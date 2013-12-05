@@ -148,8 +148,8 @@ namespace BlueBoxSharp.Data.Expressions
                 return FindProjection((EntityExpression)expression, member).ToList();
             else if (expression.NodeType == (ExpressionType)ExtendedExpressionType.Exists)
                 return FindProjection((ExistsExpression)expression, member).ToList();
-            else if (expression.NodeType == (ExpressionType)ExtendedExpressionType.Exists)
-                return FindProjection((ExistsExpression)((UnaryExpression)expression).Operand, member).ToList();
+            else if (expression.NodeType == (ExpressionType)ExtendedExpressionType.AliasedExpression)
+                return new ProjectionItem[] { new ProjectionItem(expression, member, ((AliasedExpression)expression).Alias) };
 
             else
                 return new ProjectionItem[] { new ProjectionItem(expression, member, "Extent" + this._index++) };

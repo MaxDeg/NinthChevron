@@ -1,0 +1,294 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ output extension="?" #>
+<#@ assembly name="EnvDTE" #>
+<#@ assembly name="Microsoft.VisualStudio.OLE.Interop" #>
+<#@ assembly name="Microsoft.VisualStudio.Shell" #>
+<#@ assembly name="Microsoft.VisualStudio.Shell.Interop" #>
+<#@ assembly name="Microsoft.VisualStudio.Shell.Interop.8.0" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Core.dll" #>
+<#@ assembly name="System.Configuration.dll" #>
+<#@ assembly name="$(SolutionDir)BlueBoxSharp.Data\bin\Release\BlueBoxSharp.Data.dll" #>
+<#@ assembly name="$(DataMySql)BlueBoxSharp.Data.MySql.dll" #>
+<#@ import namespace="EnvDTE" #>
+<#@ import namespace="Microsoft.VisualStudio.Shell" #>
+<#@ import namespace="Microsoft.VisualStudio.Shell.Interop" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="BlueBoxSharp.Data" #>
+<#@ import namespace="BlueBoxSharp.Data.MySql" #>
+<#@ import namespace="BlueBoxSharp.Data.Metadata" #>
+<#
+	string path = Host.ResolvePath(@"App.config");
+	System.Configuration.Configuration configuration = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(
+															new System.Configuration.ExeConfigurationFileMap { ExeConfigFilename = path }, 
+															System.Configuration.ConfigurationUserLevel.None
+														);
+		
+	MySqlMetadata meta = new MySqlMetadata(configuration.ConnectionStrings.ConnectionStrings["T4Connection"].ConnectionString, "evoconcept");
+
+	NamingRulesProvider.Current = new NamingRules() 
+	{
+		TableName = name =>
+		{
+			IEnumerable<string> parts = name.Split('_').Skip(1);
+
+			if (parts.Count() > 1)
+				parts = parts.Take(parts.Count() - 1);
+
+			return string.Join("_", parts);
+		},
+		ColumnName = name =>
+		{
+			IEnumerable<string> parts = name.Split('_').Skip(1);
+
+			List<string> words = new List<string>();
+			foreach (string word in parts)
+			{
+				ITableMetadata tblMeta = meta.Tables.FirstOrDefault(t => t.Name.EndsWith("_" + word, StringComparison.OrdinalIgnoreCase));
+
+				if (tblMeta == null)
+					words.Add(word);
+				else
+					words.Add(GeneratorHelper.ToCSharpName(tblMeta.Name, NameType.Table));
+			}
+
+			return string.Join("_", words);
+		},
+		RelationColumnName = (foreign, name, isReverse) =>
+		{
+			IEnumerable<string> parts = name.Split('_').Skip(1);
+			
+			if (parts.Count() > 1)
+				parts = parts.Take(parts.Count() - 1);
+
+			List<string> words = new List<string>();
+			foreach (string word in parts)
+			{
+				ITableMetadata tblMeta = meta.Tables.FirstOrDefault(t => t.Name.EndsWith("_" + word, StringComparison.OrdinalIgnoreCase));
+
+				if (tblMeta == null)
+					words.Add(word);
+				else
+					words.Add(GeneratorHelper.ToCSharpName(tblMeta.Name, NameType.Table));
+			}
+
+			if (isReverse)
+				return NamingRulesProvider.Current.TableName(foreign.Name) + "_" + string.Join("_", words);
+			return string.Join("_", words);
+		}
+	};
+
+foreach (var group in meta.Tables.GroupBy(t => new { Database = t.Database, Schema = t.Schema })) 
+{
+	string dbName = GeneratorHelper.ToCSharpName(group.Key.Database, NameType.None);
+	string schemaName = GeneratorHelper.ToCSharpName(group.Key.Schema, NameType.Schema);
+	string namespaceName = dbName + (!string.IsNullOrEmpty(group.Key.Schema) ? "." + schemaName : "");
+
+#>
+using System;
+using System.Collections.Generic;
+using BlueBoxSharp.Data;
+using BlueBoxSharp.Data.Entity;
+using BlueBoxSharp.Helpers;
+using BlueBoxSharp.ComponentModel.DataAnnotations;
+
+namespace Sandbox.Entities.<#= namespaceName #>
+{
+<# 
+foreach (ITableMetadata tab in group) 
+{
+#>
+	[Table("<#= tab.Name #>", "<#= tab.Schema #>", "<#= tab.Database #>")]
+	public partial class <#= GeneratorHelper.ToCSharpName(tab.Name, NameType.Table) #> : Entity<<#= GeneratorHelper.ToCSharpName(tab.Name, NameType.Table) #>>
+	{
+		static <#= GeneratorHelper.ToCSharpName(tab.Name, NameType.Table) #>()
+		{
+	<# 
+	foreach (IRelationColumnMetadata c in tab.Relations) 
+	{
+	#>
+		<#= GeneratorHelper.CreateRelationDefinition(c) #> // <#= c.IsReverseRelation ? "Reverse Relation" : "Relation" #>
+	<# 
+	}
+	#>
+	}
+
+	<# 
+	foreach (IColumnMetadata c in tab.Columns.Values) 
+	{
+	#>
+	<#= GeneratorHelper.CreateProperty(c) #>
+	<#
+	}
+	#>
+
+	<# 
+	foreach (IRelationColumnMetadata c in tab.Relations) 
+	{
+	#>
+	<#= GeneratorHelper.CreateRelationProperty(c) #>
+	<# 
+	}
+	#>
+}
+
+<# 
+}
+#>
+
+}
+
+<# 
+	SaveOutput(namespaceName + ".Tables.cs");
+#>
+using System;
+using System.Collections.Generic;
+using BlueBoxSharp.Data;
+using BlueBoxSharp.Data.Entity;
+using BlueBoxSharp.Helpers;
+using BlueBoxSharp.ComponentModel.DataAnnotations;
+
+namespace Sandbox.Entities.<#= namespaceName #>
+{
+	public class Procedures
+	{
+<# 
+foreach (IProcedureMetadata procedure in meta.Procedures.Where(p => p.Database.Name == group.Key.Database))
+{ 
+#>
+	<#= GeneratorHelper.CreateDelegate(procedure) #>
+<# 
+}
+#>
+	}
+}
+<# 
+	SaveOutput(namespaceName + ".Procedures.cs");
+#>
+<#
+}
+
+	DeleteOldOutputs();
+#>
+<#+
+	List<string> __savedOutputs = new List<string>();
+
+	void DeleteOldOutputs()
+	{
+		ProjectItem templateProjectItem = __getTemplateProjectItem();
+		foreach (ProjectItem childProjectItem in templateProjectItem.ProjectItems)
+		{
+			if (!__savedOutputs.Contains(childProjectItem.Name))
+				childProjectItem.Delete();
+		}
+	}
+
+	void SaveOutput(string outputFileName)
+	{
+		string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+		string outputFilePath = Path.Combine(templateDirectory, outputFileName);  
+
+		File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString());
+		this.GenerationEnvironment = new StringBuilder();  
+
+		ProjectItem templateProjectItem = __getTemplateProjectItem();
+		templateProjectItem.ProjectItems.AddFromFile(outputFilePath);  
+
+		__savedOutputs.Add(outputFileName);
+	}
+  
+	EnvDTE.ProjectItem __getTemplateProjectItem()
+	{
+		EnvDTE.Project dteProject = __getTemplateProject();
+
+		IVsProject vsProject = __dteProjectToVsProject(dteProject);
+
+		int iFound = 0;
+		uint itemId = 0;
+		VSDOCUMENTPRIORITY[] pdwPriority = new VSDOCUMENTPRIORITY[1];
+		int result = vsProject.IsDocumentInProject(Host.TemplateFile, out iFound, pdwPriority, out itemId);
+		if (result != VSConstants.S_OK)
+			throw new Exception("Unexpected error calling IVsProject.IsDocumentInProject");
+		if (iFound == 0)
+			throw new Exception("Cannot retrieve ProjectItem for template file");
+		if (itemId == 0)
+			throw new Exception("Cannot retrieve ProjectItem for template file");
+
+		Microsoft.VisualStudio.OLE.Interop.IServiceProvider itemContext = null;
+		result = vsProject.GetItemContext(itemId, out itemContext);
+		if (result != VSConstants.S_OK)
+			throw new Exception("Unexpected error calling IVsProject.GetItemContext");
+		if (itemContext == null)
+			throw new Exception("IVsProject.GetItemContext returned null");
+    
+		ServiceProvider itemContextService = new ServiceProvider(itemContext);
+		EnvDTE.ProjectItem templateItem = (EnvDTE.ProjectItem)itemContextService.GetService(typeof(EnvDTE.ProjectItem));
+		//Debug.Assert(templateItem != null, "itemContextService.GetService returned null");
+
+		return templateItem;
+	}
+
+	EnvDTE.Project __getTemplateProject()
+	{
+		IServiceProvider hostServiceProvider = (IServiceProvider)Host;
+		if (hostServiceProvider == null)
+			throw new Exception("Host property returned unexpected value (null)");
+
+		EnvDTE.DTE dte = (EnvDTE.DTE)hostServiceProvider.GetService(typeof(EnvDTE.DTE));
+		if (dte == null)
+			throw new Exception("Unable to retrieve EnvDTE.DTE");
+
+		Array activeSolutionProjects = (Array)dte.ActiveSolutionProjects;
+		if (activeSolutionProjects == null)
+			throw new Exception("DTE.ActiveSolutionProjects returned null");
+
+		EnvDTE.Project dteProject = (EnvDTE.Project)activeSolutionProjects.GetValue(0);
+		if (dteProject == null)
+			throw new Exception("DTE.ActiveSolutionProjects[0] returned null");
+
+		return dteProject;
+	}
+
+	static IVsProject __dteProjectToVsProject(EnvDTE.Project project)
+	{
+		if (project == null) 
+			throw new ArgumentNullException("project");
+            
+		string projectGuid = null;        
+
+		// DTE does not expose the project GUID that exists at in the msbuild project file.        
+		// Cannot use MSBuild object model because it uses a static instance of the Engine,         
+		// and using the Project will cause it to be unloaded from the engine when the         
+		// GC collects the variable that we declare.       
+		using (XmlReader projectReader = XmlReader.Create(project.FileName))
+		{
+			projectReader.MoveToContent();
+			object nodeName = projectReader.NameTable.Add("ProjectGuid");
+			while (projectReader.Read())
+			{
+				if (Object.Equals(projectReader.LocalName, nodeName))
+				{
+					projectGuid = (string)projectReader.ReadElementContentAsString(); 
+					break;
+				}
+			}
+		}
+		if (string.IsNullOrEmpty(projectGuid))
+			throw new Exception("Unable to find ProjectGuid element in the project file");
+
+		Microsoft.VisualStudio.OLE.Interop.IServiceProvider dteServiceProvider = 
+			(Microsoft.VisualStudio.OLE.Interop.IServiceProvider)project.DTE;
+		IServiceProvider serviceProvider = new ServiceProvider(dteServiceProvider); 
+		IVsHierarchy vsHierarchy = VsShellUtilities.GetHierarchy(serviceProvider, new Guid(projectGuid));
+            
+		IVsProject vsProject = (IVsProject)vsHierarchy;
+		if (vsProject == null)
+			throw new ArgumentException("Project is not a VS project.");
+		return vsProject;
+	}
+#>

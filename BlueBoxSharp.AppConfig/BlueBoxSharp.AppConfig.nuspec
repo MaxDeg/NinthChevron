@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+		  <id>BlueBoxSharp.AppConfig</id>
+		  <version>1.0.0.0</version>
+		  <title>BlueBoxSharp.AppConfig</title>
+		  <authors>Maxime Degallaix</authors>
+		  <owners>Maxime Degallaix</owners>
+		  <requireLicenseAcceptance>false</requireLicenseAcceptance>
+		  <description>StronglyTyped App.Config/Web.Config</description>
+		  <copyright>Copyright 2013</copyright>
+      <frameworkAssemblies>
+        <frameworkAssembly assemblyName="System.Configuration" />
+      </frameworkAssemblies>
+    </metadata>
+    <files>	
+        <file src="..\BlueBoxSharp.Core\bin\Release\BlueBoxSharp.Core.dll" target="build\BlueBoxSharp.Core.dll" />
+        <file src="BlueBoxSharp.AppConfig.props" target="build\BlueBoxSharp.AppConfig.props" />
+        <file src="AppConfig.tt.pp" target="content\AppConfig.tt.pp" />
+    </files>
+</package>

@@ -42,7 +42,7 @@ namespace BlueBoxSharp.Data.Expressions
             this._joins = new Dictionary<string, JoinExpression>();
             this._indexes = new List<string>();
 
-            if (this._type.IsSubclassOf(typeof(IEntity)))
+            if (typeof(IEntity).IsAssignableFrom(this._type))
             {
                 ExpressionConverter converter = new ExpressionConverter(null);
                 object entity = Activator.CreateInstance(type);

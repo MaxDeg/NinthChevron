@@ -202,11 +202,16 @@ namespace BlueBoxSharp.Data.Expressions
 
         private IEnumerable<ProjectionItem> FindProjection(MethodCallExpression expression, MemberInfo member)
         {
-            if (expression.Object != null && expression.Object.NodeType != ExpressionType.Constant)
-                yield return new ProjectionItem(expression.Object, member, "Extent" + this._index++);
-
-            foreach (Expression expr in expression.Arguments)
-                yield return new ProjectionItem(expr, member, "Extent" + this._index++);
+            if (expression.Method.DeclaringType == typeof(SqlFunctions))
+                yield return new ProjectionItem(expression, member, "Extent" + this._index++);
+            else
+            {
+                if (expression.Object != null && expression.Object.NodeType != ExpressionType.Constant)
+                    yield return new ProjectionItem(expression.Object, member, "Extent" + this._index++);
+    
+                foreach (Expression expr in expression.Arguments)
+                    yield return new ProjectionItem(expr, member, "Extent" + this._index++);
+            }
         }
 
         private IEnumerable<ProjectionItem> FindProjection(ExistsExpression expression, MemberInfo member)

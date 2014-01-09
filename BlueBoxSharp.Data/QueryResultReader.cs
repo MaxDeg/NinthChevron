@@ -113,6 +113,15 @@ namespace BlueBoxSharp.Data
 
         private object InitMethodCall(MethodCallExpression expression, object[] values, ref int index)
         {
+            if (expression.Method.DeclaringType == typeof(SqlFunctions))
+            {
+                object value = values[index++];
+                if (value == DBNull.Value)
+                    return null;
+
+                return value;
+            }
+            
             object target = null;
             if (expression.Object != null && expression.Object.NodeType != ExpressionType.Constant)
                 target = VisitProjection(null, expression.Object, values, ref index);

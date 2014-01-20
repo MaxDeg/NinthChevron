@@ -33,6 +33,7 @@ namespace BlueBoxSharp.Data.Entity
 
         public EntityChangeTracker ChangeTracker { get; private set; }
 
+        // Could be private ???
         public Entity()
         {
             this.ChangeTracker = new EntityChangeTracker(this);

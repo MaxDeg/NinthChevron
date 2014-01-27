@@ -38,6 +38,7 @@ namespace BlueBoxSharp.Data.Expressions
             this.RightQuery = right;
             this.LeftQuery = left;
 
+            this.From = this.LeftQuery.From;  // Need to set from property if we want being able to Select after union
             this.Alias = this.GetNewTableAlias();
             this.Projection = new UnionProjectionExpression(left.Projection);
             this.IsDefaultProjection = left.IsDefaultProjection;

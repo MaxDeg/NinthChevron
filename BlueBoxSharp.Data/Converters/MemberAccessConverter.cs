@@ -51,7 +51,12 @@ namespace BlueBoxSharp.Data.Converters
                     ProjectionItem item;
 
                     if (qExp.Projection.TryFindMember(expression.Member, out item))
-                        return new AliasedExpression(expression, item.Alias);
+                    {
+                        if (qExp.IsDefaultProjection)
+                            return item.Expression;
+                        else
+                            return new AliasedExpression(expression, item.Alias);
+                    }
 
                     throw new InvalidOperationException("Member doesn't exists");
                 }

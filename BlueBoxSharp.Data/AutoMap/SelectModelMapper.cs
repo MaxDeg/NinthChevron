@@ -51,48 +51,39 @@ namespace BlueBoxSharp.Data.AutoMap
 
         private void EnterModel(PropertyDescriptor property, IModelVisitorContext context, IModelVisitorContext parentContext)
         {
-            if (property == null)
-            {
-                ContextData data = new ContextData
-                {
-                    Bindings = new Dictionary<string, MemberBinding>(),
-                    BaseBindings = this._baseBindings
-                };
+            MemberInitExpression parentBaseBinding = parentContext == null ? null : ((ContextData)parentContext.Data).BaseBindings;
+            ContextData data = new ContextData { Bindings = new Dictionary<string, MemberBinding>() };
+            context.Data = data;
 
-                context.Data = data;
-            }
+            Type modelType = typeof(TModel);
+            if (property != null)
+                modelType = property.PropertyType;
             else
+                data.BaseBindings = this._baseBindings;
+            
+            // Selecting the new BaseBinding (useful if multiple level of init)
+            if (parentBaseBinding != null && property != null)
             {
-                MemberInitExpression parentBaseBinding = ((ContextData)parentContext.Data).BaseBindings;
-                ContextData data = new ContextData { Bindings = new Dictionary<string, MemberBinding>() };
-                context.Data = data;
-
-                Type modelType = property.PropertyType;
-                
-                // Selecting the new BaseBinding (useful if multiple level of init)
-                if (parentBaseBinding != null)
+                foreach (MemberBinding bind in parentBaseBinding.Bindings)
                 {
-                    foreach (MemberBinding bind in parentBaseBinding.Bindings)
-                    {
-                        Expression bindExpression = ((MemberAssignment)bind).Expression;
+                    Expression bindExpression = ((MemberAssignment)bind).Expression;
 
-                        if (bind.Member.Name == property.Name)
-                        {
-                            data.BaseBindings = (MemberInitExpression)bindExpression;
-                            break;
-                        }
+                    if (bind.Member.Name == property.Name)
+                    {
+                        data.BaseBindings = (MemberInitExpression)bindExpression;
+                        break;
                     }
                 }
+            }
 
-                // Set base binding in Bindings list (manual binding have priority on EntityMap)
-                if (data.BaseBindings != null)
+            // Set base binding in Bindings list (manual binding have priority on EntityMap)
+            if (data.BaseBindings != null)
+            {
+                foreach (MemberBinding bind in data.BaseBindings.Bindings)
                 {
-                    foreach (MemberBinding bind in data.BaseBindings.Bindings)
-                    {
-                        PropertyInfo entityProperty = modelType.GetProperty(bind.Member.Name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                        if (entityProperty != null)
-                            data.Bindings.Add(entityProperty.Name, Expression.Bind(entityProperty, ((MemberAssignment)bind).Expression));
-                    }
+                    PropertyInfo entityProperty = modelType.GetProperty(bind.Member.Name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                    if (entityProperty != null)
+                        data.Bindings.Add(entityProperty.Name, Expression.Bind(entityProperty, ((MemberAssignment)bind).Expression));
                 }
             }
         }

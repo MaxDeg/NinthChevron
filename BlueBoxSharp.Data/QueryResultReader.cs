@@ -139,11 +139,14 @@ namespace BlueBoxSharp.Data
 
         private void SetValue(PropertyInfo property, object model, object value)
         {
-            if (value != null && TypeHelper.NonNullableType(property.PropertyType) == typeof(bool) && TypeHelper.NonNullableType(value.GetType()) == typeof(int))
+            Type propertyType = TypeHelper.NonNullableType(property.PropertyType);
+
+            if (value != null && propertyType == typeof(bool) && TypeHelper.NonNullableType(value.GetType()) == typeof(int))
                 property.SetValue(model, (int)value == 1, null);
-            else if (value != null && TypeHelper.NonNullableType(value.GetType()) != TypeHelper.NonNullableType(property.PropertyType) 
-                        && !property.PropertyType.IsSubclassOf(typeof(Enum)) && !property.PropertyType.IsAssignableFrom(value.GetType()))
+            else if (value != null && TypeHelper.NonNullableType(value.GetType()) != propertyType && !propertyType.IsEnum && !propertyType.IsAssignableFrom(value.GetType()))
                 property.SetValue(model, Convert.ChangeType(value, TypeHelper.NonNullableType(property.PropertyType)), null);
+            else if (value != null && propertyType.IsEnum)
+                property.SetValue(model, Enum.Parse(propertyType, value.ToString()), null);
             else
                 property.SetValue(model, value, null);
         }

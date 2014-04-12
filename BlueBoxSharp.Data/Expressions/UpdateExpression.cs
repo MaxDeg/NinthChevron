@@ -24,9 +24,6 @@ namespace BlueBoxSharp.Data.Expressions
 {
     public class UpdateExpression : InsertUpdateExpression
     {
-        internal UpdateExpression(QueryExpression expression)
-            : base(ExtendedExpressionType.Update, expression) { }
-
         internal UpdateExpression(DataContext context, IInternalEntity entity)
             : base(ExtendedExpressionType.Update, context, entity)
         {

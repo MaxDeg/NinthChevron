@@ -28,7 +28,7 @@ namespace BlueBoxSharp.Data.Expressions
     public class DeleteExpression : CommandExpression
     {
         internal DeleteExpression(CommandExpression expression) : base(expression) { }
-        
+
         internal DeleteExpression(DataContext context, IEntity entity)
             : base(context, entity.GetType())
         {

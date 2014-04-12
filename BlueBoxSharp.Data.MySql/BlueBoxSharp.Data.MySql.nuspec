@@ -11,8 +11,14 @@
 		<copyright>Copyright 2013</copyright>
     </metadata>
     <files>
-        <file src="bin\Release\BlueBoxSharp.Data.MySql.pdb" target="lib\net40\BlueBoxSharp.Data.MySql.pdb" />
-        <file src="bin\Release\MySql.Data.dll" target="lib\net40\MySql.Data.dll" />
+        <file src="bin\Release\v4.0\BlueBoxSharp.Data.MySql.dll" target="lib\net40\BlueBoxSharp.Data.MySql.dll" />
+        <file src="bin\Release\v4.0\BlueBoxSharp.Data.MySql.pdb" target="lib\net40\BlueBoxSharp.Data.MySql.pdb" />
+        <file src="bin\Release\v4.5\BlueBoxSharp.Data.MySql.dll" target="lib\net45\BlueBoxSharp.Data.MySql.dll" />
+        <file src="bin\Release\v4.5\BlueBoxSharp.Data.MySql.pdb" target="lib\net45\BlueBoxSharp.Data.MySql.pdb" />
+
+        <file src="bin\Release\v4.0\MySql.Data.dll" target="lib\net40\MySql.Data.dll" />
+        <file src="bin\Release\v4.5\MySql.Data.dll" target="lib\net45\MySql.Data.dll" />
+
         <file src="__NugetPackage\BlueBoxSharp.Data.MySql.props" target="build\BlueBoxSharp.Data.MySql.props" />
     </files>
 </package>

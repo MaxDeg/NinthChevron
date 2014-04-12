@@ -25,7 +25,9 @@ namespace BlueBoxSharp.Data.Expressions
     {
         Query = 5000,
         Update,
+        UpdateSelect,
         Insert,
+        InsertSelect,
         Delete,
         Union,
         Join,
@@ -41,6 +43,7 @@ namespace BlueBoxSharp.Data.Expressions
         Average,
         OrderBy,
         Exists,
-        AliasedExpression
+        AliasedExpression,
+        Keyword
     }
 }

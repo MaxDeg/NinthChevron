@@ -218,7 +218,6 @@ namespace BlueBoxSharp.Data.Metadata
             return Tuple.Create(name, type, mode, precision);
         }
 
-        public Dictionary<string, string> TypeMapping { get { return _mapping; } }
         public string Name { get; private set; }
         public List<ITableMetadata> Tables { get; private set; }
         public IEnumerable<IProcedureMetadata> Procedures { get; private set; }
@@ -255,5 +254,15 @@ namespace BlueBoxSharp.Data.Metadata
             { "timestamp", "System.DateTime"}, { "timestamp_nullable", "System.Nullable`1[System.DateTime]"},      
             { "enum", "System.Int32"}, { "enum_nullable", "System.Nullable`1[System.Int32]"},         
 		};
+
+
+        public Type GetType(string dbType, bool isNullable)
+        {
+            switch (dbType)
+            {
+                default:
+                    return typeof(object);
+            }
+        }
     }
 }

@@ -20,7 +20,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using BlueBoxSharp.Data.Expressions;
 
-namespace BlueBoxSharp.Data.Converters.IqueryableConverters
+namespace BlueBoxSharp.Data.Converters.IQueryableConverters
 {
     internal class CountMethodConverter : BaseIQueryableMethodConverter
     {
@@ -38,7 +38,7 @@ namespace BlueBoxSharp.Data.Converters.IqueryableConverters
 
             if (context.IsDefaultProjection)
             {
-                context.Project(new ProjectionExpression(typeof(int), new AggregateExpression(typeof(int), ExtendedExpressionType.Count, null)));
+                context.Project(new ProjectionExpression(new AggregateExpression(typeof(int), ExtendedExpressionType.Count, null)));
                 context.ResultType = QueryReturnType.Aggregate;
 
                 return context;
@@ -48,7 +48,7 @@ namespace BlueBoxSharp.Data.Converters.IqueryableConverters
                 QueryExpression countQuery = context.WrapQuery(typeof(int));
                 countQuery.ResultType = QueryReturnType.Aggregate;
                 countQuery.From = context;
-                countQuery.Project(new ProjectionExpression(typeof(int), new AggregateExpression(typeof(int), ExtendedExpressionType.Count, null)));
+                countQuery.Project(new ProjectionExpression(new AggregateExpression(typeof(int), ExtendedExpressionType.Count, null)));
 
                 return countQuery;
             }

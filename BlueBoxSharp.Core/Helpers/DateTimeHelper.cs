@@ -20,7 +20,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
-namespace BlueBoxSharp.Core.Helpers
+namespace BlueBoxSharp.Helpers
 {
     public static class DateTimeHelper
     {

@@ -32,11 +32,11 @@ namespace BlueBoxSharp.Data.Expressions
             get { return (ExpressionType)ExtendedExpressionType.GroupByProjection; }
         }
 
-        public override bool TryFindMember(MemberInfo member, out Expression result)
+        public override bool TryFindMember(MemberInfo member, out AliasedExpression result)
         {
             if (member.Name == "Key")
             {
-                result = this;
+                result = new AliasedExpression(this, null);
                 return true;
             }
 

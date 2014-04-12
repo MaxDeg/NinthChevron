@@ -63,7 +63,7 @@ namespace BlueBoxSharp.Data.Expressions
             if (entity.Where != null) this.Where = entity.Where;
 
             this.From = entity;
-            this.Projection = new ProjectionExpression(this);
+            this.Projection = new EntityProjectionExpression((EntityExpression)this.From);
         }
 
         protected QueryExpression(DataContext context)
@@ -73,16 +73,6 @@ namespace BlueBoxSharp.Data.Expressions
             this.OrderBy = new List<OrderByExpression>();
             this.IsDefaultProjection = true;
             this.ResultType = QueryReturnType.Enumerable;
-        }
-
-        protected QueryExpression(QueryExpression expression)
-            : base(expression)
-        {
-            this._subQueries = expression._subQueries;
-            this.OrderBy = expression.OrderBy;
-            this.Projection = expression.Projection;
-            this.IsDefaultProjection = expression.IsDefaultProjection;
-            this.ResultType = expression.ResultType;
         }
 
         internal QueryExpression SubQuery(Type type)
@@ -106,32 +96,40 @@ namespace BlueBoxSharp.Data.Expressions
 
         internal virtual void Project(ProjectionExpression projection)
         {
-            if (projection != null && projection.Fields.Count == 0)
-                throw new ArgumentException("Empty Projection is not allowed");
-
             this.Projection = projection;
             this.IsDefaultProjection = false;
-
-            foreach (OrderByExpression expr in this.OrderBy)
-            {
-                ProjectionItem item;
-                if (this.Projection.TryFindMember(expr.Expression, out item))
-                    expr.Alias = item.Alias;
-                else
-                    expr.Alias = null;
-            }
         }
 
         internal virtual void Project(ExpressionConverter converter, LambdaExpression lambda)
         {
-            Expression exp = converter.Convert(lambda.Body, new Binding(lambda.Parameters[0], this));
+            Expression projection = converter.Convert(lambda.Body, new Binding(lambda.Parameters[0], this.Projection));
 
-            if (exp is QueryExpression)
-                this.Project(new ProjectionExpression((QueryExpression)exp));
-            else if (exp is JoinExpression)
-                this.Project(new ProjectionExpression((JoinExpression)exp));
+            if (projection.NodeType == (ExpressionType)ExtendedExpressionType.Projection)
+                this.Project(projection as ProjectionExpression);
             else
-                this.Project(new ProjectionExpression(exp));
+                this.Project(new ProjectionExpression(projection));
+        }
+
+        internal virtual void OrderByAsc(ExpressionConverter converter, LambdaExpression lambda)
+        {
+            Expression orderByExpr = converter.Convert(lambda.Body, new Binding(lambda.Parameters[0], this.Projection));
+
+            if (orderByExpr.NodeType == ExpressionType.Convert)
+                orderByExpr = ((UnaryExpression)orderByExpr).Operand;
+
+            OrderByExpression orderByClause = new OrderByExpression(orderByExpr, OrderByDirection.Ascending);
+            this.OrderBy.Add(orderByClause);
+        }
+
+        internal virtual void OrderByDesc(ExpressionConverter converter, LambdaExpression lambda)
+        {
+            Expression orderByExpr = converter.Convert(lambda.Body, new Binding(lambda.Parameters[0], this.Projection));
+
+            if (orderByExpr.NodeType == ExpressionType.Convert)
+                orderByExpr = ((UnaryExpression)orderByExpr).Operand;
+
+            OrderByExpression orderByClause = new OrderByExpression(orderByExpr, OrderByDirection.Descending);
+            this.OrderBy.Add(orderByClause);
         }
 
         public override string ToString()
@@ -161,8 +159,7 @@ namespace BlueBoxSharp.Data.Expressions
         {
             get { return this.Projection != null ? this.Projection.Type : this._type; }
         }
-
-
+        
         public override string GetNewTableAlias()
         {
             if (this._parentQuery != null)

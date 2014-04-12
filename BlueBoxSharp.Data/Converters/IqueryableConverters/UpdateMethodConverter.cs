@@ -21,7 +21,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace BlueBoxSharp.Data.Converters.IqueryableConverters
+namespace BlueBoxSharp.Data.Converters.IQueryableConverters
 {
     internal class UpdateMethodConverter : BaseIQueryableMethodConverter
     {
@@ -37,7 +37,7 @@ namespace BlueBoxSharp.Data.Converters.IqueryableConverters
                 context.Project(converter, lambda);
             }
 
-            return new UpdateExpression(context);
+            return new UpdateSelectExpression(context);
         }
     }
 }

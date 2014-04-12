@@ -23,7 +23,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
-namespace BlueBoxSharp.Core.Collections
+namespace BlueBoxSharp.Collections
 {
     public class ObservableDictionary<TKey, TValue> : IDictionary<TKey, TValue>, INotifyCollectionChanged, INotifyPropertyChanged
     {

@@ -16,22 +16,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
-using BlueBoxSharp.Data.Converters;
-using BlueBoxSharp.Data.Entity;
-using BlueBoxSharp.Data.Metadata;
-using BlueBoxSharp.Helpers;
 
-namespace BlueBoxSharp.Data.Expressions
+namespace BlueBoxSharp.Data.MySql
 {
-    public class InsertExpression : InsertUpdateExpression
+    public static class SqlFunctions
     {
-        internal InsertExpression(DataContext context, IInternalEntity entity)
-            : base(ExtendedExpressionType.Insert, context, entity)
-        {
-        }
+        [SqlFunction("{0} IS NULL")]
+        public static bool IsNull(object key) { throw new InvalidOperationException(); }
+
+        [SqlFunction("NOW()")]
+        public static DateTime Now() { throw new InvalidOperationException(); }
     }
 }

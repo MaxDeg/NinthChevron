@@ -79,8 +79,12 @@ namespace BlueBoxSharp.Data.Translators
                     return Visit((QueryExpression)node);
                 case (ExpressionType)ExtendedExpressionType.Insert:
                     return Visit((InsertExpression)node);
+                case (ExpressionType)ExtendedExpressionType.InsertSelect:
+                    return Visit((InsertSelectExpression)node);
                 case (ExpressionType)ExtendedExpressionType.Update:
                     return Visit((UpdateExpression)node);
+                case (ExpressionType)ExtendedExpressionType.UpdateSelect:
+                    return Visit((UpdateSelectExpression)node);
                 case (ExpressionType)ExtendedExpressionType.Delete:
                     return Visit((DeleteExpression)node);
                 case (ExpressionType)ExtendedExpressionType.Union:
@@ -109,6 +113,8 @@ namespace BlueBoxSharp.Data.Translators
                     return Visit((ExistsExpression)node);
                 case (ExpressionType)ExtendedExpressionType.AliasedExpression:
                     return Visit((AliasedExpression)node);
+                case (ExpressionType)ExtendedExpressionType.Keyword:
+                    return Visit((KeywordExpression)node);
                                     
                 default:
                     return string.Empty;
@@ -132,7 +138,9 @@ namespace BlueBoxSharp.Data.Translators
         public abstract string Visit(QueryExpression node);
         public abstract string Visit(DeleteExpression node);
         public abstract string Visit(InsertExpression node);
+        public abstract string Visit(InsertSelectExpression node);
         public abstract string Visit(UpdateExpression node);
+        public abstract string Visit(UpdateSelectExpression node);
         public abstract string Visit(UnionQueryExpression node);
         public abstract string Visit(AggregateExpression node);
         public abstract string Visit(ProjectionExpression node);
@@ -144,5 +152,6 @@ namespace BlueBoxSharp.Data.Translators
         public abstract string Visit(JoinExpression node);
         public abstract string Visit(ExistsExpression node);
         public abstract string Visit(AliasedExpression node);
+        public abstract string Visit(KeywordExpression node);
     }
 }

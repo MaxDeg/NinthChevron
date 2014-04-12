@@ -21,7 +21,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace BlueBoxSharp.Data.Converters.IqueryableConverters
+namespace BlueBoxSharp.Data.Converters.IQueryableConverters
 {
     internal class DeleteMethodConverter : BaseIQueryableMethodConverter
     {

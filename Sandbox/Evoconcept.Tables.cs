@@ -17,10 +17,10 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("cny_code", true, false, false)]
-        public string Code { get; set; }
+        public object Code { get; set; }
 		
         [NotifyPropertyChanged, Column("cny_name", false, false, false)]
-        public string Name { get; set; }
+        public object Name { get; set; }
 	
 		
         [LeftJoinColumn]
@@ -37,17 +37,17 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("ipa_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("ipa_ip", false, false, false)]
-        public string Ip { get; set; }
+        public object Ip { get; set; }
 		
         [NotifyPropertyChanged, Column("ipa_ipt_code", false, false, false)]
-        public string IptCode { get; set; }
+        public object IptCode { get; set; }
 	
 		
         [InnerJoinColumn]
@@ -66,26 +66,26 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("ofr_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("ofr_name", false, false, false)]
-        public string Name { get; set; }
+        public object Name { get; set; }
 		
         [NotifyPropertyChanged, Column("ofr_price", false, false, false)]
-        public decimal Price { get; set; }
+        public object Price { get; set; }
 		
         [NotifyPropertyChanged, Column("ofr_locked", false, false, false)]
-        public sbyte Locked { get; set; }
+        public object Locked { get; set; }
 		
         [NotifyPropertyChanged, Column("ofr_trial_period", false, false, false)]
-        public int TrialPeriod { get; set; }
+        public object TrialPeriod { get; set; }
 		
         [NotifyPropertyChanged, Column("ofr_type", false, false, false)]
-        public string Type { get; set; }
+        public object Type { get; set; }
 	
 		
         [LeftJoinColumn]
@@ -108,20 +108,20 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("red_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("red_ofr_id", false, false, true)]
-        public System.Nullable<int> OfferId { get; set; }
+        public object OfferId { get; set; }
 		
         [NotifyPropertyChanged, Column("red_quantity", false, false, false)]
-        public int Quantity { get; set; }
+        public object Quantity { get; set; }
 		
         [NotifyPropertyChanged, Column("red_percentage", false, false, false)]
-        public int Percentage { get; set; }
+        public object Percentage { get; set; }
 	
 		
         [LeftJoinColumn]
@@ -138,13 +138,13 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("scc_code", true, false, false)]
-        public string Code { get; set; }
+        public object Code { get; set; }
 		
         [NotifyPropertyChanged, Column("scc_name", false, false, false)]
-        public string Name { get; set; }
+        public object Name { get; set; }
 		
         [NotifyPropertyChanged, Column("scc_order", false, false, false)]
-        public int Order { get; set; }
+        public object Order { get; set; }
 	
 		
         [InnerJoinColumn]
@@ -162,20 +162,20 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("spv_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("spv_value", false, false, false)]
-        public int Value { get; set; }
+        public object Value { get; set; }
 		
         [NotifyPropertyChanged, Column("spv_custom", false, false, false)]
-        public sbyte Custom { get; set; }
+        public object Custom { get; set; }
 		
         [NotifyPropertyChanged, Column("spv_spc_code", false, false, false)]
-        public string SpecificationCode { get; set; }
+        public object SpecificationCode { get; set; }
 	
 		
         [InnerJoinColumn]
@@ -196,34 +196,34 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("spc_code", true, false, false)]
-        public string Code { get; set; }
+        public object Code { get; set; }
 		
         [NotifyPropertyChanged, Column("spc_name", false, false, false)]
-        public string Name { get; set; }
+        public object Name { get; set; }
 		
         [NotifyPropertyChanged, Column("spc_period", false, false, false)]
-        public int Period { get; set; }
+        public object Period { get; set; }
 		
         [NotifyPropertyChanged, Column("spc_description", false, false, false)]
-        public string Description { get; set; }
+        public object Description { get; set; }
 		
         [NotifyPropertyChanged, Column("spc_unit", false, false, true)]
-        public string Unit { get; set; }
+        public object Unit { get; set; }
 		
         [NotifyPropertyChanged, Column("spc_scc_code", false, false, false)]
-        public string SpecificationcategoryCode { get; set; }
+        public object SpecificationcategoryCode { get; set; }
 		
         [NotifyPropertyChanged, Column("spc_show_0", false, false, false)]
-        public sbyte Show0 { get; set; }
+        public object Show0 { get; set; }
 		
         [NotifyPropertyChanged, Column("spc_add_s", false, false, false)]
-        public sbyte AddS { get; set; }
+        public object AddS { get; set; }
 		
         [NotifyPropertyChanged, Column("spc_order", false, false, false)]
-        public int Order { get; set; }
+        public object Order { get; set; }
 		
         [NotifyPropertyChanged, Column("spc_image", false, false, false)]
-        public sbyte Image { get; set; }
+        public object Image { get; set; }
 	
 		
         [InnerJoinColumn]
@@ -238,42 +238,42 @@ namespace Sandbox.Entities.Evoconcept
 	{
 		static Alias()
 		{
-			Join<Domain>(t => t.Domain, (t, f) => t.DomainId == f.Id); // Relation
 			Join<Evobox>(t => t.DerivedEvobox, (t, f) => t.DerivedEvoboxId == f.Id); // Relation
+			Join<Domain>(t => t.Domain, (t, f) => t.DomainId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("als_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("als_dom_id", false, false, false)]
-        public int DomainId { get; set; }
+        public object DomainId { get; set; }
 		
         [NotifyPropertyChanged, Column("als_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> Createdate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("als_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> Updatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("als_local_part", false, false, false)]
-        public string LocalPart { get; set; }
+        public object LocalPart { get; set; }
 		
         [NotifyPropertyChanged, Column("als_rcpt", false, false, false)]
-        public string Rcpt { get; set; }
+        public object Rcpt { get; set; }
 		
         [NotifyPropertyChanged, Column("als_derived_ebx_id", false, false, false)]
-        public int DerivedEvoboxId { get; set; }
+        public object DerivedEvoboxId { get; set; }
 	
 		
         [InnerJoinColumn]
-        public Domain Domain { get; set; }
+        public Evobox DerivedEvobox { get; set; }
 		
         [InnerJoinColumn]
-        public Evobox DerivedEvobox { get; set; }
+        public Domain Domain { get; set; }
 	}
 
 	[Table("tbl_applicationattribute_apa", "", "evoconcept")]
@@ -286,20 +286,20 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("apa_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("apa_app_id", false, false, false)]
-        public int ApplicationId { get; set; }
+        public object ApplicationId { get; set; }
 		
         [NotifyPropertyChanged, Column("apa_value", false, false, false)]
-        public string Value { get; set; }
+        public object Value { get; set; }
 		
         [NotifyPropertyChanged, Column("apa_aat_code", false, false, false)]
-        public string AatCode { get; set; }
+        public object AatCode { get; set; }
 	
 		
         [InnerJoinColumn]
@@ -315,10 +315,10 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("aip_ip", false, false, false)]
-        public string Ip { get; set; }
+        public object Ip { get; set; }
 		
         [NotifyPropertyChanged, Column("aip_app_id", false, false, true)]
-        public System.Nullable<int> ApplicationId { get; set; }
+        public object ApplicationId { get; set; }
 	
 	}
 
@@ -328,46 +328,46 @@ namespace Sandbox.Entities.Evoconcept
 		static Application()
 		{
 			Join<Applicationattribute>(t => t.ApplicationattributeApplication, (t, f) => t.Id == f.ApplicationId); // Reverse Relation
-			Join<Evobox>(t => t.Evobox, (t, f) => t.EvoboxId == f.Id); // Relation
 			Join<Service>(t => t.Service, (t, f) => t.ServiceId == f.Id); // Relation
+			Join<Evobox>(t => t.Evobox, (t, f) => t.EvoboxId == f.Id); // Relation
 			Join<Website>(t => t.WebsiteApplication, (t, f) => t.Id == f.ApplicationId); // Reverse Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("app_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("app_ebx_id", false, false, false)]
-        public int EvoboxId { get; set; }
+        public object EvoboxId { get; set; }
 		
         [NotifyPropertyChanged, Column("app_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> Createdate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("app_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> Updatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("app_name", false, false, false)]
-        public string Name { get; set; }
+        public object Name { get; set; }
 		
         [NotifyPropertyChanged, Column("app_svc_id", false, false, false)]
-        public int ServiceId { get; set; }
+        public object ServiceId { get; set; }
 		
         [NotifyPropertyChanged, Column("app_apt_code", false, false, false)]
-        public string AptCode { get; set; }
+        public object AptCode { get; set; }
 	
 		
         [InnerJoinColumn]
         public Applicationattribute ApplicationattributeApplication { get; set; }
 		
         [InnerJoinColumn]
-        public Evobox Evobox { get; set; }
+        public Service Service { get; set; }
 		
         [InnerJoinColumn]
-        public Service Service { get; set; }
+        public Evobox Evobox { get; set; }
 		
         [InnerJoinColumn]
         public Website WebsiteApplication { get; set; }
@@ -383,14 +383,14 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("bll_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("bll_tsn_id", false, false, false)]
-        public int TransactionId { get; set; }
+        public object TransactionId { get; set; }
 	
 		
         [InnerJoinColumn]
@@ -407,20 +407,20 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("cgv_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("cgv_name", false, false, false)]
-        public string Name { get; set; }
+        public object Name { get; set; }
 		
         [NotifyPropertyChanged, Column("cgv_date", false, false, true)]
-        public System.Nullable<System.DateTime> Date { get; set; }
+        public object Date { get; set; }
 		
         [NotifyPropertyChanged, Column("cgv_ubx_id", false, false, true)]
-        public System.Nullable<int> UsrEbxId { get; set; }
+        public object UsrEbxId { get; set; }
 	
 		
         [LeftJoinColumn]
@@ -438,47 +438,47 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("crn_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("crn_ebx_id", false, false, false)]
-        public int EvoboxId { get; set; }
+        public object EvoboxId { get; set; }
 		
         [NotifyPropertyChanged, Column("crn_url", false, false, false)]
-        public string Url { get; set; }
+        public object Url { get; set; }
 		
         [NotifyPropertyChanged, Column("crn_month", false, false, false)]
-        public int Month { get; set; }
+        public object Month { get; set; }
 		
         [NotifyPropertyChanged, Column("crn_day", false, false, false)]
-        public int Day { get; set; }
+        public object Day { get; set; }
 		
         [NotifyPropertyChanged, Column("crn_hour", false, false, false)]
-        public int Hour { get; set; }
+        public object Hour { get; set; }
 		
         [NotifyPropertyChanged, Column("crn_minute", false, false, false)]
-        public long Minute { get; set; }
+        public object Minute { get; set; }
 		
         [NotifyPropertyChanged, Column("crn_email_notification", false, false, true)]
-        public string EmailNotification { get; set; }
+        public object EmailNotification { get; set; }
 		
         [NotifyPropertyChanged, Column("crn_last_executed", false, false, true)]
-        public System.Nullable<System.DateTime> LastExecuted { get; set; }
+        public object LastExecuted { get; set; }
 		
         [NotifyPropertyChanged, Column("crn_last_execution_time", false, false, true)]
-        public System.Nullable<int> LastExecutionTime { get; set; }
+        public object LastExecutionTime { get; set; }
 		
         [NotifyPropertyChanged, Column("crn_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> Createdate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("crn_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> Updatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("crn_svc_id", false, false, false)]
-        public int ServiceId { get; set; }
+        public object ServiceId { get; set; }
 	
 		
         [InnerJoinColumn]
@@ -493,42 +493,42 @@ namespace Sandbox.Entities.Evoconcept
 	{
 		static Databaselogin()
 		{
-			Join<Evobox>(t => t.Evobox, (t, f) => t.EvoboxId == f.Id); // Relation
 			Join<Service>(t => t.Service, (t, f) => t.ServiceId == f.Id); // Relation
+			Join<Evobox>(t => t.Evobox, (t, f) => t.EvoboxId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("dbl_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("dbl_login", false, false, false)]
-        public string Login { get; set; }
+        public object Login { get; set; }
 		
         [NotifyPropertyChanged, Column("dbl_ebx_id", false, false, false)]
-        public int EvoboxId { get; set; }
+        public object EvoboxId { get; set; }
 		
         [NotifyPropertyChanged, Column("dbl_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> Createdate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("dbl_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> Updatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("dbl_svc_id", false, false, false)]
-        public int ServiceId { get; set; }
+        public object ServiceId { get; set; }
 		
         [NotifyPropertyChanged, Column("dbl_password", false, false, true)]
-        public string Password { get; set; }
+        public object Password { get; set; }
 	
 		
         [InnerJoinColumn]
-        public Evobox Evobox { get; set; }
+        public Service Service { get; set; }
 		
         [InnerJoinColumn]
-        public Service Service { get; set; }
+        public Evobox Evobox { get; set; }
 	}
 
 	[Table("tbl_database_dtb", "", "evoconcept")]
@@ -536,39 +536,39 @@ namespace Sandbox.Entities.Evoconcept
 	{
 		static Database()
 		{
-			Join<Evobox>(t => t.Evobox, (t, f) => t.EvoboxId == f.Id); // Relation
 			Join<Service>(t => t.Service, (t, f) => t.ServiceId == f.Id); // Relation
+			Join<Evobox>(t => t.Evobox, (t, f) => t.EvoboxId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("dtb_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("dtb_name", false, false, false)]
-        public string Name { get; set; }
+        public object Name { get; set; }
 		
         [NotifyPropertyChanged, Column("dtb_ebx_id", false, false, false)]
-        public int EvoboxId { get; set; }
+        public object EvoboxId { get; set; }
 		
         [NotifyPropertyChanged, Column("dtb_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> Createdate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("dtb_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> Updatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("dtb_svc_id", false, false, false)]
-        public int ServiceId { get; set; }
+        public object ServiceId { get; set; }
 	
 		
         [InnerJoinColumn]
-        public Evobox Evobox { get; set; }
+        public Service Service { get; set; }
 		
         [InnerJoinColumn]
-        public Service Service { get; set; }
+        public Evobox Evobox { get; set; }
 	}
 
 	[Table("tbl_dnsrecord_dns", "", "evoconcept")]
@@ -582,35 +582,35 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("dns_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("dns_dom_id", false, false, false)]
-        public int DomainId { get; set; }
+        public object DomainId { get; set; }
 		
         [NotifyPropertyChanged, Column("dns_name", false, false, true)]
-        public string Name { get; set; }
+        public object Name { get; set; }
 		
         [NotifyPropertyChanged, Column("dns_priority", false, false, true)]
-        public System.Nullable<int> Priority { get; set; }
+        public object Priority { get; set; }
 		
         [NotifyPropertyChanged, Column("dns_to", false, false, false)]
-        public string To { get; set; }
+        public object To { get; set; }
 		
         [NotifyPropertyChanged, Column("dns_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> Createdate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("dns_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> Updatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("dns_dnt_code", false, false, false)]
-        public string DntCode { get; set; }
+        public object DntCode { get; set; }
 		
         [NotifyPropertyChanged, Column("dns_sdm_id", false, false, true)]
-        public System.Nullable<int> SdmId { get; set; }
+        public object SdmId { get; set; }
 	
 		
         [LeftJoinColumn]
@@ -628,58 +628,58 @@ namespace Sandbox.Entities.Evoconcept
 			Join<Alias>(t => t.AliasDomain, (t, f) => t.Id == f.DomainId); // Reverse Relation
 			Join<Dnsrecord>(t => t.DnsrecordSdm, (t, f) => t.Id == f.SdmId); // Reverse Relation
 			Join<Dnsrecord>(t => t.DnsrecordDomain, (t, f) => t.Id == f.DomainId); // Reverse Relation
+			Join<Service>(t => t.PrimaryService, (t, f) => t.PrimaryServiceId == f.Id); // Relation
 			Join<Domain>(t => t.ParentDomain, (t, f) => t.ParentDomainId == f.Id); // Relation
 			Join<Domain>(t => t.DomainParentDomain, (t, f) => t.Id == f.ParentDomainId); // Reverse Relation
 			Join<Service>(t => t.SecondaryService, (t, f) => t.SecondaryServiceId == f.Id); // Relation
 			Join<Evobox>(t => t.Evobox, (t, f) => t.EvoboxId == f.Id); // Relation
-			Join<Service>(t => t.PrimaryService, (t, f) => t.PrimaryServiceId == f.Id); // Relation
 			Join<Email>(t => t.EmailDomain, (t, f) => t.Id == f.DomainId); // Reverse Relation
 			Join<Website>(t => t.WebsiteDomain, (t, f) => t.Id == f.DomainId); // Reverse Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("dom_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("dom_ebx_id", false, false, true)]
-        public System.Nullable<int> EvoboxId { get; set; }
+        public object EvoboxId { get; set; }
 		
         [NotifyPropertyChanged, Column("dom_name", false, false, false)]
-        public string Name { get; set; }
+        public object Name { get; set; }
 		
         [NotifyPropertyChanged, Column("dom_parent_dom_id", false, false, true)]
-        public System.Nullable<int> ParentDomainId { get; set; }
+        public object ParentDomainId { get; set; }
 		
         [NotifyPropertyChanged, Column("dom_hostdom", false, false, false)]
-        public sbyte Hostdom { get; set; }
+        public object Hostdom { get; set; }
 		
         [NotifyPropertyChanged, Column("dom_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> Createdate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("dom_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> Updatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("dom_primary_svc_id", false, false, true)]
-        public System.Nullable<int> PrimaryServiceId { get; set; }
+        public object PrimaryServiceId { get; set; }
 		
         [NotifyPropertyChanged, Column("dom_secondary_svc_id", false, false, true)]
-        public System.Nullable<int> SecondaryServiceId { get; set; }
+        public object SecondaryServiceId { get; set; }
 		
         [NotifyPropertyChanged, Column("dom_fullname", false, false, false)]
-        public string Fullname { get; set; }
+        public object Fullname { get; set; }
 		
         [NotifyPropertyChanged, Column("dom_dnsmanaged", false, false, true)]
-        public System.Nullable<sbyte> Dnsmanaged { get; set; }
+        public object Dnsmanaged { get; set; }
 		
         [NotifyPropertyChanged, Column("dom_status", false, false, false)]
-        public string Status { get; set; }
+        public object Status { get; set; }
 		
         [NotifyPropertyChanged, Column("dom_forceremote", false, false, true)]
-        public System.Nullable<sbyte> Forceremote { get; set; }
+        public object Forceremote { get; set; }
 	
 		
         [InnerJoinColumn]
@@ -690,6 +690,9 @@ namespace Sandbox.Entities.Evoconcept
 		
         [InnerJoinColumn]
         public Dnsrecord DnsrecordDomain { get; set; }
+		
+        [LeftJoinColumn]
+        public Service PrimaryService { get; set; }
 		
         [LeftJoinColumn]
         public Domain ParentDomain { get; set; }
@@ -703,9 +706,6 @@ namespace Sandbox.Entities.Evoconcept
         [LeftJoinColumn]
         public Evobox Evobox { get; set; }
 		
-        [LeftJoinColumn]
-        public Service PrimaryService { get; set; }
-		
         [InnerJoinColumn]
         public Email EmailDomain { get; set; }
 		
@@ -718,57 +718,57 @@ namespace Sandbox.Entities.Evoconcept
 	{
 		static Email()
 		{
-			Join<Evobox>(t => t.DerivedEvobox, (t, f) => t.DerivedEvoboxId == f.Id); // Relation
 			Join<Domain>(t => t.Domain, (t, f) => t.DomainId == f.Id); // Relation
+			Join<Evobox>(t => t.DerivedEvobox, (t, f) => t.DerivedEvoboxId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("eml_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("eml_dom_id", false, false, false)]
-        public int DomainId { get; set; }
+        public object DomainId { get; set; }
 		
         [NotifyPropertyChanged, Column("eml_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> Createdate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("eml_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> Updatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("eml_home_dir", false, false, false)]
-        public string HomeDir { get; set; }
+        public object HomeDir { get; set; }
 		
         [NotifyPropertyChanged, Column("eml_catch_all", false, false, false)]
-        public sbyte CatchAll { get; set; }
+        public object CatchAll { get; set; }
 		
         [NotifyPropertyChanged, Column("eml_away", false, false, true)]
-        public System.Nullable<sbyte> Away { get; set; }
+        public object Away { get; set; }
 		
         [NotifyPropertyChanged, Column("eml_message", false, false, true)]
-        public string Message { get; set; }
+        public object Message { get; set; }
 		
         [NotifyPropertyChanged, Column("eml_password", false, false, false)]
-        public string Password { get; set; }
+        public object Password { get; set; }
 		
         [NotifyPropertyChanged, Column("eml_quota_usage", false, false, false)]
-        public int QuotaUsage { get; set; }
+        public object QuotaUsage { get; set; }
 		
         [NotifyPropertyChanged, Column("eml_local_part", false, false, false)]
-        public string LocalPart { get; set; }
+        public object LocalPart { get; set; }
 		
         [NotifyPropertyChanged, Column("eml_derived_ebx_id", false, false, false)]
-        public int DerivedEvoboxId { get; set; }
+        public object DerivedEvoboxId { get; set; }
 	
 		
         [InnerJoinColumn]
-        public Evobox DerivedEvobox { get; set; }
+        public Domain Domain { get; set; }
 		
         [InnerJoinColumn]
-        public Domain Domain { get; set; }
+        public Evobox DerivedEvobox { get; set; }
 	}
 
 	[Table("tbl_evobox_ebx", "", "evoconcept")]
@@ -783,8 +783,8 @@ namespace Sandbox.Entities.Evoconcept
 			Join<Database>(t => t.DatabaseEvobox, (t, f) => t.Id == f.EvoboxId); // Reverse Relation
 			Join<Domain>(t => t.DomainEvobox, (t, f) => t.Id == f.EvoboxId); // Reverse Relation
 			Join<Email>(t => t.EmailDerivedEvobox, (t, f) => t.Id == f.DerivedEvoboxId); // Reverse Relation
-			Join<Service>(t => t.StatsService, (t, f) => t.StatsServiceId == f.Id); // Relation
 			Join<Offer>(t => t.Offer, (t, f) => t.OfferId == f.Id); // Relation
+			Join<Service>(t => t.StatsService, (t, f) => t.StatsServiceId == f.Id); // Relation
 			Join<Ftpaccount>(t => t.FtpaccountEvobox, (t, f) => t.Id == f.EvoboxId); // Reverse Relation
 			Join<Transaction>(t => t.TransactionEvobox, (t, f) => t.Id == f.EvoboxId); // Reverse Relation
 			Join<UsrEbx>(t => t.UsrEbxEvobox, (t, f) => t.Id == f.EvoboxId); // Reverse Relation
@@ -792,44 +792,44 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("ebx_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("ebx_name", false, false, false)]
-        public string Name { get; set; }
+        public object Name { get; set; }
 		
         [NotifyPropertyChanged, Column("ebx_startdate", false, false, true)]
-        public System.Nullable<System.DateTime> Startdate { get; set; }
+        public object Startdate { get; set; }
 		
         [NotifyPropertyChanged, Column("ebx_enddate", false, false, true)]
-        public System.Nullable<System.DateTime> Enddate { get; set; }
+        public object Enddate { get; set; }
 		
         [NotifyPropertyChanged, Column("ebx_ofr_id", false, false, false)]
-        public int OfferId { get; set; }
+        public object OfferId { get; set; }
 		
         [NotifyPropertyChanged, Column("ebx_quota", false, false, false)]
-        public int Quota { get; set; }
+        public object Quota { get; set; }
 		
         [NotifyPropertyChanged, Column("ebx_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> Createdate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("ebx_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> Updatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("ebx_stats_service_id", false, false, true)]
-        public System.Nullable<int> StatsServiceId { get; set; }
+        public object StatsServiceId { get; set; }
 		
         [NotifyPropertyChanged, Column("ebx_homedir", false, false, true)]
-        public string Homedir { get; set; }
+        public object Homedir { get; set; }
 		
         [NotifyPropertyChanged, Column("ebx_status", false, false, false)]
-        public string Status { get; set; }
+        public object Status { get; set; }
 		
         [NotifyPropertyChanged, Column("ebx_nfs_service_id", false, false, true)]
-        public System.Nullable<int> NfsServiceId { get; set; }
+        public object NfsServiceId { get; set; }
 	
 		
         [InnerJoinColumn]
@@ -853,11 +853,11 @@ namespace Sandbox.Entities.Evoconcept
         [InnerJoinColumn]
         public Email EmailDerivedEvobox { get; set; }
 		
-        [LeftJoinColumn]
-        public Service StatsService { get; set; }
-		
         [InnerJoinColumn]
         public Offer Offer { get; set; }
+		
+        [LeftJoinColumn]
+        public Service StatsService { get; set; }
 		
         [InnerJoinColumn]
         public Ftpaccount FtpaccountEvobox { get; set; }
@@ -879,17 +879,17 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("fqc_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("fqc_title", false, false, false)]
-        public string Title { get; set; }
+        public object Title { get; set; }
 		
         [NotifyPropertyChanged, Column("fqc_order", false, false, false)]
-        public int Order { get; set; }
+        public object Order { get; set; }
 	
 		
         [InnerJoinColumn]
@@ -906,23 +906,23 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("faq_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("faq_fqc_id", false, false, false)]
-        public int FaqcategoryId { get; set; }
+        public object FaqcategoryId { get; set; }
 		
         [NotifyPropertyChanged, Column("faq_question", false, false, false)]
-        public string Question { get; set; }
+        public object Question { get; set; }
 		
         [NotifyPropertyChanged, Column("faq_answer", false, false, false)]
-        public string Answer { get; set; }
+        public object Answer { get; set; }
 		
         [NotifyPropertyChanged, Column("faq_order", false, false, false)]
-        public int Order { get; set; }
+        public object Order { get; set; }
 	
 		
         [InnerJoinColumn]
@@ -940,44 +940,44 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("ftp_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("ftp_ebx_id", false, false, false)]
-        public int EvoboxId { get; set; }
+        public object EvoboxId { get; set; }
 		
         [NotifyPropertyChanged, Column("ftp_login", false, false, false)]
-        public string Login { get; set; }
+        public object Login { get; set; }
 		
         [NotifyPropertyChanged, Column("ftp_password", false, false, false)]
-        public string Password { get; set; }
+        public object Password { get; set; }
 		
         [NotifyPropertyChanged, Column("ftp_homedir", false, false, false)]
-        public string Homedir { get; set; }
+        public object Homedir { get; set; }
 		
         [NotifyPropertyChanged, Column("ftp_count", false, false, false)]
-        public int Count { get; set; }
+        public object Count { get; set; }
 		
         [NotifyPropertyChanged, Column("ftp_enabled", false, false, false)]
-        public sbyte Enabled { get; set; }
+        public object Enabled { get; set; }
 		
         [NotifyPropertyChanged, Column("ftp_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> Createdate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("ftp_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> Updatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("ftp_accessed", false, false, true)]
-        public System.Nullable<System.DateTime> Accessed { get; set; }
+        public object Accessed { get; set; }
 		
         [NotifyPropertyChanged, Column("ftp_modified", false, false, true)]
-        public System.Nullable<System.DateTime> Modified { get; set; }
+        public object Modified { get; set; }
 		
         [NotifyPropertyChanged, Column("ftp_svc_id", false, false, false)]
-        public int ServiceId { get; set; }
+        public object ServiceId { get; set; }
 	
 		
         [InnerJoinColumn]
@@ -996,23 +996,23 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("nws_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("nws_title", false, false, false)]
-        public string Title { get; set; }
+        public object Title { get; set; }
 		
         [NotifyPropertyChanged, Column("nws_content", false, false, false)]
-        public string Content { get; set; }
+        public object Content { get; set; }
 		
         [NotifyPropertyChanged, Column("nws_author", false, false, false)]
-        public string Author { get; set; }
+        public object Author { get; set; }
 		
         [NotifyPropertyChanged, Column("nws_date", false, false, true)]
-        public System.Nullable<System.DateTime> Date { get; set; }
+        public object Date { get; set; }
 	
 	}
 
@@ -1021,30 +1021,30 @@ namespace Sandbox.Entities.Evoconcept
 	{
 		static OfrSpv()
 		{
-			Join<Specificationvalue>(t => t.Specificationvalue, (t, f) => t.SpecificationvalueId == f.Id); // Relation
 			Join<Offer>(t => t.Offer, (t, f) => t.OfferId == f.Id); // Relation
+			Join<Specificationvalue>(t => t.Specificationvalue, (t, f) => t.SpecificationvalueId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("osv_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("osv_ofr_id", false, false, false)]
-        public int OfferId { get; set; }
+        public object OfferId { get; set; }
 		
         [NotifyPropertyChanged, Column("osv_spv_id", false, false, false)]
-        public int SpecificationvalueId { get; set; }
+        public object SpecificationvalueId { get; set; }
 	
 		
         [InnerJoinColumn]
-        public Specificationvalue Specificationvalue { get; set; }
+        public Offer Offer { get; set; }
 		
         [InnerJoinColumn]
-        public Offer Offer { get; set; }
+        public Specificationvalue Specificationvalue { get; set; }
 	}
 
 	[Table("tbl_order_ord", "", "evoconcept")]
@@ -1057,14 +1057,14 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("ord_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("ord_tsn_id", false, false, false)]
-        public int TransactionId { get; set; }
+        public object TransactionId { get; set; }
 	
 		
         [InnerJoinColumn]
@@ -1082,20 +1082,20 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("sip_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("sip_srv_id", false, false, false)]
-        public int ServerId { get; set; }
+        public object ServerId { get; set; }
 		
         [NotifyPropertyChanged, Column("sip_ipa_id", false, false, false)]
-        public int IpaddressId { get; set; }
+        public object IpaddressId { get; set; }
 		
         [NotifyPropertyChanged, Column("sip_status", false, false, false)]
-        public int Status { get; set; }
+        public object Status { get; set; }
 	
 		
         [InnerJoinColumn]
@@ -1112,26 +1112,26 @@ namespace Sandbox.Entities.Evoconcept
 		{
 			Join<Serverip>(t => t.ServeripServer, (t, f) => t.Id == f.ServerId); // Reverse Relation
 			Join<Service>(t => t.ServiceServer, (t, f) => t.Id == f.ServerId); // Reverse Relation
-			Join<SrvSrv>(t => t.SrvSrvGuest, (t, f) => t.Id == f.GuestId); // Reverse Relation
 			Join<SrvSrv>(t => t.SrvSrvHost, (t, f) => t.Id == f.HostId); // Reverse Relation
+			Join<SrvSrv>(t => t.SrvSrvGuest, (t, f) => t.Id == f.GuestId); // Reverse Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("srv_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("srv_name", false, false, true)]
-        public string Name { get; set; }
+        public object Name { get; set; }
 		
         [NotifyPropertyChanged, Column("srv_status", false, false, false)]
-        public int Status { get; set; }
+        public object Status { get; set; }
 		
         [NotifyPropertyChanged, Column("srv_type", false, false, false)]
-        public string Type { get; set; }
+        public object Type { get; set; }
 	
 		
         [InnerJoinColumn]
@@ -1141,10 +1141,10 @@ namespace Sandbox.Entities.Evoconcept
         public Service ServiceServer { get; set; }
 		
         [InnerJoinColumn]
-        public SrvSrv SrvSrvGuest { get; set; }
+        public SrvSrv SrvSrvHost { get; set; }
 		
         [InnerJoinColumn]
-        public SrvSrv SrvSrvHost { get; set; }
+        public SrvSrv SrvSrvGuest { get; set; }
 	}
 
 	[Table("tbl_serviceattribute_sva", "", "evoconcept")]
@@ -1157,27 +1157,29 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("sva_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("sva_key", false, false, false)]
-        public string Key { get; set; }
+        public object Key { get; set; }
 		
         [NotifyPropertyChanged, Column("sva_strvalue", false, false, true)]
-        public string Strvalue { get; set; }
+        public object Strvalue { get; set; }
 		
         [NotifyPropertyChanged, Column("sva_intvalue", false, false, true)]
-        public System.Nullable<int> Intvalue { get; set; }
+        public object Intvalue { get; set; }
 		
+        [NotifyPropertyChanged, Column("sva_dblvalue", false, false, true)]
+        public object Dblvalue { get; set; }
 		
         [NotifyPropertyChanged, Column("sva_dtvalue", false, false, true)]
-        public System.Nullable<System.DateTime> Dtvalue { get; set; }
+        public object Dtvalue { get; set; }
 		
         [NotifyPropertyChanged, Column("sva_svc_id", false, false, false)]
-        public int ServiceId { get; set; }
+        public object ServiceId { get; set; }
 	
 		
         [InnerJoinColumn]
@@ -1189,30 +1191,30 @@ namespace Sandbox.Entities.Evoconcept
 	{
 		static Serviceinvoker()
 		{
-			Join<Service>(t => t.Svc2, (t, f) => t.Svc2Id == f.Id); // Relation
 			Join<Service>(t => t.Svc1, (t, f) => t.Svc1Id == f.Id); // Relation
+			Join<Service>(t => t.Svc2, (t, f) => t.Svc2Id == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("sin_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("sin_svc1_id", false, false, false)]
-        public int Svc1Id { get; set; }
+        public object Svc1Id { get; set; }
 		
         [NotifyPropertyChanged, Column("sin_svc2_id", false, false, false)]
-        public int Svc2Id { get; set; }
+        public object Svc2Id { get; set; }
 	
 		
         [InnerJoinColumn]
-        public Service Svc2 { get; set; }
+        public Service Svc1 { get; set; }
 		
         [InnerJoinColumn]
-        public Service Svc1 { get; set; }
+        public Service Svc2 { get; set; }
 	}
 
 	[Table("tbl_service_svc", "", "evoconcept")]
@@ -1224,44 +1226,44 @@ namespace Sandbox.Entities.Evoconcept
 			Join<Cron>(t => t.CronService, (t, f) => t.Id == f.ServiceId); // Reverse Relation
 			Join<Databaselogin>(t => t.DatabaseloginService, (t, f) => t.Id == f.ServiceId); // Reverse Relation
 			Join<Database>(t => t.DatabaseService, (t, f) => t.Id == f.ServiceId); // Reverse Relation
-			Join<Domain>(t => t.DomainSecondaryService, (t, f) => t.Id == f.SecondaryServiceId); // Reverse Relation
 			Join<Domain>(t => t.DomainPrimaryService, (t, f) => t.Id == f.PrimaryServiceId); // Reverse Relation
+			Join<Domain>(t => t.DomainSecondaryService, (t, f) => t.Id == f.SecondaryServiceId); // Reverse Relation
 			Join<Evobox>(t => t.EvoboxStatsService, (t, f) => t.Id == f.StatsServiceId); // Reverse Relation
 			Join<Ftpaccount>(t => t.FtpaccountService, (t, f) => t.Id == f.ServiceId); // Reverse Relation
 			Join<Serviceattribute>(t => t.ServiceattributeService, (t, f) => t.Id == f.ServiceId); // Reverse Relation
-			Join<Serviceinvoker>(t => t.ServiceinvokerSvc2, (t, f) => t.Id == f.Svc2Id); // Reverse Relation
 			Join<Serviceinvoker>(t => t.ServiceinvokerSvc1, (t, f) => t.Id == f.Svc1Id); // Reverse Relation
+			Join<Serviceinvoker>(t => t.ServiceinvokerSvc2, (t, f) => t.Id == f.Svc2Id); // Reverse Relation
 			Join<Server>(t => t.Server, (t, f) => t.ServerId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("svc_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("svc_name", false, false, true)]
-        public string Name { get; set; }
+        public object Name { get; set; }
 		
         [NotifyPropertyChanged, Column("svc_description", false, false, true)]
-        public string Description { get; set; }
+        public object Description { get; set; }
 		
         [NotifyPropertyChanged, Column("svc_srv_id", false, false, false)]
-        public int ServerId { get; set; }
+        public object ServerId { get; set; }
 		
         [NotifyPropertyChanged, Column("svc_svt_code", false, false, false)]
-        public string SvtCode { get; set; }
+        public object SvtCode { get; set; }
 		
         [NotifyPropertyChanged, Column("svc_capacity", false, false, true)]
-        public System.Nullable<int> Capacity { get; set; }
+        public object Capacity { get; set; }
 		
         [NotifyPropertyChanged, Column("svc_domain", false, false, true)]
-        public string Domain { get; set; }
+        public object Domain { get; set; }
 		
         [NotifyPropertyChanged, Column("svc_backup_svc_id", false, false, true)]
-        public System.Nullable<int> BackupServiceId { get; set; }
+        public object BackupServiceId { get; set; }
 	
 		
         [InnerJoinColumn]
@@ -1277,10 +1279,10 @@ namespace Sandbox.Entities.Evoconcept
         public Database DatabaseService { get; set; }
 		
         [LeftJoinColumn]
-        public Domain DomainSecondaryService { get; set; }
+        public Domain DomainPrimaryService { get; set; }
 		
         [LeftJoinColumn]
-        public Domain DomainPrimaryService { get; set; }
+        public Domain DomainSecondaryService { get; set; }
 		
         [LeftJoinColumn]
         public Evobox EvoboxStatsService { get; set; }
@@ -1292,10 +1294,10 @@ namespace Sandbox.Entities.Evoconcept
         public Serviceattribute ServiceattributeService { get; set; }
 		
         [InnerJoinColumn]
-        public Serviceinvoker ServiceinvokerSvc2 { get; set; }
+        public Serviceinvoker ServiceinvokerSvc1 { get; set; }
 		
         [InnerJoinColumn]
-        public Serviceinvoker ServiceinvokerSvc1 { get; set; }
+        public Serviceinvoker ServiceinvokerSvc2 { get; set; }
 		
         [InnerJoinColumn]
         public Server Server { get; set; }
@@ -1306,26 +1308,26 @@ namespace Sandbox.Entities.Evoconcept
 	{
 		static SrvSrv()
 		{
-			Join<Server>(t => t.Guest, (t, f) => t.GuestId == f.Id); // Relation
 			Join<Server>(t => t.Host, (t, f) => t.HostId == f.Id); // Relation
+			Join<Server>(t => t.Guest, (t, f) => t.GuestId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("ssv_host_id", true, false, false)]
-        public int HostId { get; set; }
+        public object HostId { get; set; }
 		
         [NotifyPropertyChanged, Column("ssv_guest_id", true, false, false)]
-        public int GuestId { get; set; }
+        public object GuestId { get; set; }
 		
         [NotifyPropertyChanged, Column("ssv_active", false, false, false)]
-        public sbyte Active { get; set; }
+        public object Active { get; set; }
 	
 		
         [InnerJoinColumn]
-        public Server Guest { get; set; }
+        public Server Host { get; set; }
 		
         [InnerJoinColumn]
-        public Server Host { get; set; }
+        public Server Guest { get; set; }
 	}
 
 	[Table("tbl_taskattribute_tka", "", "evoconcept")]
@@ -1338,27 +1340,29 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("tka_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("tka_key", false, false, false)]
-        public string Key { get; set; }
+        public object Key { get; set; }
 		
         [NotifyPropertyChanged, Column("tka_strvalue", false, false, true)]
-        public string Strvalue { get; set; }
+        public object Strvalue { get; set; }
 		
         [NotifyPropertyChanged, Column("tka_intvalue", false, false, true)]
-        public System.Nullable<int> Intvalue { get; set; }
+        public object Intvalue { get; set; }
 		
+        [NotifyPropertyChanged, Column("tka_dblvalue", false, false, true)]
+        public object Dblvalue { get; set; }
 		
         [NotifyPropertyChanged, Column("tka_dtvalue", false, false, true)]
-        public System.Nullable<System.DateTime> Dtvalue { get; set; }
+        public object Dtvalue { get; set; }
 		
         [NotifyPropertyChanged, Column("tka_tsk_id", false, false, false)]
-        public int TaskId { get; set; }
+        public object TaskId { get; set; }
 	
 		
         [InnerJoinColumn]
@@ -1375,41 +1379,41 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("tsk_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("tsk_type", false, false, false)]
-        public string Type { get; set; }
+        public object Type { get; set; }
 		
         [NotifyPropertyChanged, Column("tsk_ref_type", false, false, true)]
-        public string RefType { get; set; }
+        public object RefType { get; set; }
 		
         [NotifyPropertyChanged, Column("tsk_ref_id", false, false, true)]
-        public System.Nullable<int> RefId { get; set; }
+        public object RefId { get; set; }
 		
         [NotifyPropertyChanged, Column("tsk_status", false, false, false)]
-        public string Status { get; set; }
+        public object Status { get; set; }
 		
         [NotifyPropertyChanged, Column("tsk_percentage", false, false, false)]
-        public int Percentage { get; set; }
+        public object Percentage { get; set; }
 		
         [NotifyPropertyChanged, Column("tsk_svc_id", false, false, true)]
-        public System.Nullable<int> ServiceId { get; set; }
+        public object ServiceId { get; set; }
 		
         [NotifyPropertyChanged, Column("tsk_error", false, false, true)]
-        public string Error { get; set; }
+        public object Error { get; set; }
 		
         [NotifyPropertyChanged, Column("tsk_created_at", false, false, true)]
-        public System.Nullable<System.DateTime> CreatedAt { get; set; }
+        public object CreatedAt { get; set; }
 		
         [NotifyPropertyChanged, Column("tsk_executed_at", false, false, true)]
-        public System.Nullable<System.DateTime> ExecutedAt { get; set; }
+        public object ExecutedAt { get; set; }
 		
         [NotifyPropertyChanged, Column("tsk_finished_at", false, false, true)]
-        public System.Nullable<System.DateTime> FinishedAt { get; set; }
+        public object FinishedAt { get; set; }
 	
 		
         [InnerJoinColumn]
@@ -1426,20 +1430,20 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("tsa_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("tsa_tsn_id", false, false, false)]
-        public int TransactionId { get; set; }
+        public object TransactionId { get; set; }
 		
         [NotifyPropertyChanged, Column("tsa_key", false, false, false)]
-        public string Key { get; set; }
+        public object Key { get; set; }
 		
         [NotifyPropertyChanged, Column("tsa_value", false, false, false)]
-        public string Value { get; set; }
+        public object Value { get; set; }
 	
 		
         [InnerJoinColumn]
@@ -1460,38 +1464,38 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("tsn_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("tsn_ebx_id", false, false, true)]
-        public System.Nullable<int> EvoboxId { get; set; }
+        public object EvoboxId { get; set; }
 		
         [NotifyPropertyChanged, Column("tsn_usr_id", false, false, false)]
-        public int UserId { get; set; }
+        public object UserId { get; set; }
 		
         [NotifyPropertyChanged, Column("tsn_price", false, false, false)]
-        public decimal Price { get; set; }
+        public object Price { get; set; }
 		
         [NotifyPropertyChanged, Column("tsn_status", false, false, false)]
-        public string Status { get; set; }
+        public object Status { get; set; }
 		
         [NotifyPropertyChanged, Column("tsn_amount_payed", false, false, true)]
-        public System.Nullable<decimal> AmountPayed { get; set; }
+        public object AmountPayed { get; set; }
 		
         [NotifyPropertyChanged, Column("tsn_usage", false, false, false)]
-        public string Usage { get; set; }
+        public object Usage { get; set; }
 		
         [NotifyPropertyChanged, Column("tsn_description", false, false, true)]
-        public string Description { get; set; }
+        public object Description { get; set; }
 		
         [NotifyPropertyChanged, Column("tsn_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> Createdate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("tsn_pmm_code", false, false, false)]
-        public string PmmCode { get; set; }
+        public object PmmCode { get; set; }
 	
 		
         [InnerJoinColumn]
@@ -1520,17 +1524,17 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("uak_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("uak_activation_key", false, false, true)]
-        public string ActivationKey { get; set; }
+        public object ActivationKey { get; set; }
 		
         [NotifyPropertyChanged, Column("uak_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> Createdate { get; set; }
+        public object Createdate { get; set; }
 	
 		
         [LeftJoinColumn]
@@ -1542,53 +1546,53 @@ namespace Sandbox.Entities.Evoconcept
 	{
 		static Userinformation()
 		{
-			Join<Country>(t => t.Country, (t, f) => t.CountryCode == f.Code); // Relation
 			Join<User>(t => t.User, (t, f) => t.UserId == f.Id); // Relation
+			Join<Country>(t => t.Country, (t, f) => t.CountryCode == f.Code); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("uin_usr_id", true, false, false)]
-        public int UserId { get; set; }
+        public object UserId { get; set; }
 		
         [NotifyPropertyChanged, Column("uin_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> Createdate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("uin_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> Updatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("uin_lastname", false, false, false)]
-        public string Lastname { get; set; }
+        public object Lastname { get; set; }
 		
         [NotifyPropertyChanged, Column("uin_firstname", false, false, false)]
-        public string Firstname { get; set; }
+        public object Firstname { get; set; }
 		
         [NotifyPropertyChanged, Column("uin_city", false, false, false)]
-        public string City { get; set; }
+        public object City { get; set; }
 		
         [NotifyPropertyChanged, Column("uin_cny_code", false, false, true)]
-        public string CountryCode { get; set; }
+        public object CountryCode { get; set; }
 		
         [NotifyPropertyChanged, Column("uin_post_code", false, false, false)]
-        public string PostCode { get; set; }
+        public object PostCode { get; set; }
 		
         [NotifyPropertyChanged, Column("uin_address1", false, false, false)]
-        public string Address1 { get; set; }
+        public object Address1 { get; set; }
 		
         [NotifyPropertyChanged, Column("uin_address2", false, false, true)]
-        public string Address2 { get; set; }
+        public object Address2 { get; set; }
 		
         [NotifyPropertyChanged, Column("uin_address3", false, false, true)]
-        public string Address3 { get; set; }
+        public object Address3 { get; set; }
 		
         [NotifyPropertyChanged, Column("uin_address4", false, false, true)]
-        public string Address4 { get; set; }
+        public object Address4 { get; set; }
 	
-		
-        [LeftJoinColumn]
-        public Country Country { get; set; }
 		
         [InnerJoinColumn]
         public User User { get; set; }
+		
+        [LeftJoinColumn]
+        public Country Country { get; set; }
 	}
 
 	[Table("tbl_user_usr", "", "evoconcept")]
@@ -1604,41 +1608,41 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("usr_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("usr_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> Createdate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("usr_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> Updatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("usr_password", false, false, false)]
-        public string Password { get; set; }
+        public object Password { get; set; }
 		
         [NotifyPropertyChanged, Column("usr_email", false, false, false)]
-        public string Email { get; set; }
+        public object Email { get; set; }
 		
         [NotifyPropertyChanged, Column("usr_login", false, false, true)]
-        public string Login { get; set; }
+        public object Login { get; set; }
 		
         [NotifyPropertyChanged, Column("usr_locked", false, false, false)]
-        public sbyte Locked { get; set; }
+        public object Locked { get; set; }
 		
         [NotifyPropertyChanged, Column("usr_enabled", false, false, false)]
-        public sbyte Enabled { get; set; }
+        public object Enabled { get; set; }
 		
         [NotifyPropertyChanged, Column("usr_admin", false, false, false)]
-        public sbyte Admin { get; set; }
+        public object Admin { get; set; }
 		
         [NotifyPropertyChanged, Column("usr_credit", false, false, false)]
-        public int Credit { get; set; }
+        public object Credit { get; set; }
 		
         [NotifyPropertyChanged, Column("usr_uak_id", false, false, true)]
-        public System.Nullable<int> UseractivationkeyId { get; set; }
+        public object UseractivationkeyId { get; set; }
 	
 		
         [InnerJoinColumn]
@@ -1660,42 +1664,42 @@ namespace Sandbox.Entities.Evoconcept
 		static UsrEbx()
 		{
 			Join<Conditions>(t => t.ConditionsUsrEbx, (t, f) => t.Id == f.UsrEbxId); // Reverse Relation
-			Join<User>(t => t.User, (t, f) => t.UserId == f.Id); // Relation
 			Join<Evobox>(t => t.Evobox, (t, f) => t.EvoboxId == f.Id); // Relation
+			Join<User>(t => t.User, (t, f) => t.UserId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("ubx_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("ubx_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> Createdate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("ubx_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> Updatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("ubx_ebx_id", false, false, false)]
-        public int EvoboxId { get; set; }
+        public object EvoboxId { get; set; }
 		
         [NotifyPropertyChanged, Column("ubx_usr_id", false, false, false)]
-        public int UserId { get; set; }
+        public object UserId { get; set; }
 		
         [NotifyPropertyChanged, Column("ubx_owner", false, false, true)]
-        public System.Nullable<sbyte> Owner { get; set; }
+        public object Owner { get; set; }
 	
 		
         [LeftJoinColumn]
         public Conditions ConditionsUsrEbx { get; set; }
 		
         [InnerJoinColumn]
-        public User User { get; set; }
+        public Evobox Evobox { get; set; }
 		
         [InnerJoinColumn]
-        public Evobox Evobox { get; set; }
+        public User User { get; set; }
 	}
 
 	[Table("tbl_website_web", "", "evoconcept")]
@@ -1709,23 +1713,23 @@ namespace Sandbox.Entities.Evoconcept
 
 		
         [NotifyPropertyChanged, Column("web_id", true, true, false)]
-        public int Id
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("web_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> Createdate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("web_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> Updatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("web_dom_id", false, false, false)]
-        public int DomainId { get; set; }
+        public object DomainId { get; set; }
 		
         [NotifyPropertyChanged, Column("web_app_id", false, false, false)]
-        public int ApplicationId { get; set; }
+        public object ApplicationId { get; set; }
 	
 		
         [InnerJoinColumn]

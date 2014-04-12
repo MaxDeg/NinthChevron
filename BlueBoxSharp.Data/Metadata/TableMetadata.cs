@@ -26,7 +26,7 @@ using BlueBoxSharp.Helpers;
 
 namespace BlueBoxSharp.Data.Metadata
 {
-    public enum JoinType { Left, Inner, None }
+    public enum JoinType { Left, Right, Inner, None }
 
     public class TableMetadata : ITableMetadata
     {

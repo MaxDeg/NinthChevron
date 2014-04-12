@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
-using BlueBoxSharp.Data.Converters.IqueryableConverters;
+using BlueBoxSharp.Data.Converters.IQueryableConverters;
 using BlueBoxSharp.Data.Expressions;
 
 namespace BlueBoxSharp.Data.Converters
@@ -35,7 +35,9 @@ namespace BlueBoxSharp.Data.Converters
 
         public override Expression Convert(ExpressionConverter converter, MethodCallExpression expression)
         {
-            if (expression.Method.DeclaringType == typeof(SqlFunctions))
+            var customAttr = expression.Method.GetCustomAttributes(typeof(SqlFunctionAttribute), false);
+
+            if (customAttr != null && customAttr.Length > 0)
             {
                 return expression.Update(expression.Object, expression.Arguments.Select(a => converter.Convert(a)));
             }

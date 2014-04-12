@@ -38,7 +38,7 @@ namespace BlueBoxSharp.Data.Expressions
             this.RightQuery = right;
             this.LeftQuery = left;
 
-            this.From = this.LeftQuery.From;  // Need to set from property if we want being able to Select after union
+            this.From = this.LeftQuery.From; // Need to set from property if we want being able to Select after union
             this.Alias = this.GetNewTableAlias();
             this.Projection = new UnionProjectionExpression(left.Projection);
             this.IsDefaultProjection = left.IsDefaultProjection;
@@ -46,22 +46,20 @@ namespace BlueBoxSharp.Data.Expressions
 
         internal override void Project(ExpressionConverter converter, LambdaExpression lambda)
         {
-            if (this.LeftQuery.IsDefaultProjection)
-                this.LeftQuery.Project(converter, lambda);
-
-            if (this.RightQuery.IsDefaultProjection)
-                this.RightQuery.Project(converter, lambda);
-            
-            this.Projection = new UnionProjectionExpression(converter.Convert(lambda.Body, new Binding(lambda.Parameters[0], this)));
-            this.IsDefaultProjection = false;
-
-
-            foreach (OrderByExpression orderBy in this.OrderBy)
+            if (this.OrderBy == null || this.OrderBy.Count == 0)
             {
-                ProjectionItem item;
-                if (this.Projection.TryFindMember(orderBy.Expression, out item))
-                    orderBy.Alias = item.Alias;
+                if (this.LeftQuery.IsDefaultProjection && this.RightQuery.IsDefaultProjection)
+                {
+                    this.LeftQuery.Project(converter, lambda);
+                    this.RightQuery.Project(converter, lambda);
+                }
+
+                this.Projection = new UnionProjectionExpression(this.LeftQuery.Projection);
             }
+            else
+                this.Projection = new UnionProjectionExpression(converter.Convert(lambda.Body, new Binding(lambda.Parameters[0], this.Projection)));
+
+            this.IsDefaultProjection = false;
         }
 
         public override ExpressionType NodeType

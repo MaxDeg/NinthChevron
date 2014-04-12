@@ -108,7 +108,7 @@ namespace BlueBoxSharp.Data.Metadata
 
             string parameters = string.Join(", ", meta.Parameters.Select(p => 
                                                         string.Format("{0} {1}",
-                                                            provider.GetTypeOutput(new CodeTypeReference(meta.Database.TypeMapping[p.SqlType + "_nullable"])),
+                                                            provider.GetTypeOutput(new CodeTypeReference(meta.Database.GetType(p.SqlType, true))),
                                                             p.Mode.ToLower() + ToCSharpName(p.Name.Replace("@", ""), NameType.None)
                                                             )
                                                         )

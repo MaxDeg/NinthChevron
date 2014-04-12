@@ -11,11 +11,18 @@
 		<copyright>Copyright 2013</copyright>
     </metadata>
     <files>
-        <file src="bin\Release\BlueBoxSharp.Core.pdb" target="lib\net40\BlueBoxSharp.Core.pdb" />
+        <file src="bin\Release\v4.0\BlueBoxSharp.Core.dll" target="lib\net40\BlueBoxSharp.Core.dll" />
+        <file src="bin\Release\v4.0\BlueBoxSharp.Core.pdb" target="lib\net40\BlueBoxSharp.Core.pdb" />
+        <file src="bin\Release\v4.5\BlueBoxSharp.Core.dll" target="lib\net45\BlueBoxSharp.Core.dll" />
+        <file src="bin\Release\v4.5\BlueBoxSharp.Core.pdb" target="lib\net45\BlueBoxSharp.Core.pdb" />
 	
-        <file src="BlueBoxSharp.Core.targets" target="build\BlueBoxSharp.Core.targets" />
+        <file src="__NugetPackage\BlueBoxSharp.Core.props" target="build\BlueBoxSharp.Core.props" />
+        <file src="__NugetPackage\BlueBoxSharp.Core.targets" target="build\BlueBoxSharp.Core.targets" />
 
-        <file src="bin\Release\BlueBoxSharp.Core.dll" target="build\BlueBoxSharp.Core.dll" />
-        <file src="..\BlueBoxSharp.ILInjector\bin\Release\BlueBoxSharp.ILInjector.dll" target="build\BlueBoxSharp.ILInjector.dll" />
+        <file src="bin\Release\v4.0\BlueBoxSharp.Core.dll" target="build\net40\BlueBoxSharp.Core.dll" />
+        <file src="..\BlueBoxSharp.ILInjector\bin\Release\v4.0\BlueBoxSharp.ILInjector.dll" target="build\net40\BlueBoxSharp.ILInjector.dll" />
+
+        <file src="bin\Release\v4.5\BlueBoxSharp.Core.dll" target="build\net45\BlueBoxSharp.Core.dll" />
+        <file src="..\BlueBoxSharp.ILInjector\bin\Release\v4.5\BlueBoxSharp.ILInjector.dll" target="build\net45\BlueBoxSharp.ILInjector.dll" />
     </files>
 </package>

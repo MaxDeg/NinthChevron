@@ -30,42 +30,16 @@ namespace BlueBoxSharp.Data.Expressions
     public class ProjectionExpression : Expression
     {
         private Type _type;
-        private int _index = 0;
+        protected int _index = 0;
 
-        public ProjectionExpression(EntityExpression expression)
+        protected ProjectionExpression() { }
+
+        public ProjectionExpression(Expression expression)
         {
             this._type = expression.Type;
             this.Fields = FindProjection(expression, null).ToList();
         }
         
-        public ProjectionExpression(Type type, params Expression[] fields)
-        {
-            this._type = type;
-            this.Fields = fields.Select(e => new ProjectionItem(e, null, "Extent" + this._index++)).ToList();
-        }
-
-        public ProjectionExpression(QueryExpression expression)
-        {
-            this._type = expression.From.Type;
-            this.Fields = FindProjection((EntityExpression)expression.From, null).ToList();
-        }
-
-        public ProjectionExpression(JoinExpression expression)
-        {
-            this._type = expression.Entity.Type;
-            this.Fields = FindProjection((EntityExpression)expression.Entity, null).ToList();
-        }
-
-        public ProjectionExpression(Expression expression)
-        {
-            this._type = expression.Type;
-
-            if (expression.NodeType == (ExpressionType)ExtendedExpressionType.Query)
-                this.Fields = ((QueryExpression)expression).Projection.Fields;
-            else
-                this.Fields = FindProjection(expression, null).ToList();
-        }
-
         public List<ProjectionItem> Fields { get; protected set; }
 
         public override ExpressionType NodeType
@@ -78,37 +52,12 @@ namespace BlueBoxSharp.Data.Expressions
             get { return this._type; }
         }
 
-        public virtual bool TryFindMember(Expression expr, out ProjectionItem result)
+        public virtual bool TryFindMember(MemberInfo member, out AliasedExpression result)
         {
             result = Fields
                 .Where(f => f.Type == ProjectionItemType.Projection)
-                .Where(f => f.Expression == expr)
-                .FirstOrDefault();
-
-            return result != null;
-        }
-
-        public virtual bool TryFindMember(MemberInfo member, out ProjectionItem result)
-        {
-            result = Fields
-                .Where(f => f.Type == ProjectionItemType.Projection)
-                .Where(f => f.Expression is MemberExpression && ((MemberExpression)f.Expression).Member == member || (f.Member != null && f.Member.Name == member.Name))
-                .FirstOrDefault();
-
-            if (result == null)
-                result = Fields
-                    .Where(f => f.Type == ProjectionItemType.Projection)
-                    .Where(f => f.Member != null && f.Member.Name == member.Name)
-                    .FirstOrDefault();
-
-            return result != null;
-        }
-
-        public virtual bool TryFindMember(MemberInfo member, out Expression result)
-        {
-            result = Fields
-                .Where(f => f.Type == ProjectionItemType.Projection)
-                .Where(f => f.Expression is MemberExpression && ((MemberExpression)f.Expression).Member == member || (f.Member != null && f.Member.Name == member.Name))
+                .Where(f => f.Expression.Expression is MemberExpression
+                    && ((MemberExpression)f.Expression.Expression).Member == member || (f.Member != null && f.Member.Name == member.Name && f.Member.DeclaringType == member.DeclaringType))
                 .Select(f => f.Expression)
                 .FirstOrDefault();
 
@@ -129,7 +78,7 @@ namespace BlueBoxSharp.Data.Expressions
 
 
 
-        private IEnumerable<ProjectionItem> FindProjection(Expression expression, MemberInfo member)
+        protected virtual IEnumerable<ProjectionItem> FindProjection(Expression expression, MemberInfo member)
         {
             if (expression.NodeType == ExpressionType.MemberAccess)
                 return FindProjection(expression as MemberExpression, member).ToList();
@@ -144,8 +93,14 @@ namespace BlueBoxSharp.Data.Expressions
             else if (expression.NodeType == ExpressionType.Convert)
                 return FindProjection(expression as UnaryExpression, member).ToList();
 
+            else if (expression.NodeType == (ExpressionType)ExtendedExpressionType.Projection)
+                return FindProjection((ProjectionExpression)expression, member).ToList();
+            else if (expression.NodeType == (ExpressionType)ExtendedExpressionType.GroupByProjection)
+                return FindProjection((GroupByProjectionExpression)expression, member).ToList();
             else if (expression.NodeType == (ExpressionType)ExtendedExpressionType.Entity)
                 return FindProjection((EntityExpression)expression, member).ToList();
+            else if (expression.NodeType == (ExpressionType)ExtendedExpressionType.Join)
+                return FindProjection((JoinExpression)expression, member).ToList();
             else if (expression.NodeType == (ExpressionType)ExtendedExpressionType.Exists)
                 return FindProjection((ExistsExpression)expression, member).ToList();
             else if (expression.NodeType == (ExpressionType)ExtendedExpressionType.AliasedExpression)
@@ -155,23 +110,22 @@ namespace BlueBoxSharp.Data.Expressions
                 return new ProjectionItem[] { new ProjectionItem(expression, member, "Extent" + this._index++) };
         }
 
-        private IEnumerable<ProjectionItem> FindProjection(EntityExpression expression, MemberInfo member)
+        protected virtual IEnumerable<ProjectionItem> FindProjection(EntityExpression expression, MemberInfo member)
         {
-            EntityRefExpression entityRef = new EntityRefExpression((EntityExpression)expression);
-            return FindProjection(Expression.MemberInit(
-                                        Expression.New(expression.Type),
-                                        expression.Type.GetProperties()
-                                            .Where(p => !typeof(IEntity).IsAssignableFrom(p.PropertyType) && p.GetCustomAttributes(typeof(ColumnAttribute), true).Any())
-                                            .Select(p => Expression.Bind(p, Expression.MakeMemberAccess(entityRef, p)))
-                                        ), null).ToList();
+            yield return new ProjectionItem(new EntityProjectionExpression((EntityExpression)expression), member, "Extent" + this._index++);
         }
 
-        private IEnumerable<ProjectionItem> FindProjection(MemberExpression expression, MemberInfo member)
+        protected virtual IEnumerable<ProjectionItem> FindProjection(JoinExpression expression, MemberInfo member)
+        {
+            yield return new ProjectionItem(new EntityProjectionExpression(((JoinExpression)expression).Entity), member, "Extent" + this._index++);
+        }
+
+        protected virtual IEnumerable<ProjectionItem> FindProjection(MemberExpression expression, MemberInfo member)
         {
             yield return new ProjectionItem(expression, member ?? expression.Member, "Extent" + this._index++);
         }
 
-        private IEnumerable<ProjectionItem> FindProjection(NewExpression expression, MemberInfo member)
+        protected virtual IEnumerable<ProjectionItem> FindProjection(NewExpression expression, MemberInfo member)
         {
             yield return new ProjectionItem(expression, member);
 
@@ -188,7 +142,7 @@ namespace BlueBoxSharp.Data.Expressions
             }
         }
 
-        private IEnumerable<ProjectionItem> FindProjection(MemberInitExpression expression, MemberInfo member)
+        protected virtual IEnumerable<ProjectionItem> FindProjection(MemberInitExpression expression, MemberInfo member)
         {
             yield return new ProjectionItem(expression, member);
 
@@ -200,33 +154,59 @@ namespace BlueBoxSharp.Data.Expressions
                     yield return innerProj;
         }
 
-        private IEnumerable<ProjectionItem> FindProjection(MethodCallExpression expression, MemberInfo member)
+        protected virtual IEnumerable<ProjectionItem> FindProjection(MethodCallExpression expression, MemberInfo member)
         {
-            if (expression.Method.DeclaringType == typeof(SqlFunctions))
+            var customAttr = expression.Method.GetCustomAttributes(typeof(SqlFunctionAttribute), false);
+            if (customAttr != null && customAttr.Length > 0)
                 yield return new ProjectionItem(expression, member, "Extent" + this._index++);
             else
             {
                 if (expression.Object != null && expression.Object.NodeType != ExpressionType.Constant)
                     yield return new ProjectionItem(expression.Object, member, "Extent" + this._index++);
-    
+
                 foreach (Expression expr in expression.Arguments)
                     yield return new ProjectionItem(expr, member, "Extent" + this._index++);
             }
         }
 
-        private IEnumerable<ProjectionItem> FindProjection(ExistsExpression expression, MemberInfo member)
+        protected virtual IEnumerable<ProjectionItem> FindProjection(ExistsExpression expression, MemberInfo member)
         {
             yield return new ProjectionItem(Expression.Condition(expression, Expression.Constant(1), Expression.Constant(0)), member, "Extent" + this._index++);
         }
 
-        private IEnumerable<ProjectionItem> FindProjection(BinaryExpression expression, MemberInfo member)
+        protected virtual IEnumerable<ProjectionItem> FindProjection(BinaryExpression expression, MemberInfo member)
         {
             yield return new ProjectionItem(expression, member, "Extent" + this._index++);
         }
 
-        private IEnumerable<ProjectionItem> FindProjection(UnaryExpression expression, MemberInfo member)
+        protected virtual IEnumerable<ProjectionItem> FindProjection(UnaryExpression expression, MemberInfo member)
         {
             return FindProjection(expression.Operand, member);
+        }
+
+        protected virtual IEnumerable<ProjectionItem> FindProjection(ProjectionExpression expression, MemberInfo member)
+        {
+            if (expression is EntityProjectionExpression)
+            {
+                yield return new ProjectionItem(expression, member, "Extent" + this._index++);
+            }
+            else
+            {
+                foreach (ProjectionItem item in expression.Fields)
+                {
+                    foreach (ProjectionItem innerProj in FindProjection(item.Expression.Expression, item.Member))
+                        yield return innerProj;
+                }
+            }
+        }
+
+        protected virtual IEnumerable<ProjectionItem> FindProjection(GroupByProjectionExpression expression, MemberInfo member)
+        {
+            foreach (ProjectionItem item in expression.Fields)
+            {
+                foreach (ProjectionItem innerProj in FindProjection(item.Expression.Expression, member))
+                    yield return innerProj;
+            }
         }
     }
 }

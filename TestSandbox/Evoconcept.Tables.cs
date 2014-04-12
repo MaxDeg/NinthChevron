@@ -1,6 +1,5 @@
 
 
-
 using System;
 using System.Collections.Generic;
 using BlueBoxSharp.Data;
@@ -11,1733 +10,1694 @@ using BlueBoxSharp.ComponentModel.DataAnnotations;
 namespace TestSandbox.Evoconcept
 {
 	[Table("lut_country_cny", "", "evoconcept")]
-	public partial class LutCountryCny : Entity<LutCountryCny>
+	public partial class Country : Entity<Country>
 	{
-		static LutCountryCny()
+		static Country()
 		{
-			Join<TblUserinformationUin>(t => t.UinCnyTblUserinformationUin, (t, f) => t.CnyCode == f.UinCnyCode); // Reverse Relation
+			Join<Userinformation>(t => t.UserinformationCountry, (t, f) => t.Code == f.CountryCode); // Reverse Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("cny_code", true, false, false)]
-        public string CnyCode { get; set; }
+        public object Code { get; set; }
 		
         [NotifyPropertyChanged, Column("cny_name", false, false, false)]
-        public string CnyName { get; set; }
+        public object Name { get; set; }
 	
 		
         [LeftJoinColumn]
-        public TblUserinformationUin UinCnyTblUserinformationUin { get; set; }
+        public Userinformation UserinformationCountry { get; set; }
 	}
-
 	[Table("lut_ipaddress_ipa", "", "evoconcept")]
-	public partial class LutIpaddressIpa : Entity<LutIpaddressIpa>
+	public partial class Ipaddress : Entity<Ipaddress>
 	{
-		static LutIpaddressIpa()
+		static Ipaddress()
 		{
-			Join<TblServeripSip>(t => t.SipIpaTblServeripSip, (t, f) => t.IpaId == f.SipIpaId); // Reverse Relation
+			Join<Serverip>(t => t.ServeripIpaddress, (t, f) => t.Id == f.IpaddressId); // Reverse Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("ipa_id", true, true, false)]
-        public int IpaId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("ipa_ip", false, false, false)]
-        public string IpaIp { get; set; }
+        public object Ip { get; set; }
 		
         [NotifyPropertyChanged, Column("ipa_ipt_code", false, false, false)]
-        public string IpaIptCode { get; set; }
+        public object IptCode { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblServeripSip SipIpaTblServeripSip { get; set; }
+        public Serverip ServeripIpaddress { get; set; }
 	}
-
 	[Table("lut_offer_ofr", "", "evoconcept")]
-	public partial class LutOfferOfr : Entity<LutOfferOfr>
+	public partial class Offer : Entity<Offer>
 	{
-		static LutOfferOfr()
+		static Offer()
 		{
-			Join<LutReductionRed>(t => t.RedOfrLutReductionRed, (t, f) => t.OfrId == f.RedOfrId); // Reverse Relation
-			Join<TblEvoboxEbx>(t => t.EbxOfrTblEvoboxEbx, (t, f) => t.OfrId == f.EbxOfrId); // Reverse Relation
-			Join<TblOfrSpvOsv>(t => t.OsvOfrTblOfrSpvOsv, (t, f) => t.OfrId == f.OsvOfrId); // Reverse Relation
+			Join<Reduction>(t => t.ReductionOffer, (t, f) => t.Id == f.OfferId); // Reverse Relation
+			Join<Evobox>(t => t.EvoboxOffer, (t, f) => t.Id == f.OfferId); // Reverse Relation
+			Join<OfrSpv>(t => t.OfrSpvOffer, (t, f) => t.Id == f.OfferId); // Reverse Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("ofr_id", true, true, false)]
-        public int OfrId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("ofr_name", false, false, false)]
-        public string OfrName { get; set; }
+        public object Name { get; set; }
 		
         [NotifyPropertyChanged, Column("ofr_price", false, false, false)]
-        public decimal OfrPrice { get; set; }
+        public object Price { get; set; }
 		
         [NotifyPropertyChanged, Column("ofr_locked", false, false, false)]
-        public sbyte OfrLocked { get; set; }
+        public object Locked { get; set; }
 		
         [NotifyPropertyChanged, Column("ofr_trial_period", false, false, false)]
-        public int OfrTrialPeriod { get; set; }
+        public object TrialPeriod { get; set; }
 		
         [NotifyPropertyChanged, Column("ofr_type", false, false, false)]
-        public string OfrType { get; set; }
+        public object Type { get; set; }
 	
 		
         [LeftJoinColumn]
-        public LutReductionRed RedOfrLutReductionRed { get; set; }
+        public Reduction ReductionOffer { get; set; }
 		
         [InnerJoinColumn]
-        public TblEvoboxEbx EbxOfrTblEvoboxEbx { get; set; }
+        public Evobox EvoboxOffer { get; set; }
 		
         [InnerJoinColumn]
-        public TblOfrSpvOsv OsvOfrTblOfrSpvOsv { get; set; }
+        public OfrSpv OfrSpvOffer { get; set; }
 	}
-
 	[Table("lut_reduction_red", "", "evoconcept")]
-	public partial class LutReductionRed : Entity<LutReductionRed>
+	public partial class Reduction : Entity<Reduction>
 	{
-		static LutReductionRed()
+		static Reduction()
 		{
-			Join<LutOfferOfr>(t => t.RedOfr, (t, f) => t.RedOfrId == f.OfrId); // Relation
+			Join<Offer>(t => t.Offer, (t, f) => t.OfferId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("red_id", true, true, false)]
-        public int RedId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("red_ofr_id", false, false, true)]
-        public System.Nullable<int> RedOfrId { get; set; }
+        public object OfferId { get; set; }
 		
         [NotifyPropertyChanged, Column("red_quantity", false, false, false)]
-        public int RedQuantity { get; set; }
+        public object Quantity { get; set; }
 		
         [NotifyPropertyChanged, Column("red_percentage", false, false, false)]
-        public int RedPercentage { get; set; }
+        public object Percentage { get; set; }
 	
 		
         [LeftJoinColumn]
-        public LutOfferOfr RedOfr { get; set; }
+        public Offer Offer { get; set; }
 	}
-
 	[Table("lut_specificationcategory_scc", "", "evoconcept")]
-	public partial class LutSpecificationcategoryScc : Entity<LutSpecificationcategoryScc>
+	public partial class Specificationcategory : Entity<Specificationcategory>
 	{
-		static LutSpecificationcategoryScc()
+		static Specificationcategory()
 		{
-			Join<LutSpecificationSpc>(t => t.SpcSccLutSpecificationSpc, (t, f) => t.SccCode == f.SpcSccCode); // Reverse Relation
+			Join<Specification>(t => t.SpecificationSpecificationcategory, (t, f) => t.Code == f.SpecificationcategoryCode); // Reverse Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("scc_code", true, false, false)]
-        public string SccCode { get; set; }
+        public object Code { get; set; }
 		
         [NotifyPropertyChanged, Column("scc_name", false, false, false)]
-        public string SccName { get; set; }
+        public object Name { get; set; }
 		
         [NotifyPropertyChanged, Column("scc_order", false, false, false)]
-        public int SccOrder { get; set; }
+        public object Order { get; set; }
 	
 		
         [InnerJoinColumn]
-        public LutSpecificationSpc SpcSccLutSpecificationSpc { get; set; }
+        public Specification SpecificationSpecificationcategory { get; set; }
 	}
-
 	[Table("lut_specificationvalue_spv", "", "evoconcept")]
-	public partial class LutSpecificationvalueSpv : Entity<LutSpecificationvalueSpv>
+	public partial class Specificationvalue : Entity<Specificationvalue>
 	{
-		static LutSpecificationvalueSpv()
+		static Specificationvalue()
 		{
-			Join<LutSpecificationSpc>(t => t.SpvSpc, (t, f) => t.SpvSpcCode == f.SpcCode); // Relation
-			Join<TblOfrSpvOsv>(t => t.OsvSpvTblOfrSpvOsv, (t, f) => t.SpvId == f.OsvSpvId); // Reverse Relation
+			Join<Specification>(t => t.Specification, (t, f) => t.SpecificationCode == f.Code); // Relation
+			Join<OfrSpv>(t => t.OfrSpvSpecificationvalue, (t, f) => t.Id == f.SpecificationvalueId); // Reverse Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("spv_id", true, true, false)]
-        public int SpvId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("spv_value", false, false, false)]
-        public int SpvValue { get; set; }
+        public object Value { get; set; }
 		
         [NotifyPropertyChanged, Column("spv_custom", false, false, false)]
-        public sbyte SpvCustom { get; set; }
+        public object Custom { get; set; }
 		
         [NotifyPropertyChanged, Column("spv_spc_code", false, false, false)]
-        public string SpvSpcCode { get; set; }
+        public object SpecificationCode { get; set; }
 	
 		
         [InnerJoinColumn]
-        public LutSpecificationSpc SpvSpc { get; set; }
+        public Specification Specification { get; set; }
 		
         [InnerJoinColumn]
-        public TblOfrSpvOsv OsvSpvTblOfrSpvOsv { get; set; }
+        public OfrSpv OfrSpvSpecificationvalue { get; set; }
 	}
-
 	[Table("lut_specification_spc", "", "evoconcept")]
-	public partial class LutSpecificationSpc : Entity<LutSpecificationSpc>
+	public partial class Specification : Entity<Specification>
 	{
-		static LutSpecificationSpc()
+		static Specification()
 		{
-			Join<LutSpecificationvalueSpv>(t => t.SpvSpcLutSpecificationvalueSpv, (t, f) => t.SpcCode == f.SpvSpcCode); // Reverse Relation
-			Join<LutSpecificationcategoryScc>(t => t.SpcScc, (t, f) => t.SpcSccCode == f.SccCode); // Relation
+			Join<Specificationvalue>(t => t.SpecificationvalueSpecification, (t, f) => t.Code == f.SpecificationCode); // Reverse Relation
+			Join<Specificationcategory>(t => t.Specificationcategory, (t, f) => t.SpecificationcategoryCode == f.Code); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("spc_code", true, false, false)]
-        public string SpcCode { get; set; }
+        public object Code { get; set; }
 		
         [NotifyPropertyChanged, Column("spc_name", false, false, false)]
-        public string SpcName { get; set; }
+        public object Name { get; set; }
 		
         [NotifyPropertyChanged, Column("spc_period", false, false, false)]
-        public int SpcPeriod { get; set; }
+        public object Period { get; set; }
 		
         [NotifyPropertyChanged, Column("spc_description", false, false, false)]
-        public string SpcDescription { get; set; }
+        public object Description { get; set; }
 		
         [NotifyPropertyChanged, Column("spc_unit", false, false, true)]
-        public string SpcUnit { get; set; }
+        public object Unit { get; set; }
 		
         [NotifyPropertyChanged, Column("spc_scc_code", false, false, false)]
-        public string SpcSccCode { get; set; }
+        public object SpecificationcategoryCode { get; set; }
 		
         [NotifyPropertyChanged, Column("spc_show_0", false, false, false)]
-        public sbyte SpcShow0 { get; set; }
+        public object Show0 { get; set; }
 		
         [NotifyPropertyChanged, Column("spc_add_s", false, false, false)]
-        public sbyte SpcAddS { get; set; }
+        public object AddS { get; set; }
 		
         [NotifyPropertyChanged, Column("spc_order", false, false, false)]
-        public int SpcOrder { get; set; }
+        public object Order { get; set; }
 		
         [NotifyPropertyChanged, Column("spc_image", false, false, false)]
-        public sbyte SpcImage { get; set; }
+        public object Image { get; set; }
 	
 		
         [InnerJoinColumn]
-        public LutSpecificationvalueSpv SpvSpcLutSpecificationvalueSpv { get; set; }
+        public Specificationvalue SpecificationvalueSpecification { get; set; }
 		
         [InnerJoinColumn]
-        public LutSpecificationcategoryScc SpcScc { get; set; }
+        public Specificationcategory Specificationcategory { get; set; }
 	}
-
 	[Table("tbl_alias_als", "", "evoconcept")]
-	public partial class TblAliasAls : Entity<TblAliasAls>
+	public partial class Alias : Entity<Alias>
 	{
-		static TblAliasAls()
+		static Alias()
 		{
-			Join<TblEvoboxEbx>(t => t.AlsDerivedEbx, (t, f) => t.AlsDerivedEbxId == f.EbxId); // Relation
-			Join<TblDomainDom>(t => t.AlsDom, (t, f) => t.AlsDomId == f.DomId); // Relation
+			Join<Evobox>(t => t.DerivedEvobox, (t, f) => t.DerivedEvoboxId == f.Id); // Relation
+			Join<Domain>(t => t.Domain, (t, f) => t.DomainId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("als_id", true, true, false)]
-        public int AlsId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("als_dom_id", false, false, false)]
-        public int AlsDomId { get; set; }
+        public object DomainId { get; set; }
 		
         [NotifyPropertyChanged, Column("als_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> AlsCreatedate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("als_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> AlsUpdatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("als_local_part", false, false, false)]
-        public string AlsLocalPart { get; set; }
+        public object LocalPart { get; set; }
 		
         [NotifyPropertyChanged, Column("als_rcpt", false, false, false)]
-        public string AlsRcpt { get; set; }
+        public object Rcpt { get; set; }
 		
         [NotifyPropertyChanged, Column("als_derived_ebx_id", false, false, false)]
-        public int AlsDerivedEbxId { get; set; }
+        public object DerivedEvoboxId { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblEvoboxEbx AlsDerivedEbx { get; set; }
+        public Evobox DerivedEvobox { get; set; }
 		
         [InnerJoinColumn]
-        public TblDomainDom AlsDom { get; set; }
+        public Domain Domain { get; set; }
 	}
-
 	[Table("tbl_applicationattribute_apa", "", "evoconcept")]
-	public partial class TblApplicationattributeApa : Entity<TblApplicationattributeApa>
+	public partial class Applicationattribute : Entity<Applicationattribute>
 	{
-		static TblApplicationattributeApa()
+		static Applicationattribute()
 		{
-			Join<TblApplicationApp>(t => t.ApaApp, (t, f) => t.ApaAppId == f.AppId); // Relation
+			Join<Application>(t => t.Application, (t, f) => t.ApplicationId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("apa_id", true, true, false)]
-        public int ApaId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("apa_app_id", false, false, false)]
-        public int ApaAppId { get; set; }
+        public object ApplicationId { get; set; }
 		
         [NotifyPropertyChanged, Column("apa_value", false, false, false)]
-        public string ApaValue { get; set; }
+        public object Value { get; set; }
 		
         [NotifyPropertyChanged, Column("apa_aat_code", false, false, false)]
-        public string ApaAatCode { get; set; }
+        public object AatCode { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblApplicationApp ApaApp { get; set; }
+        public Application Application { get; set; }
 	}
-
 	[Table("tbl_applicationip_aip", "", "evoconcept")]
-	public partial class TblApplicationipAip : Entity<TblApplicationipAip>
+	public partial class Applicationip : Entity<Applicationip>
 	{
-		static TblApplicationipAip()
+		static Applicationip()
 		{
 		}
 
 		
         [NotifyPropertyChanged, Column("aip_ip", false, false, false)]
-        public string AipIp { get; set; }
+        public object Ip { get; set; }
 		
         [NotifyPropertyChanged, Column("aip_app_id", false, false, true)]
-        public System.Nullable<int> AipAppId { get; set; }
+        public object ApplicationId { get; set; }
 	
 	}
-
 	[Table("tbl_application_app", "", "evoconcept")]
-	public partial class TblApplicationApp : Entity<TblApplicationApp>
+	public partial class Application : Entity<Application>
 	{
-		static TblApplicationApp()
+		static Application()
 		{
-			Join<TblApplicationattributeApa>(t => t.ApaAppTblApplicationattributeApa, (t, f) => t.AppId == f.ApaAppId); // Reverse Relation
-			Join<TblEvoboxEbx>(t => t.AppEbx, (t, f) => t.AppEbxId == f.EbxId); // Relation
-			Join<TblServiceSvc>(t => t.AppSvc, (t, f) => t.AppSvcId == f.SvcId); // Relation
-			Join<TblWebsiteWeb>(t => t.WebAppTblWebsiteWeb, (t, f) => t.AppId == f.WebAppId); // Reverse Relation
+			Join<Applicationattribute>(t => t.ApplicationattributeApplication, (t, f) => t.Id == f.ApplicationId); // Reverse Relation
+			Join<Service>(t => t.Service, (t, f) => t.ServiceId == f.Id); // Relation
+			Join<Evobox>(t => t.Evobox, (t, f) => t.EvoboxId == f.Id); // Relation
+			Join<Website>(t => t.WebsiteApplication, (t, f) => t.Id == f.ApplicationId); // Reverse Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("app_id", true, true, false)]
-        public int AppId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("app_ebx_id", false, false, false)]
-        public int AppEbxId { get; set; }
+        public object EvoboxId { get; set; }
 		
         [NotifyPropertyChanged, Column("app_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> AppCreatedate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("app_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> AppUpdatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("app_name", false, false, false)]
-        public string AppName { get; set; }
+        public object Name { get; set; }
 		
         [NotifyPropertyChanged, Column("app_svc_id", false, false, false)]
-        public int AppSvcId { get; set; }
+        public object ServiceId { get; set; }
 		
         [NotifyPropertyChanged, Column("app_apt_code", false, false, false)]
-        public string AppAptCode { get; set; }
+        public object AptCode { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblApplicationattributeApa ApaAppTblApplicationattributeApa { get; set; }
+        public Applicationattribute ApplicationattributeApplication { get; set; }
 		
         [InnerJoinColumn]
-        public TblEvoboxEbx AppEbx { get; set; }
+        public Service Service { get; set; }
 		
         [InnerJoinColumn]
-        public TblServiceSvc AppSvc { get; set; }
+        public Evobox Evobox { get; set; }
 		
         [InnerJoinColumn]
-        public TblWebsiteWeb WebAppTblWebsiteWeb { get; set; }
+        public Website WebsiteApplication { get; set; }
 	}
-
 	[Table("tbl_bill_bll", "", "evoconcept")]
-	public partial class TblBillBll : Entity<TblBillBll>
+	public partial class Bill : Entity<Bill>
 	{
-		static TblBillBll()
+		static Bill()
 		{
-			Join<TblTransactionTsn>(t => t.BllTsn, (t, f) => t.BllTsnId == f.TsnId); // Relation
+			Join<Transaction>(t => t.Transaction, (t, f) => t.TransactionId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("bll_id", true, true, false)]
-        public int BllId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("bll_tsn_id", false, false, false)]
-        public int BllTsnId { get; set; }
+        public object TransactionId { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblTransactionTsn BllTsn { get; set; }
+        public Transaction Transaction { get; set; }
 	}
-
 	[Table("tbl_conditions_cgv", "", "evoconcept")]
-	public partial class TblConditionsCgv : Entity<TblConditionsCgv>
+	public partial class Conditions : Entity<Conditions>
 	{
-		static TblConditionsCgv()
+		static Conditions()
 		{
-			Join<TblUsrEbxUbx>(t => t.CgvUbx, (t, f) => t.CgvUbxId == f.UbxId); // Relation
+			Join<UsrEbx>(t => t.UsrEbx, (t, f) => t.UsrEbxId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("cgv_id", true, true, false)]
-        public int CgvId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("cgv_name", false, false, false)]
-        public string CgvName { get; set; }
+        public object Name { get; set; }
 		
         [NotifyPropertyChanged, Column("cgv_date", false, false, true)]
-        public System.Nullable<System.DateTime> CgvDate { get; set; }
+        public object Date { get; set; }
 		
         [NotifyPropertyChanged, Column("cgv_ubx_id", false, false, true)]
-        public System.Nullable<int> CgvUbxId { get; set; }
+        public object UsrEbxId { get; set; }
 	
 		
         [LeftJoinColumn]
-        public TblUsrEbxUbx CgvUbx { get; set; }
+        public UsrEbx UsrEbx { get; set; }
 	}
-
 	[Table("tbl_cron_crn", "", "evoconcept")]
-	public partial class TblCronCrn : Entity<TblCronCrn>
+	public partial class Cron : Entity<Cron>
 	{
-		static TblCronCrn()
+		static Cron()
 		{
-			Join<TblServiceSvc>(t => t.CrnSvc, (t, f) => t.CrnSvcId == f.SvcId); // Relation
-			Join<TblEvoboxEbx>(t => t.CrnEbx, (t, f) => t.CrnEbxId == f.EbxId); // Relation
+			Join<Service>(t => t.Service, (t, f) => t.ServiceId == f.Id); // Relation
+			Join<Evobox>(t => t.Evobox, (t, f) => t.EvoboxId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("crn_id", true, true, false)]
-        public int CrnId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("crn_ebx_id", false, false, false)]
-        public int CrnEbxId { get; set; }
+        public object EvoboxId { get; set; }
 		
         [NotifyPropertyChanged, Column("crn_url", false, false, false)]
-        public string CrnUrl { get; set; }
+        public object Url { get; set; }
 		
         [NotifyPropertyChanged, Column("crn_month", false, false, false)]
-        public int CrnMonth { get; set; }
+        public object Month { get; set; }
 		
         [NotifyPropertyChanged, Column("crn_day", false, false, false)]
-        public int CrnDay { get; set; }
+        public object Day { get; set; }
 		
         [NotifyPropertyChanged, Column("crn_hour", false, false, false)]
-        public int CrnHour { get; set; }
+        public object Hour { get; set; }
 		
         [NotifyPropertyChanged, Column("crn_minute", false, false, false)]
-        public long CrnMinute { get; set; }
+        public object Minute { get; set; }
 		
         [NotifyPropertyChanged, Column("crn_email_notification", false, false, true)]
-        public string CrnEmailNotification { get; set; }
+        public object EmailNotification { get; set; }
 		
         [NotifyPropertyChanged, Column("crn_last_executed", false, false, true)]
-        public System.Nullable<System.DateTime> CrnLastExecuted { get; set; }
+        public object LastExecuted { get; set; }
 		
         [NotifyPropertyChanged, Column("crn_last_execution_time", false, false, true)]
-        public System.Nullable<int> CrnLastExecutionTime { get; set; }
+        public object LastExecutionTime { get; set; }
 		
         [NotifyPropertyChanged, Column("crn_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> CrnCreatedate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("crn_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> CrnUpdatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("crn_svc_id", false, false, false)]
-        public int CrnSvcId { get; set; }
+        public object ServiceId { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblServiceSvc CrnSvc { get; set; }
+        public Service Service { get; set; }
 		
         [InnerJoinColumn]
-        public TblEvoboxEbx CrnEbx { get; set; }
+        public Evobox Evobox { get; set; }
 	}
-
 	[Table("tbl_databaselogin_dbl", "", "evoconcept")]
-	public partial class TblDatabaseloginDbl : Entity<TblDatabaseloginDbl>
+	public partial class Databaselogin : Entity<Databaselogin>
 	{
-		static TblDatabaseloginDbl()
+		static Databaselogin()
 		{
-			Join<TblEvoboxEbx>(t => t.DblEbx, (t, f) => t.DblEbxId == f.EbxId); // Relation
-			Join<TblServiceSvc>(t => t.DblSvc, (t, f) => t.DblSvcId == f.SvcId); // Relation
+			Join<Service>(t => t.Service, (t, f) => t.ServiceId == f.Id); // Relation
+			Join<Evobox>(t => t.Evobox, (t, f) => t.EvoboxId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("dbl_id", true, true, false)]
-        public int DblId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("dbl_login", false, false, false)]
-        public string DblLogin { get; set; }
+        public object Login { get; set; }
 		
         [NotifyPropertyChanged, Column("dbl_ebx_id", false, false, false)]
-        public int DblEbxId { get; set; }
+        public object EvoboxId { get; set; }
 		
         [NotifyPropertyChanged, Column("dbl_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> DblCreatedate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("dbl_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> DblUpdatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("dbl_svc_id", false, false, false)]
-        public int DblSvcId { get; set; }
+        public object ServiceId { get; set; }
 		
         [NotifyPropertyChanged, Column("dbl_password", false, false, true)]
-        public string DblPassword { get; set; }
+        public object Password { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblEvoboxEbx DblEbx { get; set; }
+        public Service Service { get; set; }
 		
         [InnerJoinColumn]
-        public TblServiceSvc DblSvc { get; set; }
+        public Evobox Evobox { get; set; }
 	}
-
 	[Table("tbl_database_dtb", "", "evoconcept")]
-	public partial class TblDatabaseDtb : Entity<TblDatabaseDtb>
+	public partial class Database : Entity<Database>
 	{
-		static TblDatabaseDtb()
+		static Database()
 		{
-			Join<TblEvoboxEbx>(t => t.DtbEbx, (t, f) => t.DtbEbxId == f.EbxId); // Relation
-			Join<TblServiceSvc>(t => t.DtbSvc, (t, f) => t.DtbSvcId == f.SvcId); // Relation
+			Join<Service>(t => t.Service, (t, f) => t.ServiceId == f.Id); // Relation
+			Join<Evobox>(t => t.Evobox, (t, f) => t.EvoboxId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("dtb_id", true, true, false)]
-        public int DtbId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("dtb_name", false, false, false)]
-        public string DtbName { get; set; }
+        public object Name { get; set; }
 		
         [NotifyPropertyChanged, Column("dtb_ebx_id", false, false, false)]
-        public int DtbEbxId { get; set; }
+        public object EvoboxId { get; set; }
 		
         [NotifyPropertyChanged, Column("dtb_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> DtbCreatedate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("dtb_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> DtbUpdatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("dtb_svc_id", false, false, false)]
-        public int DtbSvcId { get; set; }
+        public object ServiceId { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblEvoboxEbx DtbEbx { get; set; }
+        public Service Service { get; set; }
 		
         [InnerJoinColumn]
-        public TblServiceSvc DtbSvc { get; set; }
+        public Evobox Evobox { get; set; }
 	}
-
 	[Table("tbl_dnsrecord_dns", "", "evoconcept")]
-	public partial class TblDnsrecordDns : Entity<TblDnsrecordDns>
+	public partial class Dnsrecord : Entity<Dnsrecord>
 	{
-		static TblDnsrecordDns()
+		static Dnsrecord()
 		{
-			Join<TblDomainDom>(t => t.DnsDom, (t, f) => t.DnsDomId == f.DomId); // Relation
-			Join<TblDomainDom>(t => t.DnsSdm, (t, f) => t.DnsSdmId == f.DomId); // Relation
+			Join<Domain>(t => t.Sdm, (t, f) => t.SdmId == f.Id); // Relation
+			Join<Domain>(t => t.Domain, (t, f) => t.DomainId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("dns_id", true, true, false)]
-        public int DnsId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("dns_dom_id", false, false, false)]
-        public int DnsDomId { get; set; }
+        public object DomainId { get; set; }
 		
         [NotifyPropertyChanged, Column("dns_name", false, false, true)]
-        public string DnsName { get; set; }
+        public object Name { get; set; }
 		
         [NotifyPropertyChanged, Column("dns_priority", false, false, true)]
-        public System.Nullable<int> DnsPriority { get; set; }
+        public object Priority { get; set; }
 		
         [NotifyPropertyChanged, Column("dns_to", false, false, false)]
-        public string DnsTo { get; set; }
+        public object To { get; set; }
 		
         [NotifyPropertyChanged, Column("dns_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> DnsCreatedate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("dns_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> DnsUpdatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("dns_dnt_code", false, false, false)]
-        public string DnsDntCode { get; set; }
+        public object DntCode { get; set; }
 		
         [NotifyPropertyChanged, Column("dns_sdm_id", false, false, true)]
-        public System.Nullable<int> DnsSdmId { get; set; }
+        public object SdmId { get; set; }
 	
 		
-        [InnerJoinColumn]
-        public TblDomainDom DnsDom { get; set; }
-		
         [LeftJoinColumn]
-        public TblDomainDom DnsSdm { get; set; }
+        public Domain Sdm { get; set; }
+		
+        [InnerJoinColumn]
+        public Domain Domain { get; set; }
 	}
-
 	[Table("tbl_domain_dom", "", "evoconcept")]
-	public partial class TblDomainDom : Entity<TblDomainDom>
+	public partial class Domain : Entity<Domain>
 	{
-		static TblDomainDom()
+		static Domain()
 		{
-			Join<TblAliasAls>(t => t.AlsDomTblAliasAls, (t, f) => t.DomId == f.AlsDomId); // Reverse Relation
-			Join<TblDnsrecordDns>(t => t.DnsDomTblDnsrecordDns, (t, f) => t.DomId == f.DnsDomId); // Reverse Relation
-			Join<TblDnsrecordDns>(t => t.DnsSdmTblDnsrecordDns, (t, f) => t.DomId == f.DnsSdmId); // Reverse Relation
-			Join<TblServiceSvc>(t => t.DomSecondarySvc, (t, f) => t.DomSecondarySvcId == f.SvcId); // Relation
-			Join<TblEvoboxEbx>(t => t.DomEbx, (t, f) => t.DomEbxId == f.EbxId); // Relation
-			Join<TblServiceSvc>(t => t.DomPrimarySvc, (t, f) => t.DomPrimarySvcId == f.SvcId); // Relation
-			Join<TblDomainDom>(t => t.DomParentDom, (t, f) => t.DomParentDomId == f.DomId); // Relation
-			Join<TblDomainDom>(t => t.DomParentDomTblDomainDom, (t, f) => t.DomId == f.DomParentDomId); // Reverse Relation
-			Join<TblEmailEml>(t => t.EmlDomTblEmailEml, (t, f) => t.DomId == f.EmlDomId); // Reverse Relation
-			Join<TblWebsiteWeb>(t => t.WebDomTblWebsiteWeb, (t, f) => t.DomId == f.WebDomId); // Reverse Relation
+			Join<Alias>(t => t.AliasDomain, (t, f) => t.Id == f.DomainId); // Reverse Relation
+			Join<Dnsrecord>(t => t.DnsrecordSdm, (t, f) => t.Id == f.SdmId); // Reverse Relation
+			Join<Dnsrecord>(t => t.DnsrecordDomain, (t, f) => t.Id == f.DomainId); // Reverse Relation
+			Join<Evobox>(t => t.Evobox, (t, f) => t.EvoboxId == f.Id); // Relation
+			Join<Service>(t => t.PrimaryService, (t, f) => t.PrimaryServiceId == f.Id); // Relation
+			Join<Domain>(t => t.ParentDomain, (t, f) => t.ParentDomainId == f.Id); // Relation
+			Join<Domain>(t => t.DomainParentDomain, (t, f) => t.Id == f.ParentDomainId); // Reverse Relation
+			Join<Service>(t => t.SecondaryService, (t, f) => t.SecondaryServiceId == f.Id); // Relation
+			Join<Email>(t => t.EmailDomain, (t, f) => t.Id == f.DomainId); // Reverse Relation
+			Join<Website>(t => t.WebsiteDomain, (t, f) => t.Id == f.DomainId); // Reverse Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("dom_id", true, true, false)]
-        public int DomId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("dom_ebx_id", false, false, true)]
-        public System.Nullable<int> DomEbxId { get; set; }
+        public object EvoboxId { get; set; }
 		
         [NotifyPropertyChanged, Column("dom_name", false, false, false)]
-        public string DomName { get; set; }
+        public object Name { get; set; }
 		
         [NotifyPropertyChanged, Column("dom_parent_dom_id", false, false, true)]
-        public System.Nullable<int> DomParentDomId { get; set; }
+        public object ParentDomainId { get; set; }
 		
         [NotifyPropertyChanged, Column("dom_hostdom", false, false, false)]
-        public sbyte DomHostdom { get; set; }
+        public object Hostdom { get; set; }
 		
         [NotifyPropertyChanged, Column("dom_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> DomCreatedate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("dom_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> DomUpdatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("dom_primary_svc_id", false, false, true)]
-        public System.Nullable<int> DomPrimarySvcId { get; set; }
+        public object PrimaryServiceId { get; set; }
 		
         [NotifyPropertyChanged, Column("dom_secondary_svc_id", false, false, true)]
-        public System.Nullable<int> DomSecondarySvcId { get; set; }
+        public object SecondaryServiceId { get; set; }
 		
         [NotifyPropertyChanged, Column("dom_fullname", false, false, false)]
-        public string DomFullname { get; set; }
+        public object Fullname { get; set; }
 		
         [NotifyPropertyChanged, Column("dom_dnsmanaged", false, false, true)]
-        public System.Nullable<sbyte> DomDnsmanaged { get; set; }
+        public object Dnsmanaged { get; set; }
 		
         [NotifyPropertyChanged, Column("dom_status", false, false, false)]
-        public string DomStatus { get; set; }
+        public object Status { get; set; }
 		
         [NotifyPropertyChanged, Column("dom_forceremote", false, false, true)]
-        public System.Nullable<sbyte> DomForceremote { get; set; }
+        public object Forceremote { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblAliasAls AlsDomTblAliasAls { get; set; }
+        public Alias AliasDomain { get; set; }
+		
+        [LeftJoinColumn]
+        public Dnsrecord DnsrecordSdm { get; set; }
 		
         [InnerJoinColumn]
-        public TblDnsrecordDns DnsDomTblDnsrecordDns { get; set; }
+        public Dnsrecord DnsrecordDomain { get; set; }
 		
         [LeftJoinColumn]
-        public TblDnsrecordDns DnsSdmTblDnsrecordDns { get; set; }
+        public Evobox Evobox { get; set; }
 		
         [LeftJoinColumn]
-        public TblServiceSvc DomSecondarySvc { get; set; }
+        public Service PrimaryService { get; set; }
 		
         [LeftJoinColumn]
-        public TblEvoboxEbx DomEbx { get; set; }
+        public Domain ParentDomain { get; set; }
 		
         [LeftJoinColumn]
-        public TblServiceSvc DomPrimarySvc { get; set; }
+        public Domain DomainParentDomain { get; set; }
 		
         [LeftJoinColumn]
-        public TblDomainDom DomParentDom { get; set; }
-		
-        [LeftJoinColumn]
-        public TblDomainDom DomParentDomTblDomainDom { get; set; }
+        public Service SecondaryService { get; set; }
 		
         [InnerJoinColumn]
-        public TblEmailEml EmlDomTblEmailEml { get; set; }
+        public Email EmailDomain { get; set; }
 		
         [InnerJoinColumn]
-        public TblWebsiteWeb WebDomTblWebsiteWeb { get; set; }
+        public Website WebsiteDomain { get; set; }
 	}
-
 	[Table("tbl_email_eml", "", "evoconcept")]
-	public partial class TblEmailEml : Entity<TblEmailEml>
+	public partial class Email : Entity<Email>
 	{
-		static TblEmailEml()
+		static Email()
 		{
-			Join<TblEvoboxEbx>(t => t.EmlDerivedEbx, (t, f) => t.EmlDerivedEbxId == f.EbxId); // Relation
-			Join<TblDomainDom>(t => t.EmlDom, (t, f) => t.EmlDomId == f.DomId); // Relation
+			Join<Domain>(t => t.Domain, (t, f) => t.DomainId == f.Id); // Relation
+			Join<Evobox>(t => t.DerivedEvobox, (t, f) => t.DerivedEvoboxId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("eml_id", true, true, false)]
-        public int EmlId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("eml_dom_id", false, false, false)]
-        public int EmlDomId { get; set; }
+        public object DomainId { get; set; }
 		
         [NotifyPropertyChanged, Column("eml_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> EmlCreatedate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("eml_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> EmlUpdatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("eml_home_dir", false, false, false)]
-        public string EmlHomeDir { get; set; }
+        public object HomeDir { get; set; }
 		
         [NotifyPropertyChanged, Column("eml_catch_all", false, false, false)]
-        public sbyte EmlCatchAll { get; set; }
+        public object CatchAll { get; set; }
 		
         [NotifyPropertyChanged, Column("eml_away", false, false, true)]
-        public System.Nullable<sbyte> EmlAway { get; set; }
+        public object Away { get; set; }
 		
         [NotifyPropertyChanged, Column("eml_message", false, false, true)]
-        public string EmlMessage { get; set; }
+        public object Message { get; set; }
 		
         [NotifyPropertyChanged, Column("eml_password", false, false, false)]
-        public string EmlPassword { get; set; }
+        public object Password { get; set; }
 		
         [NotifyPropertyChanged, Column("eml_quota_usage", false, false, false)]
-        public int EmlQuotaUsage { get; set; }
+        public object QuotaUsage { get; set; }
 		
         [NotifyPropertyChanged, Column("eml_local_part", false, false, false)]
-        public string EmlLocalPart { get; set; }
+        public object LocalPart { get; set; }
 		
         [NotifyPropertyChanged, Column("eml_derived_ebx_id", false, false, false)]
-        public int EmlDerivedEbxId { get; set; }
+        public object DerivedEvoboxId { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblEvoboxEbx EmlDerivedEbx { get; set; }
+        public Domain Domain { get; set; }
 		
         [InnerJoinColumn]
-        public TblDomainDom EmlDom { get; set; }
+        public Evobox DerivedEvobox { get; set; }
 	}
-
 	[Table("tbl_evobox_ebx", "", "evoconcept")]
-	public partial class TblEvoboxEbx : Entity<TblEvoboxEbx>
+	public partial class Evobox : Entity<Evobox>
 	{
-		static TblEvoboxEbx()
+		static Evobox()
 		{
-			Join<TblAliasAls>(t => t.AlsDerivedEbxTblAliasAls, (t, f) => t.EbxId == f.AlsDerivedEbxId); // Reverse Relation
-			Join<TblApplicationApp>(t => t.AppEbxTblApplicationApp, (t, f) => t.EbxId == f.AppEbxId); // Reverse Relation
-			Join<TblCronCrn>(t => t.CrnEbxTblCronCrn, (t, f) => t.EbxId == f.CrnEbxId); // Reverse Relation
-			Join<TblDatabaseloginDbl>(t => t.DblEbxTblDatabaseloginDbl, (t, f) => t.EbxId == f.DblEbxId); // Reverse Relation
-			Join<TblDatabaseDtb>(t => t.DtbEbxTblDatabaseDtb, (t, f) => t.EbxId == f.DtbEbxId); // Reverse Relation
-			Join<TblDomainDom>(t => t.DomEbxTblDomainDom, (t, f) => t.EbxId == f.DomEbxId); // Reverse Relation
-			Join<TblEmailEml>(t => t.EmlDerivedEbxTblEmailEml, (t, f) => t.EbxId == f.EmlDerivedEbxId); // Reverse Relation
-			Join<TblServiceSvc>(t => t.EbxStatsService, (t, f) => t.EbxStatsServiceId == f.SvcId); // Relation
-			Join<LutOfferOfr>(t => t.EbxOfr, (t, f) => t.EbxOfrId == f.OfrId); // Relation
-			Join<TblFtpaccountFtp>(t => t.FtpEbxTblFtpaccountFtp, (t, f) => t.EbxId == f.FtpEbxId); // Reverse Relation
-			Join<TblTransactionTsn>(t => t.TsnEbxTblTransactionTsn, (t, f) => t.EbxId == f.TsnEbxId); // Reverse Relation
-			Join<TblUsrEbxUbx>(t => t.UbxEbxTblUsrEbxUbx, (t, f) => t.EbxId == f.UbxEbxId); // Reverse Relation
+			Join<Alias>(t => t.AliasDerivedEvobox, (t, f) => t.Id == f.DerivedEvoboxId); // Reverse Relation
+			Join<Application>(t => t.ApplicationEvobox, (t, f) => t.Id == f.EvoboxId); // Reverse Relation
+			Join<Cron>(t => t.CronEvobox, (t, f) => t.Id == f.EvoboxId); // Reverse Relation
+			Join<Databaselogin>(t => t.DatabaseloginEvobox, (t, f) => t.Id == f.EvoboxId); // Reverse Relation
+			Join<Database>(t => t.DatabaseEvobox, (t, f) => t.Id == f.EvoboxId); // Reverse Relation
+			Join<Domain>(t => t.DomainEvobox, (t, f) => t.Id == f.EvoboxId); // Reverse Relation
+			Join<Email>(t => t.EmailDerivedEvobox, (t, f) => t.Id == f.DerivedEvoboxId); // Reverse Relation
+			Join<Service>(t => t.StatsService, (t, f) => t.StatsServiceId == f.Id); // Relation
+			Join<Offer>(t => t.Offer, (t, f) => t.OfferId == f.Id); // Relation
+			Join<Ftpaccount>(t => t.FtpaccountEvobox, (t, f) => t.Id == f.EvoboxId); // Reverse Relation
+			Join<Transaction>(t => t.TransactionEvobox, (t, f) => t.Id == f.EvoboxId); // Reverse Relation
+			Join<UsrEbx>(t => t.UsrEbxEvobox, (t, f) => t.Id == f.EvoboxId); // Reverse Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("ebx_id", true, true, false)]
-        public int EbxId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("ebx_name", false, false, false)]
-        public string EbxName { get; set; }
+        public object Name { get; set; }
 		
         [NotifyPropertyChanged, Column("ebx_startdate", false, false, true)]
-        public System.Nullable<System.DateTime> EbxStartdate { get; set; }
+        public object Startdate { get; set; }
 		
         [NotifyPropertyChanged, Column("ebx_enddate", false, false, true)]
-        public System.Nullable<System.DateTime> EbxEnddate { get; set; }
+        public object Enddate { get; set; }
 		
         [NotifyPropertyChanged, Column("ebx_ofr_id", false, false, false)]
-        public int EbxOfrId { get; set; }
+        public object OfferId { get; set; }
 		
         [NotifyPropertyChanged, Column("ebx_quota", false, false, false)]
-        public int EbxQuota { get; set; }
+        public object Quota { get; set; }
 		
         [NotifyPropertyChanged, Column("ebx_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> EbxCreatedate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("ebx_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> EbxUpdatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("ebx_stats_service_id", false, false, true)]
-        public System.Nullable<int> EbxStatsServiceId { get; set; }
+        public object StatsServiceId { get; set; }
 		
         [NotifyPropertyChanged, Column("ebx_homedir", false, false, true)]
-        public string EbxHomedir { get; set; }
+        public object Homedir { get; set; }
 		
         [NotifyPropertyChanged, Column("ebx_status", false, false, false)]
-        public string EbxStatus { get; set; }
+        public object Status { get; set; }
 		
         [NotifyPropertyChanged, Column("ebx_nfs_service_id", false, false, true)]
-        public System.Nullable<int> EbxNfsServiceId { get; set; }
+        public object NfsServiceId { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblAliasAls AlsDerivedEbxTblAliasAls { get; set; }
+        public Alias AliasDerivedEvobox { get; set; }
 		
         [InnerJoinColumn]
-        public TblApplicationApp AppEbxTblApplicationApp { get; set; }
+        public Application ApplicationEvobox { get; set; }
 		
         [InnerJoinColumn]
-        public TblCronCrn CrnEbxTblCronCrn { get; set; }
+        public Cron CronEvobox { get; set; }
 		
         [InnerJoinColumn]
-        public TblDatabaseloginDbl DblEbxTblDatabaseloginDbl { get; set; }
+        public Databaselogin DatabaseloginEvobox { get; set; }
 		
         [InnerJoinColumn]
-        public TblDatabaseDtb DtbEbxTblDatabaseDtb { get; set; }
+        public Database DatabaseEvobox { get; set; }
 		
         [LeftJoinColumn]
-        public TblDomainDom DomEbxTblDomainDom { get; set; }
+        public Domain DomainEvobox { get; set; }
 		
         [InnerJoinColumn]
-        public TblEmailEml EmlDerivedEbxTblEmailEml { get; set; }
+        public Email EmailDerivedEvobox { get; set; }
 		
         [LeftJoinColumn]
-        public TblServiceSvc EbxStatsService { get; set; }
+        public Service StatsService { get; set; }
 		
         [InnerJoinColumn]
-        public LutOfferOfr EbxOfr { get; set; }
+        public Offer Offer { get; set; }
 		
         [InnerJoinColumn]
-        public TblFtpaccountFtp FtpEbxTblFtpaccountFtp { get; set; }
+        public Ftpaccount FtpaccountEvobox { get; set; }
 		
         [LeftJoinColumn]
-        public TblTransactionTsn TsnEbxTblTransactionTsn { get; set; }
+        public Transaction TransactionEvobox { get; set; }
 		
         [InnerJoinColumn]
-        public TblUsrEbxUbx UbxEbxTblUsrEbxUbx { get; set; }
+        public UsrEbx UsrEbxEvobox { get; set; }
 	}
-
 	[Table("tbl_faqcategory_fqc", "", "evoconcept")]
-	public partial class TblFaqcategoryFqc : Entity<TblFaqcategoryFqc>
+	public partial class Faqcategory : Entity<Faqcategory>
 	{
-		static TblFaqcategoryFqc()
+		static Faqcategory()
 		{
-			Join<TblFaqFaq>(t => t.FaqFqcTblFaqFaq, (t, f) => t.FqcId == f.FaqFqcId); // Reverse Relation
+			Join<Faq>(t => t.FaqFaqcategory, (t, f) => t.Id == f.FaqcategoryId); // Reverse Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("fqc_id", true, true, false)]
-        public int FqcId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("fqc_title", false, false, false)]
-        public string FqcTitle { get; set; }
+        public object Title { get; set; }
 		
         [NotifyPropertyChanged, Column("fqc_order", false, false, false)]
-        public int FqcOrder { get; set; }
+        public object Order { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblFaqFaq FaqFqcTblFaqFaq { get; set; }
+        public Faq FaqFaqcategory { get; set; }
 	}
-
 	[Table("tbl_faq_faq", "", "evoconcept")]
-	public partial class TblFaqFaq : Entity<TblFaqFaq>
+	public partial class Faq : Entity<Faq>
 	{
-		static TblFaqFaq()
+		static Faq()
 		{
-			Join<TblFaqcategoryFqc>(t => t.FaqFqc, (t, f) => t.FaqFqcId == f.FqcId); // Relation
+			Join<Faqcategory>(t => t.Faqcategory, (t, f) => t.FaqcategoryId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("faq_id", true, true, false)]
-        public int FaqId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("faq_fqc_id", false, false, false)]
-        public int FaqFqcId { get; set; }
+        public object FaqcategoryId { get; set; }
 		
         [NotifyPropertyChanged, Column("faq_question", false, false, false)]
-        public string FaqQuestion { get; set; }
+        public object Question { get; set; }
 		
         [NotifyPropertyChanged, Column("faq_answer", false, false, false)]
-        public string FaqAnswer { get; set; }
+        public object Answer { get; set; }
 		
         [NotifyPropertyChanged, Column("faq_order", false, false, false)]
-        public int FaqOrder { get; set; }
+        public object Order { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblFaqcategoryFqc FaqFqc { get; set; }
+        public Faqcategory Faqcategory { get; set; }
 	}
-
 	[Table("tbl_ftpaccount_ftp", "", "evoconcept")]
-	public partial class TblFtpaccountFtp : Entity<TblFtpaccountFtp>
+	public partial class Ftpaccount : Entity<Ftpaccount>
 	{
-		static TblFtpaccountFtp()
+		static Ftpaccount()
 		{
-			Join<TblServiceSvc>(t => t.FtpSvc, (t, f) => t.FtpSvcId == f.SvcId); // Relation
-			Join<TblEvoboxEbx>(t => t.FtpEbx, (t, f) => t.FtpEbxId == f.EbxId); // Relation
+			Join<Evobox>(t => t.Evobox, (t, f) => t.EvoboxId == f.Id); // Relation
+			Join<Service>(t => t.Service, (t, f) => t.ServiceId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("ftp_id", true, true, false)]
-        public int FtpId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("ftp_ebx_id", false, false, false)]
-        public int FtpEbxId { get; set; }
+        public object EvoboxId { get; set; }
 		
         [NotifyPropertyChanged, Column("ftp_login", false, false, false)]
-        public string FtpLogin { get; set; }
+        public object Login { get; set; }
 		
         [NotifyPropertyChanged, Column("ftp_password", false, false, false)]
-        public string FtpPassword { get; set; }
+        public object Password { get; set; }
 		
         [NotifyPropertyChanged, Column("ftp_homedir", false, false, false)]
-        public string FtpHomedir { get; set; }
+        public object Homedir { get; set; }
 		
         [NotifyPropertyChanged, Column("ftp_count", false, false, false)]
-        public int FtpCount { get; set; }
+        public object Count { get; set; }
 		
         [NotifyPropertyChanged, Column("ftp_enabled", false, false, false)]
-        public sbyte FtpEnabled { get; set; }
+        public object Enabled { get; set; }
 		
         [NotifyPropertyChanged, Column("ftp_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> FtpCreatedate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("ftp_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> FtpUpdatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("ftp_accessed", false, false, true)]
-        public System.Nullable<System.DateTime> FtpAccessed { get; set; }
+        public object Accessed { get; set; }
 		
         [NotifyPropertyChanged, Column("ftp_modified", false, false, true)]
-        public System.Nullable<System.DateTime> FtpModified { get; set; }
+        public object Modified { get; set; }
 		
         [NotifyPropertyChanged, Column("ftp_svc_id", false, false, false)]
-        public int FtpSvcId { get; set; }
+        public object ServiceId { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblServiceSvc FtpSvc { get; set; }
+        public Evobox Evobox { get; set; }
 		
         [InnerJoinColumn]
-        public TblEvoboxEbx FtpEbx { get; set; }
+        public Service Service { get; set; }
 	}
-
 	[Table("tbl_news_nws", "", "evoconcept")]
-	public partial class TblNewsNws : Entity<TblNewsNws>
+	public partial class News : Entity<News>
 	{
-		static TblNewsNws()
+		static News()
 		{
 		}
 
 		
         [NotifyPropertyChanged, Column("nws_id", true, true, false)]
-        public int NwsId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("nws_title", false, false, false)]
-        public string NwsTitle { get; set; }
+        public object Title { get; set; }
 		
         [NotifyPropertyChanged, Column("nws_content", false, false, false)]
-        public string NwsContent { get; set; }
+        public object Content { get; set; }
 		
         [NotifyPropertyChanged, Column("nws_author", false, false, false)]
-        public string NwsAuthor { get; set; }
+        public object Author { get; set; }
 		
         [NotifyPropertyChanged, Column("nws_date", false, false, true)]
-        public System.Nullable<System.DateTime> NwsDate { get; set; }
+        public object Date { get; set; }
 	
 	}
-
 	[Table("tbl_ofr_spv_osv", "", "evoconcept")]
-	public partial class TblOfrSpvOsv : Entity<TblOfrSpvOsv>
+	public partial class OfrSpv : Entity<OfrSpv>
 	{
-		static TblOfrSpvOsv()
+		static OfrSpv()
 		{
-			Join<LutSpecificationvalueSpv>(t => t.OsvSpv, (t, f) => t.OsvSpvId == f.SpvId); // Relation
-			Join<LutOfferOfr>(t => t.OsvOfr, (t, f) => t.OsvOfrId == f.OfrId); // Relation
+			Join<Offer>(t => t.Offer, (t, f) => t.OfferId == f.Id); // Relation
+			Join<Specificationvalue>(t => t.Specificationvalue, (t, f) => t.SpecificationvalueId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("osv_id", true, true, false)]
-        public int OsvId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("osv_ofr_id", false, false, false)]
-        public int OsvOfrId { get; set; }
+        public object OfferId { get; set; }
 		
         [NotifyPropertyChanged, Column("osv_spv_id", false, false, false)]
-        public int OsvSpvId { get; set; }
+        public object SpecificationvalueId { get; set; }
 	
 		
         [InnerJoinColumn]
-        public LutSpecificationvalueSpv OsvSpv { get; set; }
+        public Offer Offer { get; set; }
 		
         [InnerJoinColumn]
-        public LutOfferOfr OsvOfr { get; set; }
+        public Specificationvalue Specificationvalue { get; set; }
 	}
-
 	[Table("tbl_order_ord", "", "evoconcept")]
-	public partial class TblOrderOrd : Entity<TblOrderOrd>
+	public partial class Order : Entity<Order>
 	{
-		static TblOrderOrd()
+		static Order()
 		{
-			Join<TblTransactionTsn>(t => t.OrdTsn, (t, f) => t.OrdTsnId == f.TsnId); // Relation
+			Join<Transaction>(t => t.Transaction, (t, f) => t.TransactionId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("ord_id", true, true, false)]
-        public int OrdId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("ord_tsn_id", false, false, false)]
-        public int OrdTsnId { get; set; }
+        public object TransactionId { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblTransactionTsn OrdTsn { get; set; }
+        public Transaction Transaction { get; set; }
 	}
-
 	[Table("tbl_serverip_sip", "", "evoconcept")]
-	public partial class TblServeripSip : Entity<TblServeripSip>
+	public partial class Serverip : Entity<Serverip>
 	{
-		static TblServeripSip()
+		static Serverip()
 		{
-			Join<TblServerSrv>(t => t.SipSrv, (t, f) => t.SipSrvId == f.SrvId); // Relation
-			Join<LutIpaddressIpa>(t => t.SipIpa, (t, f) => t.SipIpaId == f.IpaId); // Relation
+			Join<Ipaddress>(t => t.Ipaddress, (t, f) => t.IpaddressId == f.Id); // Relation
+			Join<Server>(t => t.Server, (t, f) => t.ServerId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("sip_id", true, true, false)]
-        public int SipId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("sip_srv_id", false, false, false)]
-        public int SipSrvId { get; set; }
+        public object ServerId { get; set; }
 		
         [NotifyPropertyChanged, Column("sip_ipa_id", false, false, false)]
-        public int SipIpaId { get; set; }
+        public object IpaddressId { get; set; }
 		
         [NotifyPropertyChanged, Column("sip_status", false, false, false)]
-        public int SipStatus { get; set; }
+        public object Status { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblServerSrv SipSrv { get; set; }
+        public Ipaddress Ipaddress { get; set; }
 		
         [InnerJoinColumn]
-        public LutIpaddressIpa SipIpa { get; set; }
+        public Server Server { get; set; }
 	}
-
 	[Table("tbl_server_srv", "", "evoconcept")]
-	public partial class TblServerSrv : Entity<TblServerSrv>
+	public partial class Server : Entity<Server>
 	{
-		static TblServerSrv()
+		static Server()
 		{
-			Join<TblServeripSip>(t => t.SipSrvTblServeripSip, (t, f) => t.SrvId == f.SipSrvId); // Reverse Relation
-			Join<TblServiceSvc>(t => t.SvcSrvTblServiceSvc, (t, f) => t.SrvId == f.SvcSrvId); // Reverse Relation
-			Join<TblSrvSrvSsv>(t => t.SsvGuestTblSrvSrvSsv, (t, f) => t.SrvId == f.SsvGuestId); // Reverse Relation
-			Join<TblSrvSrvSsv>(t => t.SsvHostTblSrvSrvSsv, (t, f) => t.SrvId == f.SsvHostId); // Reverse Relation
+			Join<Serverip>(t => t.ServeripServer, (t, f) => t.Id == f.ServerId); // Reverse Relation
+			Join<Service>(t => t.ServiceServer, (t, f) => t.Id == f.ServerId); // Reverse Relation
+			Join<SrvSrv>(t => t.SrvSrvHost, (t, f) => t.Id == f.HostId); // Reverse Relation
+			Join<SrvSrv>(t => t.SrvSrvGuest, (t, f) => t.Id == f.GuestId); // Reverse Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("srv_id", true, true, false)]
-        public int SrvId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("srv_name", false, false, true)]
-        public string SrvName { get; set; }
+        public object Name { get; set; }
 		
         [NotifyPropertyChanged, Column("srv_status", false, false, false)]
-        public int SrvStatus { get; set; }
+        public object Status { get; set; }
 		
         [NotifyPropertyChanged, Column("srv_type", false, false, false)]
-        public string SrvType { get; set; }
+        public object Type { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblServeripSip SipSrvTblServeripSip { get; set; }
+        public Serverip ServeripServer { get; set; }
 		
         [InnerJoinColumn]
-        public TblServiceSvc SvcSrvTblServiceSvc { get; set; }
+        public Service ServiceServer { get; set; }
 		
         [InnerJoinColumn]
-        public TblSrvSrvSsv SsvGuestTblSrvSrvSsv { get; set; }
+        public SrvSrv SrvSrvHost { get; set; }
 		
         [InnerJoinColumn]
-        public TblSrvSrvSsv SsvHostTblSrvSrvSsv { get; set; }
+        public SrvSrv SrvSrvGuest { get; set; }
 	}
-
 	[Table("tbl_serviceattribute_sva", "", "evoconcept")]
-	public partial class TblServiceattributeSva : Entity<TblServiceattributeSva>
+	public partial class Serviceattribute : Entity<Serviceattribute>
 	{
-		static TblServiceattributeSva()
+		static Serviceattribute()
 		{
-			Join<TblServiceSvc>(t => t.SvaSvc, (t, f) => t.SvaSvcId == f.SvcId); // Relation
+			Join<Service>(t => t.Service, (t, f) => t.ServiceId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("sva_id", true, true, false)]
-        public int SvaId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("sva_key", false, false, false)]
-        public string SvaKey { get; set; }
+        public object Key { get; set; }
 		
         [NotifyPropertyChanged, Column("sva_strvalue", false, false, true)]
-        public string SvaStrvalue { get; set; }
+        public object Strvalue { get; set; }
 		
         [NotifyPropertyChanged, Column("sva_intvalue", false, false, true)]
-        public System.Nullable<int> SvaIntvalue { get; set; }
+        public object Intvalue { get; set; }
 		
+        [NotifyPropertyChanged, Column("sva_dblvalue", false, false, true)]
+        public object Dblvalue { get; set; }
 		
         [NotifyPropertyChanged, Column("sva_dtvalue", false, false, true)]
-        public System.Nullable<System.DateTime> SvaDtvalue { get; set; }
+        public object Dtvalue { get; set; }
 		
         [NotifyPropertyChanged, Column("sva_svc_id", false, false, false)]
-        public int SvaSvcId { get; set; }
+        public object ServiceId { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblServiceSvc SvaSvc { get; set; }
+        public Service Service { get; set; }
 	}
-
 	[Table("tbl_serviceinvoker_sin", "", "evoconcept")]
-	public partial class TblServiceinvokerSin : Entity<TblServiceinvokerSin>
+	public partial class Serviceinvoker : Entity<Serviceinvoker>
 	{
-		static TblServiceinvokerSin()
+		static Serviceinvoker()
 		{
-			Join<TblServiceSvc>(t => t.SinSvc2, (t, f) => t.SinSvc2Id == f.SvcId); // Relation
-			Join<TblServiceSvc>(t => t.SinSvc1, (t, f) => t.SinSvc1Id == f.SvcId); // Relation
+			Join<Service>(t => t.Svc1, (t, f) => t.Svc1Id == f.Id); // Relation
+			Join<Service>(t => t.Svc2, (t, f) => t.Svc2Id == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("sin_id", true, true, false)]
-        public int SinId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("sin_svc1_id", false, false, false)]
-        public int SinSvc1Id { get; set; }
+        public object Svc1Id { get; set; }
 		
         [NotifyPropertyChanged, Column("sin_svc2_id", false, false, false)]
-        public int SinSvc2Id { get; set; }
+        public object Svc2Id { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblServiceSvc SinSvc2 { get; set; }
+        public Service Svc1 { get; set; }
 		
         [InnerJoinColumn]
-        public TblServiceSvc SinSvc1 { get; set; }
+        public Service Svc2 { get; set; }
 	}
-
 	[Table("tbl_service_svc", "", "evoconcept")]
-	public partial class TblServiceSvc : Entity<TblServiceSvc>
+	public partial class Service : Entity<Service>
 	{
-		static TblServiceSvc()
+		static Service()
 		{
-			Join<TblApplicationApp>(t => t.AppSvcTblApplicationApp, (t, f) => t.SvcId == f.AppSvcId); // Reverse Relation
-			Join<TblCronCrn>(t => t.CrnSvcTblCronCrn, (t, f) => t.SvcId == f.CrnSvcId); // Reverse Relation
-			Join<TblDatabaseloginDbl>(t => t.DblSvcTblDatabaseloginDbl, (t, f) => t.SvcId == f.DblSvcId); // Reverse Relation
-			Join<TblDatabaseDtb>(t => t.DtbSvcTblDatabaseDtb, (t, f) => t.SvcId == f.DtbSvcId); // Reverse Relation
-			Join<TblDomainDom>(t => t.DomSecondarySvcTblDomainDom, (t, f) => t.SvcId == f.DomSecondarySvcId); // Reverse Relation
-			Join<TblDomainDom>(t => t.DomPrimarySvcTblDomainDom, (t, f) => t.SvcId == f.DomPrimarySvcId); // Reverse Relation
-			Join<TblEvoboxEbx>(t => t.EbxStatsServiceTblEvoboxEbx, (t, f) => t.SvcId == f.EbxStatsServiceId); // Reverse Relation
-			Join<TblFtpaccountFtp>(t => t.FtpSvcTblFtpaccountFtp, (t, f) => t.SvcId == f.FtpSvcId); // Reverse Relation
-			Join<TblServiceattributeSva>(t => t.SvaSvcTblServiceattributeSva, (t, f) => t.SvcId == f.SvaSvcId); // Reverse Relation
-			Join<TblServiceinvokerSin>(t => t.SinSvc2TblServiceinvokerSin, (t, f) => t.SvcId == f.SinSvc2Id); // Reverse Relation
-			Join<TblServiceinvokerSin>(t => t.SinSvc1TblServiceinvokerSin, (t, f) => t.SvcId == f.SinSvc1Id); // Reverse Relation
-			Join<TblServerSrv>(t => t.SvcSrv, (t, f) => t.SvcSrvId == f.SrvId); // Relation
+			Join<Application>(t => t.ApplicationService, (t, f) => t.Id == f.ServiceId); // Reverse Relation
+			Join<Cron>(t => t.CronService, (t, f) => t.Id == f.ServiceId); // Reverse Relation
+			Join<Databaselogin>(t => t.DatabaseloginService, (t, f) => t.Id == f.ServiceId); // Reverse Relation
+			Join<Database>(t => t.DatabaseService, (t, f) => t.Id == f.ServiceId); // Reverse Relation
+			Join<Domain>(t => t.DomainPrimaryService, (t, f) => t.Id == f.PrimaryServiceId); // Reverse Relation
+			Join<Domain>(t => t.DomainSecondaryService, (t, f) => t.Id == f.SecondaryServiceId); // Reverse Relation
+			Join<Evobox>(t => t.EvoboxStatsService, (t, f) => t.Id == f.StatsServiceId); // Reverse Relation
+			Join<Ftpaccount>(t => t.FtpaccountService, (t, f) => t.Id == f.ServiceId); // Reverse Relation
+			Join<Serviceattribute>(t => t.ServiceattributeService, (t, f) => t.Id == f.ServiceId); // Reverse Relation
+			Join<Serviceinvoker>(t => t.ServiceinvokerSvc1, (t, f) => t.Id == f.Svc1Id); // Reverse Relation
+			Join<Serviceinvoker>(t => t.ServiceinvokerSvc2, (t, f) => t.Id == f.Svc2Id); // Reverse Relation
+			Join<Server>(t => t.Server, (t, f) => t.ServerId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("svc_id", true, true, false)]
-        public int SvcId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("svc_name", false, false, true)]
-        public string SvcName { get; set; }
+        public object Name { get; set; }
 		
         [NotifyPropertyChanged, Column("svc_description", false, false, true)]
-        public string SvcDescription { get; set; }
+        public object Description { get; set; }
 		
         [NotifyPropertyChanged, Column("svc_srv_id", false, false, false)]
-        public int SvcSrvId { get; set; }
+        public object ServerId { get; set; }
 		
         [NotifyPropertyChanged, Column("svc_svt_code", false, false, false)]
-        public string SvcSvtCode { get; set; }
+        public object SvtCode { get; set; }
 		
         [NotifyPropertyChanged, Column("svc_capacity", false, false, true)]
-        public System.Nullable<int> SvcCapacity { get; set; }
+        public object Capacity { get; set; }
 		
         [NotifyPropertyChanged, Column("svc_domain", false, false, true)]
-        public string SvcDomain { get; set; }
+        public object Domain { get; set; }
 		
         [NotifyPropertyChanged, Column("svc_backup_svc_id", false, false, true)]
-        public System.Nullable<int> SvcBackupSvcId { get; set; }
+        public object BackupServiceId { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblApplicationApp AppSvcTblApplicationApp { get; set; }
+        public Application ApplicationService { get; set; }
 		
         [InnerJoinColumn]
-        public TblCronCrn CrnSvcTblCronCrn { get; set; }
+        public Cron CronService { get; set; }
 		
         [InnerJoinColumn]
-        public TblDatabaseloginDbl DblSvcTblDatabaseloginDbl { get; set; }
+        public Databaselogin DatabaseloginService { get; set; }
 		
         [InnerJoinColumn]
-        public TblDatabaseDtb DtbSvcTblDatabaseDtb { get; set; }
+        public Database DatabaseService { get; set; }
 		
         [LeftJoinColumn]
-        public TblDomainDom DomSecondarySvcTblDomainDom { get; set; }
+        public Domain DomainPrimaryService { get; set; }
 		
         [LeftJoinColumn]
-        public TblDomainDom DomPrimarySvcTblDomainDom { get; set; }
+        public Domain DomainSecondaryService { get; set; }
 		
         [LeftJoinColumn]
-        public TblEvoboxEbx EbxStatsServiceTblEvoboxEbx { get; set; }
+        public Evobox EvoboxStatsService { get; set; }
 		
         [InnerJoinColumn]
-        public TblFtpaccountFtp FtpSvcTblFtpaccountFtp { get; set; }
+        public Ftpaccount FtpaccountService { get; set; }
 		
         [InnerJoinColumn]
-        public TblServiceattributeSva SvaSvcTblServiceattributeSva { get; set; }
+        public Serviceattribute ServiceattributeService { get; set; }
 		
         [InnerJoinColumn]
-        public TblServiceinvokerSin SinSvc2TblServiceinvokerSin { get; set; }
+        public Serviceinvoker ServiceinvokerSvc1 { get; set; }
 		
         [InnerJoinColumn]
-        public TblServiceinvokerSin SinSvc1TblServiceinvokerSin { get; set; }
+        public Serviceinvoker ServiceinvokerSvc2 { get; set; }
 		
         [InnerJoinColumn]
-        public TblServerSrv SvcSrv { get; set; }
+        public Server Server { get; set; }
 	}
-
 	[Table("tbl_srv_srv_ssv", "", "evoconcept")]
-	public partial class TblSrvSrvSsv : Entity<TblSrvSrvSsv>
+	public partial class SrvSrv : Entity<SrvSrv>
 	{
-		static TblSrvSrvSsv()
+		static SrvSrv()
 		{
-			Join<TblServerSrv>(t => t.SsvGuest, (t, f) => t.SsvGuestId == f.SrvId); // Relation
-			Join<TblServerSrv>(t => t.SsvHost, (t, f) => t.SsvHostId == f.SrvId); // Relation
+			Join<Server>(t => t.Host, (t, f) => t.HostId == f.Id); // Relation
+			Join<Server>(t => t.Guest, (t, f) => t.GuestId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("ssv_host_id", true, false, false)]
-        public int SsvHostId { get; set; }
+        public object HostId { get; set; }
 		
         [NotifyPropertyChanged, Column("ssv_guest_id", true, false, false)]
-        public int SsvGuestId { get; set; }
+        public object GuestId { get; set; }
 		
         [NotifyPropertyChanged, Column("ssv_active", false, false, false)]
-        public sbyte SsvActive { get; set; }
+        public object Active { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblServerSrv SsvGuest { get; set; }
+        public Server Host { get; set; }
 		
         [InnerJoinColumn]
-        public TblServerSrv SsvHost { get; set; }
+        public Server Guest { get; set; }
 	}
-
 	[Table("tbl_taskattribute_tka", "", "evoconcept")]
-	public partial class TblTaskattributeTka : Entity<TblTaskattributeTka>
+	public partial class Taskattribute : Entity<Taskattribute>
 	{
-		static TblTaskattributeTka()
+		static Taskattribute()
 		{
-			Join<TblTaskTsk>(t => t.TkaTsk, (t, f) => t.TkaTskId == f.TskId); // Relation
+			Join<Task>(t => t.Task, (t, f) => t.TaskId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("tka_id", true, true, false)]
-        public int TkaId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("tka_key", false, false, false)]
-        public string TkaKey { get; set; }
+        public object Key { get; set; }
 		
         [NotifyPropertyChanged, Column("tka_strvalue", false, false, true)]
-        public string TkaStrvalue { get; set; }
+        public object Strvalue { get; set; }
 		
         [NotifyPropertyChanged, Column("tka_intvalue", false, false, true)]
-        public System.Nullable<int> TkaIntvalue { get; set; }
+        public object Intvalue { get; set; }
 		
+        [NotifyPropertyChanged, Column("tka_dblvalue", false, false, true)]
+        public object Dblvalue { get; set; }
 		
         [NotifyPropertyChanged, Column("tka_dtvalue", false, false, true)]
-        public System.Nullable<System.DateTime> TkaDtvalue { get; set; }
+        public object Dtvalue { get; set; }
 		
         [NotifyPropertyChanged, Column("tka_tsk_id", false, false, false)]
-        public int TkaTskId { get; set; }
+        public object TaskId { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblTaskTsk TkaTsk { get; set; }
+        public Task Task { get; set; }
 	}
-
 	[Table("tbl_task_tsk", "", "evoconcept")]
-	public partial class TblTaskTsk : Entity<TblTaskTsk>
+	public partial class Task : Entity<Task>
 	{
-		static TblTaskTsk()
+		static Task()
 		{
-			Join<TblTaskattributeTka>(t => t.TkaTskTblTaskattributeTka, (t, f) => t.TskId == f.TkaTskId); // Reverse Relation
+			Join<Taskattribute>(t => t.TaskattributeTask, (t, f) => t.Id == f.TaskId); // Reverse Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("tsk_id", true, true, false)]
-        public int TskId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("tsk_type", false, false, false)]
-        public string TskType { get; set; }
+        public object Type { get; set; }
 		
         [NotifyPropertyChanged, Column("tsk_ref_type", false, false, true)]
-        public string TskRefType { get; set; }
+        public object RefType { get; set; }
 		
         [NotifyPropertyChanged, Column("tsk_ref_id", false, false, true)]
-        public System.Nullable<int> TskRefId { get; set; }
+        public object RefId { get; set; }
 		
         [NotifyPropertyChanged, Column("tsk_status", false, false, false)]
-        public string TskStatus { get; set; }
+        public object Status { get; set; }
 		
         [NotifyPropertyChanged, Column("tsk_percentage", false, false, false)]
-        public int TskPercentage { get; set; }
+        public object Percentage { get; set; }
 		
         [NotifyPropertyChanged, Column("tsk_svc_id", false, false, true)]
-        public System.Nullable<int> TskSvcId { get; set; }
+        public object ServiceId { get; set; }
 		
         [NotifyPropertyChanged, Column("tsk_error", false, false, true)]
-        public string TskError { get; set; }
+        public object Error { get; set; }
 		
         [NotifyPropertyChanged, Column("tsk_created_at", false, false, true)]
-        public System.Nullable<System.DateTime> TskCreatedAt { get; set; }
+        public object CreatedAt { get; set; }
 		
         [NotifyPropertyChanged, Column("tsk_executed_at", false, false, true)]
-        public System.Nullable<System.DateTime> TskExecutedAt { get; set; }
+        public object ExecutedAt { get; set; }
 		
         [NotifyPropertyChanged, Column("tsk_finished_at", false, false, true)]
-        public System.Nullable<System.DateTime> TskFinishedAt { get; set; }
+        public object FinishedAt { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblTaskattributeTka TkaTskTblTaskattributeTka { get; set; }
+        public Taskattribute TaskattributeTask { get; set; }
 	}
-
 	[Table("tbl_transactionattribute_tsa", "", "evoconcept")]
-	public partial class TblTransactionattributeTsa : Entity<TblTransactionattributeTsa>
+	public partial class Transactionattribute : Entity<Transactionattribute>
 	{
-		static TblTransactionattributeTsa()
+		static Transactionattribute()
 		{
-			Join<TblTransactionTsn>(t => t.TsaTsn, (t, f) => t.TsaTsnId == f.TsnId); // Relation
+			Join<Transaction>(t => t.Transaction, (t, f) => t.TransactionId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("tsa_id", true, true, false)]
-        public int TsaId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("tsa_tsn_id", false, false, false)]
-        public int TsaTsnId { get; set; }
+        public object TransactionId { get; set; }
 		
         [NotifyPropertyChanged, Column("tsa_key", false, false, false)]
-        public string TsaKey { get; set; }
+        public object Key { get; set; }
 		
         [NotifyPropertyChanged, Column("tsa_value", false, false, false)]
-        public string TsaValue { get; set; }
+        public object Value { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblTransactionTsn TsaTsn { get; set; }
+        public Transaction Transaction { get; set; }
 	}
-
 	[Table("tbl_transaction_tsn", "", "evoconcept")]
-	public partial class TblTransactionTsn : Entity<TblTransactionTsn>
+	public partial class Transaction : Entity<Transaction>
 	{
-		static TblTransactionTsn()
+		static Transaction()
 		{
-			Join<TblBillBll>(t => t.BllTsnTblBillBll, (t, f) => t.TsnId == f.BllTsnId); // Reverse Relation
-			Join<TblOrderOrd>(t => t.OrdTsnTblOrderOrd, (t, f) => t.TsnId == f.OrdTsnId); // Reverse Relation
-			Join<TblTransactionattributeTsa>(t => t.TsaTsnTblTransactionattributeTsa, (t, f) => t.TsnId == f.TsaTsnId); // Reverse Relation
-			Join<TblEvoboxEbx>(t => t.TsnEbx, (t, f) => t.TsnEbxId == f.EbxId); // Relation
-			Join<TblUserUsr>(t => t.TsnUsr, (t, f) => t.TsnUsrId == f.UsrId); // Relation
+			Join<Bill>(t => t.BillTransaction, (t, f) => t.Id == f.TransactionId); // Reverse Relation
+			Join<Order>(t => t.OrderTransaction, (t, f) => t.Id == f.TransactionId); // Reverse Relation
+			Join<Transactionattribute>(t => t.TransactionattributeTransaction, (t, f) => t.Id == f.TransactionId); // Reverse Relation
+			Join<Evobox>(t => t.Evobox, (t, f) => t.EvoboxId == f.Id); // Relation
+			Join<User>(t => t.User, (t, f) => t.UserId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("tsn_id", true, true, false)]
-        public int TsnId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("tsn_ebx_id", false, false, true)]
-        public System.Nullable<int> TsnEbxId { get; set; }
+        public object EvoboxId { get; set; }
 		
         [NotifyPropertyChanged, Column("tsn_usr_id", false, false, false)]
-        public int TsnUsrId { get; set; }
+        public object UserId { get; set; }
 		
         [NotifyPropertyChanged, Column("tsn_price", false, false, false)]
-        public decimal TsnPrice { get; set; }
+        public object Price { get; set; }
 		
         [NotifyPropertyChanged, Column("tsn_status", false, false, false)]
-        public string TsnStatus { get; set; }
+        public object Status { get; set; }
 		
         [NotifyPropertyChanged, Column("tsn_amount_payed", false, false, true)]
-        public System.Nullable<decimal> TsnAmountPayed { get; set; }
+        public object AmountPayed { get; set; }
 		
         [NotifyPropertyChanged, Column("tsn_usage", false, false, false)]
-        public string TsnUsage { get; set; }
+        public object Usage { get; set; }
 		
         [NotifyPropertyChanged, Column("tsn_description", false, false, true)]
-        public string TsnDescription { get; set; }
+        public object Description { get; set; }
 		
         [NotifyPropertyChanged, Column("tsn_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> TsnCreatedate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("tsn_pmm_code", false, false, false)]
-        public string TsnPmmCode { get; set; }
+        public object PmmCode { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblBillBll BllTsnTblBillBll { get; set; }
+        public Bill BillTransaction { get; set; }
 		
         [InnerJoinColumn]
-        public TblOrderOrd OrdTsnTblOrderOrd { get; set; }
+        public Order OrderTransaction { get; set; }
 		
         [InnerJoinColumn]
-        public TblTransactionattributeTsa TsaTsnTblTransactionattributeTsa { get; set; }
+        public Transactionattribute TransactionattributeTransaction { get; set; }
 		
         [LeftJoinColumn]
-        public TblEvoboxEbx TsnEbx { get; set; }
+        public Evobox Evobox { get; set; }
 		
         [InnerJoinColumn]
-        public TblUserUsr TsnUsr { get; set; }
+        public User User { get; set; }
 	}
-
 	[Table("tbl_useractivationkey_uak", "", "evoconcept")]
-	public partial class TblUseractivationkeyUak : Entity<TblUseractivationkeyUak>
+	public partial class Useractivationkey : Entity<Useractivationkey>
 	{
-		static TblUseractivationkeyUak()
+		static Useractivationkey()
 		{
-			Join<TblUserUsr>(t => t.UsrUakTblUserUsr, (t, f) => t.UakId == f.UsrUakId); // Reverse Relation
+			Join<User>(t => t.UserUseractivationkey, (t, f) => t.Id == f.UseractivationkeyId); // Reverse Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("uak_id", true, true, false)]
-        public int UakId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("uak_activation_key", false, false, true)]
-        public string UakActivationKey { get; set; }
+        public object ActivationKey { get; set; }
 		
         [NotifyPropertyChanged, Column("uak_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> UakCreatedate { get; set; }
+        public object Createdate { get; set; }
 	
 		
         [LeftJoinColumn]
-        public TblUserUsr UsrUakTblUserUsr { get; set; }
+        public User UserUseractivationkey { get; set; }
 	}
-
 	[Table("tbl_userinformation_uin", "", "evoconcept")]
-	public partial class TblUserinformationUin : Entity<TblUserinformationUin>
+	public partial class Userinformation : Entity<Userinformation>
 	{
-		static TblUserinformationUin()
+		static Userinformation()
 		{
-			Join<LutCountryCny>(t => t.UinCny, (t, f) => t.UinCnyCode == f.CnyCode); // Relation
-			Join<TblUserUsr>(t => t.UinUsr, (t, f) => t.UinUsrId == f.UsrId); // Relation
+			Join<User>(t => t.User, (t, f) => t.UserId == f.Id); // Relation
+			Join<Country>(t => t.Country, (t, f) => t.CountryCode == f.Code); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("uin_usr_id", true, false, false)]
-        public int UinUsrId { get; set; }
+        public object UserId { get; set; }
 		
         [NotifyPropertyChanged, Column("uin_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> UinCreatedate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("uin_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> UinUpdatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("uin_lastname", false, false, false)]
-        public string UinLastname { get; set; }
+        public object Lastname { get; set; }
 		
         [NotifyPropertyChanged, Column("uin_firstname", false, false, false)]
-        public string UinFirstname { get; set; }
+        public object Firstname { get; set; }
 		
         [NotifyPropertyChanged, Column("uin_city", false, false, false)]
-        public string UinCity { get; set; }
+        public object City { get; set; }
 		
         [NotifyPropertyChanged, Column("uin_cny_code", false, false, true)]
-        public string UinCnyCode { get; set; }
+        public object CountryCode { get; set; }
 		
         [NotifyPropertyChanged, Column("uin_post_code", false, false, false)]
-        public string UinPostCode { get; set; }
+        public object PostCode { get; set; }
 		
         [NotifyPropertyChanged, Column("uin_address1", false, false, false)]
-        public string UinAddress1 { get; set; }
+        public object Address1 { get; set; }
 		
         [NotifyPropertyChanged, Column("uin_address2", false, false, true)]
-        public string UinAddress2 { get; set; }
+        public object Address2 { get; set; }
 		
         [NotifyPropertyChanged, Column("uin_address3", false, false, true)]
-        public string UinAddress3 { get; set; }
+        public object Address3 { get; set; }
 		
         [NotifyPropertyChanged, Column("uin_address4", false, false, true)]
-        public string UinAddress4 { get; set; }
+        public object Address4 { get; set; }
 	
 		
-        [LeftJoinColumn]
-        public LutCountryCny UinCny { get; set; }
-		
         [InnerJoinColumn]
-        public TblUserUsr UinUsr { get; set; }
+        public User User { get; set; }
+		
+        [LeftJoinColumn]
+        public Country Country { get; set; }
 	}
-
 	[Table("tbl_user_usr", "", "evoconcept")]
-	public partial class TblUserUsr : Entity<TblUserUsr>
+	public partial class User : Entity<User>
 	{
-		static TblUserUsr()
+		static User()
 		{
-			Join<TblTransactionTsn>(t => t.TsnUsrTblTransactionTsn, (t, f) => t.UsrId == f.TsnUsrId); // Reverse Relation
-			Join<TblUserinformationUin>(t => t.UinUsrTblUserinformationUin, (t, f) => t.UsrId == f.UinUsrId); // Reverse Relation
-			Join<TblUseractivationkeyUak>(t => t.UsrUak, (t, f) => t.UsrUakId == f.UakId); // Relation
-			Join<TblUsrEbxUbx>(t => t.UbxUsrTblUsrEbxUbx, (t, f) => t.UsrId == f.UbxUsrId); // Reverse Relation
+			Join<Transaction>(t => t.TransactionUser, (t, f) => t.Id == f.UserId); // Reverse Relation
+			Join<Userinformation>(t => t.UserinformationUser, (t, f) => t.Id == f.UserId); // Reverse Relation
+			Join<Useractivationkey>(t => t.Useractivationkey, (t, f) => t.UseractivationkeyId == f.Id); // Relation
+			Join<UsrEbx>(t => t.UsrEbxUser, (t, f) => t.Id == f.UserId); // Reverse Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("usr_id", true, true, false)]
-        public int UsrId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("usr_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> UsrCreatedate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("usr_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> UsrUpdatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("usr_password", false, false, false)]
-        public string UsrPassword { get; set; }
+        public object Password { get; set; }
 		
         [NotifyPropertyChanged, Column("usr_email", false, false, false)]
-        public string UsrEmail { get; set; }
+        public object Email { get; set; }
 		
         [NotifyPropertyChanged, Column("usr_login", false, false, true)]
-        public string UsrLogin { get; set; }
+        public object Login { get; set; }
 		
         [NotifyPropertyChanged, Column("usr_locked", false, false, false)]
-        public sbyte UsrLocked { get; set; }
+        public object Locked { get; set; }
 		
         [NotifyPropertyChanged, Column("usr_enabled", false, false, false)]
-        public sbyte UsrEnabled { get; set; }
+        public object Enabled { get; set; }
 		
         [NotifyPropertyChanged, Column("usr_admin", false, false, false)]
-        public sbyte UsrAdmin { get; set; }
+        public object Admin { get; set; }
 		
         [NotifyPropertyChanged, Column("usr_credit", false, false, false)]
-        public int UsrCredit { get; set; }
+        public object Credit { get; set; }
 		
         [NotifyPropertyChanged, Column("usr_uak_id", false, false, true)]
-        public System.Nullable<int> UsrUakId { get; set; }
+        public object UseractivationkeyId { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblTransactionTsn TsnUsrTblTransactionTsn { get; set; }
+        public Transaction TransactionUser { get; set; }
 		
         [InnerJoinColumn]
-        public TblUserinformationUin UinUsrTblUserinformationUin { get; set; }
+        public Userinformation UserinformationUser { get; set; }
 		
         [LeftJoinColumn]
-        public TblUseractivationkeyUak UsrUak { get; set; }
+        public Useractivationkey Useractivationkey { get; set; }
 		
         [InnerJoinColumn]
-        public TblUsrEbxUbx UbxUsrTblUsrEbxUbx { get; set; }
+        public UsrEbx UsrEbxUser { get; set; }
 	}
-
 	[Table("tbl_usr_ebx_ubx", "", "evoconcept")]
-	public partial class TblUsrEbxUbx : Entity<TblUsrEbxUbx>
+	public partial class UsrEbx : Entity<UsrEbx>
 	{
-		static TblUsrEbxUbx()
+		static UsrEbx()
 		{
-			Join<TblConditionsCgv>(t => t.CgvUbxTblConditionsCgv, (t, f) => t.UbxId == f.CgvUbxId); // Reverse Relation
-			Join<TblUserUsr>(t => t.UbxUsr, (t, f) => t.UbxUsrId == f.UsrId); // Relation
-			Join<TblEvoboxEbx>(t => t.UbxEbx, (t, f) => t.UbxEbxId == f.EbxId); // Relation
+			Join<Conditions>(t => t.ConditionsUsrEbx, (t, f) => t.Id == f.UsrEbxId); // Reverse Relation
+			Join<Evobox>(t => t.Evobox, (t, f) => t.EvoboxId == f.Id); // Relation
+			Join<User>(t => t.User, (t, f) => t.UserId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("ubx_id", true, true, false)]
-        public int UbxId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("ubx_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> UbxCreatedate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("ubx_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> UbxUpdatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("ubx_ebx_id", false, false, false)]
-        public int UbxEbxId { get; set; }
+        public object EvoboxId { get; set; }
 		
         [NotifyPropertyChanged, Column("ubx_usr_id", false, false, false)]
-        public int UbxUsrId { get; set; }
+        public object UserId { get; set; }
 		
         [NotifyPropertyChanged, Column("ubx_owner", false, false, true)]
-        public System.Nullable<sbyte> UbxOwner { get; set; }
+        public object Owner { get; set; }
 	
 		
         [LeftJoinColumn]
-        public TblConditionsCgv CgvUbxTblConditionsCgv { get; set; }
+        public Conditions ConditionsUsrEbx { get; set; }
 		
         [InnerJoinColumn]
-        public TblUserUsr UbxUsr { get; set; }
+        public Evobox Evobox { get; set; }
 		
         [InnerJoinColumn]
-        public TblEvoboxEbx UbxEbx { get; set; }
+        public User User { get; set; }
 	}
-
 	[Table("tbl_website_web", "", "evoconcept")]
-	public partial class TblWebsiteWeb : Entity<TblWebsiteWeb>
+	public partial class Website : Entity<Website>
 	{
-		static TblWebsiteWeb()
+		static Website()
 		{
-			Join<TblApplicationApp>(t => t.WebApp, (t, f) => t.WebAppId == f.AppId); // Relation
-			Join<TblDomainDom>(t => t.WebDom, (t, f) => t.WebDomId == f.DomId); // Relation
+			Join<Application>(t => t.Application, (t, f) => t.ApplicationId == f.Id); // Relation
+			Join<Domain>(t => t.Domain, (t, f) => t.DomainId == f.Id); // Relation
 		}
 
 		
         [NotifyPropertyChanged, Column("web_id", true, true, false)]
-        public int WebId
+        public object Id
         {
-	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<int>() : (int)Convert.ChangeType(this.EntityIdentity, typeof(int)); }
-	        set { this.EntityIdentity = (int)value; }
+	        get { return this.EntityIdentity == null ? TypeHelper.GetDefault<object>() : (object)Convert.ChangeType(this.EntityIdentity, typeof(object)); }
+	        set { this.EntityIdentity = (object)value; }
         }
 		
         [NotifyPropertyChanged, Column("web_createdate", false, false, true)]
-        public System.Nullable<System.DateTime> WebCreatedate { get; set; }
+        public object Createdate { get; set; }
 		
         [NotifyPropertyChanged, Column("web_updatedate", false, false, true)]
-        public System.Nullable<System.DateTime> WebUpdatedate { get; set; }
+        public object Updatedate { get; set; }
 		
         [NotifyPropertyChanged, Column("web_dom_id", false, false, false)]
-        public int WebDomId { get; set; }
+        public object DomainId { get; set; }
 		
         [NotifyPropertyChanged, Column("web_app_id", false, false, false)]
-        public int WebAppId { get; set; }
+        public object ApplicationId { get; set; }
 	
 		
         [InnerJoinColumn]
-        public TblApplicationApp WebApp { get; set; }
+        public Application Application { get; set; }
 		
         [InnerJoinColumn]
-        public TblDomainDom WebDom { get; set; }
+        public Domain Domain { get; set; }
 	}
-
-
 }
-

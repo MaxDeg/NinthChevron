@@ -71,6 +71,10 @@ namespace BlueBoxSharp.Data.AutoMap
             if (entityUpdateAttr != null)
                 properties.AddRange(entityUpdateAttr.Properties);
 
+            // If the property is entity mapped with multiple we cannot map it back to an entity!!
+            if (properties.Count > 1)
+                return;
+
             foreach (IEnumerable<PropertyDescriptor> propertyList in properties.Select(e => TypeDescriptorHelper.GetProperty<TEntity>(e)))
             {
                 foreach (PropertyDescriptor propDescriptor in propertyList)

@@ -51,39 +51,28 @@ namespace BlueBoxSharp.Data.AutoMap
 
         private void EnterModel(PropertyDescriptor property, IModelVisitorContext context, IModelVisitorContext parentContext)
         {
-            MemberInitExpression parentBaseBinding = parentContext == null ? null : ((ContextData)parentContext.Data).BaseBindings;
-            ContextData data = new ContextData { Bindings = new Dictionary<string, MemberBinding>() };
+            ContextData data = new ContextData
+            {
+                Bindings = new Dictionary<string, MemberBinding>(),
+                BaseBindings = parentContext == null ? this._baseBindings : ((ContextData)parentContext.Data).BaseBindings
+            };
             context.Data = data;
 
             Type modelType = typeof(TModel);
-            if (property != null)
-                modelType = property.PropertyType;
-            else
-                data.BaseBindings = this._baseBindings;
-            
-            // Selecting the new BaseBinding (useful if multiple level of init)
-            if (parentBaseBinding != null && property != null)
-            {
-                foreach (MemberBinding bind in parentBaseBinding.Bindings)
-                {
-                    Expression bindExpression = ((MemberAssignment)bind).Expression;
+            if (property != null) modelType = property.PropertyType;
 
-                    if (bind.Member.Name == property.Name)
-                    {
-                        data.BaseBindings = (MemberInitExpression)bindExpression;
-                        break;
-                    }
-                }
-            }
-
-            // Set base binding in Bindings list (manual binding have priority on EntityMap)
             if (data.BaseBindings != null)
             {
                 foreach (MemberBinding bind in data.BaseBindings.Bindings)
                 {
+                    Expression bindExpression = ((MemberAssignment)bind).Expression;
+
+                    if (property != null && bind.Member.Name == property.Name)
+                        data.BaseBindings = (MemberInitExpression)bindExpression;
+
                     PropertyInfo entityProperty = modelType.GetProperty(bind.Member.Name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
                     if (entityProperty != null)
-                        data.Bindings.Add(entityProperty.Name, Expression.Bind(entityProperty, ((MemberAssignment)bind).Expression));
+                        data.Bindings.Add(entityProperty.Name, Expression.Bind(entityProperty, bindExpression));
                 }
             }
         }
@@ -92,26 +81,19 @@ namespace BlueBoxSharp.Data.AutoMap
         {
             ContextData data = (ContextData)context.Data;
 
-            if (property != null)
+            if (property != null && !((ContextData)parentContext.Data).Bindings.ContainsKey(property.Name))
             {
-                NewExpression baseBindingNewExpression = null;
-                MemberInitExpression initExpression = ((ContextData)parentContext.Data).BaseBindings;
-
-                if (initExpression != null)
-                {
-                    MemberBinding bind = initExpression.Bindings.SingleOrDefault(b => b.Member.Name == property.Name);
-                    if (bind != null)
-                        baseBindingNewExpression = ((MemberInitExpression)((MemberAssignment)bind).Expression).NewExpression;
-                }
-
-                if (property.PropertyType.GetConstructor(Type.EmptyTypes) == null && baseBindingNewExpression == null)
+                if (property.PropertyType.GetConstructor(Type.EmptyTypes) == null)
                     return;
+                MemberInitExpression memberInit = Expression.MemberInit(
+                    Expression.New(property.PropertyType),
+                    data.Bindings.Values
+                    );
 
-                baseBindingNewExpression = baseBindingNewExpression ?? Expression.New(property.PropertyType);
-                MemberInitExpression memberInit = Expression.MemberInit(baseBindingNewExpression, data.Bindings.Values);
-
-                ((ContextData)parentContext.Data).Bindings[property.Name] =
-                                Expression.Bind(property.ComponentType.GetProperty(property.Name), memberInit);
+                ((ContextData)parentContext.Data).Bindings.Add(
+                    property.Name,
+                    Expression.Bind(property.ComponentType.GetProperty(property.Name), memberInit)
+                    );
             }
             else if (property == null && parentContext == null)
                 this.ResultExpression = Expression.Lambda<Func<TEntity, TModel>>(
@@ -135,7 +117,7 @@ namespace BlueBoxSharp.Data.AutoMap
             EntityMapAttribute entityMapAttr = property.Attributes.OfType<EntityMapAttribute>().FirstOrDefault();
 
             if (entityMapAttr == null) return;
-
+            
             properties = entityMapAttr.Properties.ToList();
 
             if (entityMapAttr.Properties.Count() == 0)

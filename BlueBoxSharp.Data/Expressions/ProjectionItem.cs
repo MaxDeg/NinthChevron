@@ -27,8 +27,7 @@ namespace BlueBoxSharp.Data.Expressions
 
     public class ProjectionItem
     {
-        public Expression Expression { get; internal set; }
-        public string Alias { get; internal set; }
+        public AliasedExpression Expression { get; internal set; }
         public MemberInfo Member { get; internal set; }
         public int Count { get; internal set; }
         public ProjectionItemType Type { get; internal set; }
@@ -37,15 +36,14 @@ namespace BlueBoxSharp.Data.Expressions
 
         public ProjectionItem(Expression exp, MemberInfo memb, string alias)
         {
-            this.Expression = exp;
+            this.Expression = new AliasedExpression(exp, alias);
             this.Member = memb;
-            this.Alias = alias;
             this.Type = ProjectionItemType.Projection;
         }
 
         public ProjectionItem(NewExpression exp, MemberInfo memb)
         {
-            this.Expression = exp;
+            this.Expression = new AliasedExpression(exp, null);
             this.Count = exp.Arguments.Count;
             this.Member = memb;
             this.Type = ProjectionItemType.New;
@@ -53,7 +51,7 @@ namespace BlueBoxSharp.Data.Expressions
 
         public ProjectionItem(MemberInitExpression exp, MemberInfo memb)
         {
-            this.Expression = exp;
+            this.Expression = new AliasedExpression(exp, null);
             this.Member = memb;
             this.Count = exp.Bindings.Count;
             this.Type = ProjectionItemType.MemberInit;
@@ -62,9 +60,9 @@ namespace BlueBoxSharp.Data.Expressions
         public override string ToString()
         {
             if (this.Member.MemberType == MemberTypes.Property)
-                return string.Format("[{0} {1} ({2})]", ((PropertyInfo)this.Member).PropertyType, this.Member.Name, this.Alias);
+                return string.Format("[{0} {1} ({2})]", ((PropertyInfo)this.Member).PropertyType, this.Member.Name, this.Expression.Alias);
 
-            return string.Format("[{0} ({2})]", this.Member.Name, this.Alias);
+            return string.Format("[{0} ({2})]", this.Member.Name, this.Expression.Alias);
         }
     }
 }

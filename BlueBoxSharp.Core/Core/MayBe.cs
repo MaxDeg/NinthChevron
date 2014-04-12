@@ -16,22 +16,28 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
-using BlueBoxSharp.Data.Converters;
-using BlueBoxSharp.Data.Entity;
-using BlueBoxSharp.Data.Metadata;
-using BlueBoxSharp.Helpers;
 
-namespace BlueBoxSharp.Data.Expressions
+namespace BlueBoxSharp.Core
 {
-    public class InsertExpression : InsertUpdateExpression
+    public class MayBe<T>
     {
-        internal InsertExpression(DataContext context, IInternalEntity entity)
-            : base(ExtendedExpressionType.Insert, context, entity)
+        private T _value;
+        private bool _isNothing;
+
+        public T Value { get { return this._value; } }
+        public bool IsNothing { get { return this._isNothing; } }
+
+        public MayBe(T value)
         {
+            this._value = value;
+            this._isNothing = false;
+        }
+
+        public MayBe()
+        {
+            this._isNothing = true;
         }
     }
 }

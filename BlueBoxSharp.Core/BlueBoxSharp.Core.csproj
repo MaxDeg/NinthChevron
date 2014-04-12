@@ -7,9 +7,9 @@
     <ProjectGuid>{0C974BCF-1A08-43F2-B503-C3656162F035}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BlueBoxSharp.Core</RootNamespace>
+    <RootNamespace>BlueBoxSharp</RootNamespace>
     <AssemblyName>BlueBoxSharp.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\Debug\$(TargetFrameworkVersion)</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,11 +28,18 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\Release\$(TargetFrameworkVersion)</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFrameworkVersion)' == 'v4.0' ">
+    <DefineConstants>NET40</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFrameworkVersion)' == 'v4.5' ">
+    <DefineConstants>NET45</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -46,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Collections\ObservableDictionary.cs" />
     <Compile Include="ComponentModel\DataAnnotations\NotifyPropertyChangedAttribute.cs" />
+    <Compile Include="Core\MayBe.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Helpers\DateTimeHelper.cs" />
     <Compile Include="Extensions\DbDataReaderExtensions.cs" />
@@ -57,7 +65,10 @@
     <Compile Include="Utilities\SimpleLogger.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BlueBoxSharp.Core.targets">
+    <None Include="__NugetPackage\BlueBoxSharp.Core.props">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="__NugetPackage\BlueBoxSharp.Core.targets">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
@@ -68,11 +79,7 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
   <Target Name="AfterBuild">
+    <MSBuild Condition=" '$(TargetFrameworkVersion)' != 'v4.0'" Projects="$(MSBuildProjectFile)" Properties="TargetFrameworkVersion=v4.0" RunEachTargetSeparately="true" />
   </Target>
-  -->
 </Project>

@@ -39,11 +39,7 @@ namespace BlueBoxSharp.Data
             int index = 0;
             ProjectionItem item = this._items.First();
 
-            object result = VisitProjection(null, item.Expression, values, ref index);
-            if (result is IInternalEntity)
-                ((IInternalEntity)result).ResetChangeTracker();
-
-            return result;
+            return VisitProjection(null, item.Expression.Expression, values, ref index);
         }
 
         private object VisitProjection(object model, Expression expression, object[] values, ref int index)
@@ -56,11 +52,23 @@ namespace BlueBoxSharp.Data
                 return InitMethodCall((MethodCallExpression)expression, values, ref index);
             else if (expression.NodeType == ExpressionType.Convert)
                 return VisitProjection(model, ((UnaryExpression)expression).Operand, values, ref index);
+            else if (expression.NodeType == (ExpressionType)ExtendedExpressionType.Projection)
+                return ConstructProjection((ProjectionExpression)expression, values, ref index);
             else
             {
                 object value = values[index++];
                 if (value == DBNull.Value)
                     return null;
+
+                if (expression.NodeType == ExpressionType.Constant)
+                {
+                    // Convert.ChangeType cannot change string to char[] (exception)
+                    if (value.GetType() == typeof(string) && expression.Type == typeof(char[]))
+                        value = ((string)value).ToCharArray();
+                    else
+                        value = Convert.ChangeType(value, expression.Type);
+                }
+
 
                 return value;
             }
@@ -113,7 +121,9 @@ namespace BlueBoxSharp.Data
 
         private object InitMethodCall(MethodCallExpression expression, object[] values, ref int index)
         {
-            if (expression.Method.DeclaringType == typeof(SqlFunctions))
+            var customAttr = expression.Method.GetCustomAttributes(typeof(SqlFunctionAttribute), false);
+
+            if (customAttr != null && customAttr.Length > 0)
             {
                 object value = values[index++];
                 if (value == DBNull.Value)
@@ -121,12 +131,15 @@ namespace BlueBoxSharp.Data
 
                 return value;
             }
-            
+
             object target = null;
             if (expression.Object != null && expression.Object.NodeType != ExpressionType.Constant)
                 target = VisitProjection(null, expression.Object, values, ref index);
             else if (expression.Object != null)
                 target = ((ConstantExpression)expression.Object).Value;
+
+            if (target == null && !expression.Method.IsStatic)
+                return null;
 
             int i = 0;
             object[] parameters = new object[expression.Arguments.Count];
@@ -135,6 +148,17 @@ namespace BlueBoxSharp.Data
                 parameters[i++] = VisitProjection(null, arg, values, ref index);
 
             return expression.Method.Invoke(target, parameters);
+        }
+
+        private object ConstructProjection(ProjectionExpression expression, object[] values, ref int index)
+        {
+            object obj = expression.Type.GetConstructor(new Type[0]).Invoke(null);
+            object[] parameters = new object[expression.Fields.Count - 1];
+
+            foreach (ProjectionItem arg in expression.Fields.Skip(1))
+                SetValue(arg.Member as PropertyInfo, obj, VisitProjection(null, arg.Expression, values, ref index));
+
+            return obj;
         }
 
         private void SetValue(PropertyInfo property, object model, object value)

@@ -160,23 +160,10 @@ namespace BlueBoxSharp.Data.Translators
 
         public override string Visit(MethodCallExpression node)
         {
-            if (node.Method.DeclaringType == typeof(SqlFunctions))
-            {
-                switch (node.Method.Name)
-                {
-                    case "IsNull":
-                        return Visit(node.Arguments[0]) + " IS NULL";
-                    case "GetDate":
-                        return "GETDATE()";
-                    case "DateAdd":
-                        return "DATEADD(" + string.Join(", ", node.Arguments.Select(a => Visit(a))) + ")";
-                    case "DateDiff":
-                        return "DATEDIFF(" + Visit(node.Arguments[2]) + Visit(node.Arguments[0]) + ", " + Visit(node.Arguments[1]) + ")";
+            SqlFunctionAttribute attribute = node.Method.GetCustomAttributes(typeof(SqlFunctionAttribute), false).OfType<SqlFunctionAttribute>().SingleOrDefault();
 
-                    default:
-                        return "";
-                }
-            }
+            if (attribute != null)
+                return string.Format(attribute.CallFormat, node.Arguments.Select(a => Visit(a)).ToArray());
             else
             {
                 switch (node.Method.Name)
@@ -239,9 +226,7 @@ namespace BlueBoxSharp.Data.Translators
 
         public override string Visit(ConstantExpression node)
         {
-            if (node.Type == typeof(SqlFunctions.DatePart))
-                return node.ToString().ToLower();
-            else if (typeof(IEnumerable).IsAssignableFrom(node.Type) && node.Type != typeof(string))
+            if (typeof(IEnumerable).IsAssignableFrom(node.Type) && node.Type != typeof(string))
                 return "(" + string.Join(", ", ((IEnumerable)node.Value).Cast<object>().Select(o => SqlEncode(o))) + ")";
             else
                 return SqlEncode(node.Value);
@@ -316,51 +301,50 @@ namespace BlueBoxSharp.Data.Translators
         }
 
         public override string Visit(InsertExpression node)
+        {            
+            TableMetadata meta = MappingProvider.GetMetadata(node.From.Type);
+            if (meta == null || node.Columns.Count == 0) return string.Empty;
+
+            return "INSERT INTO " + string.Format("[{0}]..[{1}]", meta.Database, meta.Name) +
+                "(" + string.Join(", ", node.Columns.Select(c => "[" + meta.Columns[c.Item1].Name + "]")) + ")" +
+                " VALUES(" + string.Join(", ", node.Columns.Select(c => SqlEncode(c.Item2))) + "); SELECT SCOPE_IDENTITY();";
+        }
+
+        public override string Visit(InsertSelectExpression node)
         {
-            if (node.IsDefaultProjection && node.Columns.Count > 0)
-            {
-                TableMetadata meta = MappingProvider.GetMetadata(node.From.Type);
-                if (meta == null) return string.Empty;
+            TableMetadata meta = MappingProvider.GetMetadata(node.Projection.Type);
+            if (meta == null) return string.Empty;
 
-                return "INSERT INTO " + string.Format("[{0}]..[{1}]", meta.Database, meta.Name) + 
-                            "(" + string.Join(", ", node.Columns.Select(c => "[" + meta.Columns[c.Item1].Name + "]")) + ")" + 
-                            " VALUES(" + string.Join(", ", node.Columns.Select(c => SqlEncode(c.Item2))) + "); SELECT SCOPE_IDENTITY();";
-            }
-            else
-            {
-                TableMetadata meta = MappingProvider.GetMetadata(node.Projection.Type);
-                if (meta == null) return string.Empty;
+            var fields = node.Projection.Fields.Where(f => f.Type == ProjectionItemType.Projection);
 
-                var fields = node.Projection.Fields.Where(f => f.Type == ProjectionItemType.Projection);
-
-                return "INSERT INTO " + string.Format("[{0}]..[{1}]", meta.Database, meta.Name) + 
-                            "(" + string.Join(", ", fields.Select(c => "[" + meta.Columns[c.Member.Name].Name + "]")) + ") " +
-                            Visit((QueryExpression)node) + "; SELECT SCOPE_IDENTITY();";
-            }
+            return "INSERT INTO " + string.Format("[{0}]..[{1}]", meta.Database, meta.Name) +
+                        "(" + string.Join(", ", fields.Select(c => "[" + meta.Columns[c.Member.Name].Name + "]")) + ") " +
+                        Visit((QueryExpression)node) + "; SELECT SCOPE_IDENTITY();";
         }
 
         public override string Visit(UpdateExpression node)
         {
             EntityRefExpression entityRef = new EntityRefExpression((EntityExpression)node.From);
             TableMetadata meta = MappingProvider.GetMetadata(entityRef.Type);
+            if (meta == null || node.Columns.Count == 0) return string.Empty;
+
+            return "UPDATE " + Visit(entityRef) + " SET " +
+                string.Join(", ", node.Columns.Select(c => string.Format("[{0}] = {1}", meta.Columns[c.Item1].Name, SqlEncode(c.Item2)))) +
+                " FROM " + Visit(node.From) +
+                " WHERE " + Visit(node.Where);
+        }
+
+        public override string Visit(UpdateSelectExpression node)
+        {
+            EntityRefExpression entityRef = new EntityRefExpression((EntityExpression)node.From);
+            var fields = node.Projection.Fields.Where(f => f.Type == ProjectionItemType.Projection);
+            TableMetadata meta = MappingProvider.GetMetadata(entityRef.Type);
             if (meta == null) return string.Empty;
 
-            if (node.IsDefaultProjection && node.Columns.Count > 0)
-            {
-                return "UPDATE " + Visit(entityRef) + " SET " +
-                    string.Join(", ", node.Columns.Select(c => string.Format("[{0}] = {1}", meta.Columns[c.Item1].Name, SqlEncode(c.Item2)))) +
-                    " FROM " + Visit(node.From) +
-                    " WHERE " + Visit(node.Where);
-            }
-            else
-            {
-                var fields = node.Projection.Fields.Where(f => f.Type == ProjectionItemType.Projection);
-
-                return "UPDATE " + Visit(entityRef) + " SET " +
-                    string.Join(", ", fields.Select(c => string.Format("[{0}] = {1}", meta.Columns[c.Member.Name].Name, Visit(c.Expression)))) +
-                    " FROM " + Visit(node.From) +
-                    (node.Where != null ? " WHERE " + Visit(node.Where) : "");
-            }
+            return "UPDATE " + Visit(entityRef) + " SET " +
+                string.Join(", ", fields.Select(c => string.Format("[{0}] = {1}", meta.Columns[c.Member.Name].Name, Visit(c.Expression)))) +
+                " FROM " + Visit(node.From) +
+                (node.Where != null ? " WHERE " + Visit(node.Where) : "");
         }
 
         public override string Visit(UnionQueryExpression node)
@@ -415,15 +399,24 @@ namespace BlueBoxSharp.Data.Translators
             List<string> projection = new List<string>();
 
             foreach (ProjectionItem item in node.Fields.Where(f => f.Type == ProjectionItemType.Projection))
-                projection.Add(Visit(item.Expression) + " AS [" + item.Alias + "]");
+            {
+                if (item.Expression.Expression.NodeType == (ExpressionType)ExtendedExpressionType.Projection)
+                    projection.Add(Visit(item.Expression.Expression));
+                else
+                    projection.Add(Visit(item.Expression.Expression) + " AS [" + item.Expression.Alias + "]");
+            }
 
             return string.Join(", ", projection) + " ";
         }
 
         public override string Visit(GroupByProjectionExpression node)
         {
-            IEnumerable<string> fields = node.Fields.Where(f => f.Type == ProjectionItemType.Projection).Select(f => f.Alias);
-            return string.Join(", [", fields + "]") + " ";
+            List<string> projection = new List<string>();
+
+            foreach (ProjectionItem item in node.Fields.Where(f => f.Type == ProjectionItemType.Projection))
+                projection.Add(Visit(item.Expression.Expression) + " AS [" + item.Expression.Alias + "]");
+
+            return string.Join(", ", projection) + " ";
         }
 
         public override string Visit(UnionProjectionExpression node)
@@ -431,7 +424,7 @@ namespace BlueBoxSharp.Data.Translators
             List<string> projection = new List<string>();
 
             foreach (ProjectionItem item in node.Fields.Where(f => f.Type == ProjectionItemType.Projection))
-                projection.Add("[" + item.Alias + "]");
+                projection.Add("[" + item.Expression.Alias + "]");
 
             return string.Join(", ", projection) + " ";
         }
@@ -466,8 +459,16 @@ namespace BlueBoxSharp.Data.Translators
                 withIndexes = string.Format(" WITH(INDEX({0}))", string.Join(", ", node.Indexes));
 
             string from = string.Format("[{0}]..[{1}] AS [{2}]", meta.Database, meta.Name, node.Entity.Alias);
+            string joinKeyword = null;
 
-            return (node.JoinType == JoinType.Left ? " LEFT JOIN " : " INNER JOIN ") + from + " ON " + Visit(node.JoinClause)
+            if (node.JoinType == JoinType.Left)
+                joinKeyword = " LEFT JOIN ";
+            else if (node.JoinType == JoinType.Right)
+                joinKeyword = " RIGHT JOIN ";
+            else
+                joinKeyword = " INNER JOIN ";
+
+            return joinKeyword + from + " ON " + Visit(node.JoinClause)
                         + string.Join(" ", node.Entity.Joins.Select(j => Visit(j)));
         }
 
@@ -479,6 +480,11 @@ namespace BlueBoxSharp.Data.Translators
         public override string Visit(AliasedExpression node)
         {
             return "[" + node.Alias + "]";
+        }
+
+        public override string Visit(KeywordExpression node)
+        {
+            return node.Value.ToString();
         }
 
         #endregion

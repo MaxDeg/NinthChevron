@@ -30,20 +30,6 @@ namespace BlueBoxSharp.Data.Expressions
         private TableMetadata _metadata;
         private ExtendedExpressionType _nodeType;
 
-        internal InsertUpdateExpression(ExtendedExpressionType type, QueryExpression expression)
-            : base(expression)
-        {
-            if (type != ExtendedExpressionType.Update && type != ExtendedExpressionType.Insert)
-                throw new ArgumentException("type");
-
-            this.Columns = new List<Tuple<string, object>>();
-            this._metadata = MappingProvider.GetMetadata(this.Type);
-            this._nodeType = type;
-
-            //foreach (var change in entity.ChangeTracker.Changes)
-            //    this.AddChange(change);
-        }
-
         internal InsertUpdateExpression(ExtendedExpressionType type, DataContext context, IInternalEntity entity)
             : base(context, entity.GetType())
         {
@@ -57,7 +43,7 @@ namespace BlueBoxSharp.Data.Expressions
             foreach (var change in entity.ChangeTracker.Changes)
                 this.AddChange(change);
         }
-
+        
         public List<Tuple<string, object>> Columns { get; internal set; }
         public override ExpressionType NodeType
         {

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <BBSharpCoreNugetPath>$(SolutionDir)packages\BlueBoxSharp.Core.1.0.0.2\</BBSharpCoreNugetPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFrameworkVersion)' == 'v4.0' ">
+    <BBSharpFrameworkVersion>net40</BBSharpFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFrameworkVersion)' == 'v4.5' ">
+    <BBSharpFrameworkVersion>net45</BBSharpFrameworkVersion>
+  </PropertyGroup>
+</Project>

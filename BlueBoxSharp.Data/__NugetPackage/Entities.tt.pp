@@ -3,9 +3,9 @@
 <#@ assembly name="System.Xml" #>
 <#@ assembly name="System.Core.dll" #>
 <#@ assembly name="System.Configuration.dll" #>
-<#@ assembly name="$(BBSharpCoreNugetPath)lib\net40\BlueBoxSharp.Core.dll" #>
-<#@ assembly name="$(BBSharpDataNugetPath)lib\net40\BlueBoxSharp.Data.dll" #>
-<#@ assembly name="$(BBSharpDataMySqlNugetPath)lib\net40\BlueBoxSharp.Data.MySql.dll" #>
+<#@ assembly name="$(BBSharpCoreNugetPath)lib\$(BBSharpFrameworkVersion)\BlueBoxSharp.Core.dll" #>
+<#@ assembly name="$(BBSharpDataNugetPath)lib\$(BBSharpFrameworkVersion)\BlueBoxSharp.Data.dll" #>
+<#@ assembly name="$(BBSharpDataMySqlNugetPath)lib\$(BBSharpFrameworkVersion)\BlueBoxSharp.Data.MySql.dll" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
@@ -15,7 +15,6 @@
 <#@ import namespace="BlueBoxSharp.Data.MySql" #>
 <#@ import namespace="BlueBoxSharp.Data.Metadata" #>
 <#@ include file="$(BBSharpDataNugetPath)build\T4TemplateHelpers.t4" #>
-
 <#
 	string path = Host.ResolvePath(@"App.config");
 	System.Configuration.Configuration configuration = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(

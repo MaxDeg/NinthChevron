@@ -210,30 +210,61 @@ namespace BlueBoxSharp.Data.Metadata
             }
         }
 
-        public Dictionary<string, string> TypeMapping { get { return _mapping; } }
         public string Name { get; private set; }
         public List<ITableMetadata> Tables { get; private set; }
         public IEnumerable<IProcedureMetadata> Procedures { get; private set; }
+        
+        public Type GetType(string dbType, bool isNullable)
+        {
+            switch (dbType)
+            {
+                case "varchar":
+                case "nvarchar":
+                case "char":
+                case "nchar":
+                case "text":
+                case "ntext":
+                    return typeof(string);
 
-        private static Dictionary<string, string> _mapping = new Dictionary<string, string>
-		{
-			{ "varchar", "System.String"}, { "nvarchar", "System.String"}, { "varchar_nullable", "System.String"}, { "nvarchar_nullable", "System.String"},
-			{ "char", "System.String"}, { "nchar", "System.String"}, { "char_nullable", "System.String"}, { "nchar_nullable", "System.String"},
-			{ "text", "System.String"}, { "ntext", "System.String"}, { "text_nullable", "System.String"}, { "ntext_nullable", "System.String"},
-			{ "datetime", "System.DateTime"}, { "datetime_nullable", "System.Nullable`1[System.DateTime]"},
-            { "smalldatetime", "System.DateTime"}, { "smalldatetime_nullable", "System.Nullable`1[System.DateTime]"},
-			{ "int", "System.Int32"}, { "int_nullable", "System.Nullable`1[System.Int32]"},
-			{ "smallint", "System.Int16"}, { "smallint_nullable", "System.Nullable`1[System.Int16]"},
-			{ "decimal", "System.Decimal"}, { "decimal_nullable", "System.Nullable`1[System.Decimal]"},
-			{ "float", "System.Double"}, { "float_nullable", "System.Nullable`1[System.Double]"},
-			{ "real", "System.Single"}, { "real_nullable", "System.Nullable`1[System.Single]"},
-			{ "bigint", "System.Int64"}, { "bigint_nullable", "System.Nullable`1[System.Int64]"},
-			{ "bit", "System.Boolean"}, { "bit_nullable", "System.Nullable`1[System.Boolean]"},
-			{ "tinyint", "System.Byte"}, { "tinyint_nullable", "System.Nullable`1[System.Byte]"},
-			{ "uniqueidentifier", "System.Guid"}, { "uniqueidentifier_nullable", "System.Guid"},
-			{ "varbinary", "System.Byte[]"}, { "varbinary_nullable", "System.Byte[]"},
-			{ "image", "System.Object"}, { "image_nullable", "System.Object"}, // NOT SUPPORTED
-            { "timestamp", "System.Int64"}, { "timestamp_nullable", "System.Nullable`1[System.Int64]"},
-		};
+                case "datetime":
+                case "smalldatetime":
+                    return isNullable ? typeof(DateTime?) : typeof(DateTime);
+
+                case "int":
+                    return isNullable ? typeof(int?) : typeof(int);
+
+                case "smallint":
+                    return isNullable ? typeof(short?) : typeof(short);
+
+                case "decimal":
+                    return isNullable ? typeof(decimal?) : typeof(decimal);
+
+                case "float":
+                    return isNullable ? typeof(double?) : typeof(double);
+
+                case "real":
+                    return isNullable ? typeof(float?) : typeof(float);
+
+                case "bigint":
+                case "timestamp":
+                    return isNullable ? typeof(long?) : typeof(long);
+
+                case "bit":
+                    return isNullable ? typeof(bool?) : typeof(bool);
+
+                case "tinyint":
+                    return isNullable ? typeof(byte?) : typeof(byte);
+
+                case "uniqueidentifier":
+                    return typeof(Guid);
+
+                case "varbinary":
+                    return typeof(byte[]);
+
+                case "image":
+                default:
+                    return typeof(object);
+            }
+        }
     }
 }

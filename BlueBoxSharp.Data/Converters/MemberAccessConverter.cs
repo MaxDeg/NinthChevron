@@ -48,25 +48,10 @@ namespace BlueBoxSharp.Data.Converters
                 if (instance is UnionQueryExpression)
                 {
                     UnionQueryExpression qExp = (UnionQueryExpression)instance;
-                    ProjectionItem item;
+                    AliasedExpression item;
 
                     if (qExp.Projection.TryFindMember(expression.Member, out item))
-                    {
-                        if (qExp.IsDefaultProjection)
-                            return item.Expression;
-                        else
-                            return new AliasedExpression(expression, item.Alias);
-                    }
-
-                    throw new InvalidOperationException("Member doesn't exists");
-                }
-                else if (instance is QueryExpression)
-                {
-                    QueryExpression qExp = (QueryExpression)instance;
-                    Expression member;
-
-                    if (qExp.Projection.TryFindMember(expression.Member, out member))
-                        return member;
+                        return new AliasedExpression(expression, item.Alias);
 
                     throw new InvalidOperationException("Member doesn't exists");
                 }
@@ -91,13 +76,35 @@ namespace BlueBoxSharp.Data.Converters
 
                     return Expression.Convert(Expression.Constant(getter), expression.Type);
                 }
+                else if (instance is UnionProjectionExpression)
+                {
+                    UnionProjectionExpression eExp = (UnionProjectionExpression)instance;
+                    AliasedExpression member;
+
+                    if (eExp.TryFindMember(expression.Member, out member))
+                        return member; // For Union we return AliasedExpression
+                }
                 else if (instance is GroupByProjectionExpression)
                 {
                     GroupByProjectionExpression eExp = (GroupByProjectionExpression)instance;
-                    Expression member;
+                    AliasedExpression member;
 
                     eExp.TryFindMember(expression.Member, out member);
                     return member;
+                }
+                else if (instance is ProjectionExpression)
+                {
+                    ProjectionExpression eExp = (ProjectionExpression)instance;
+                    AliasedExpression member;
+
+                    eExp.TryFindMember(expression.Member, out member);
+
+                    if (member.Expression.NodeType == ExpressionType.MemberAccess)
+                        return member.Expression;
+                    else if (member.Expression is EntityProjectionExpression)
+                        return member.Expression;
+                    else
+                        return member; // For Calculated field we return AliasedExpression
                 }
 
                 return Expression.MakeMemberAccess(instance, expression.Member);
@@ -130,6 +137,8 @@ namespace BlueBoxSharp.Data.Converters
                 return ((EntityRefExpression)instance).Entity;
             else if (instance is JoinExpression)
                 return ((JoinExpression)instance).Entity;
+            else if (instance is EntityProjectionExpression)
+                return ((EntityProjectionExpression)instance).Entity;
             else
                 return null;
         }

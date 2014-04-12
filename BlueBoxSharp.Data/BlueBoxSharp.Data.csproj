@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BlueBoxSharp.Data</RootNamespace>
     <AssemblyName>BlueBoxSharp.Data</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\Debug\$(TargetFrameworkVersion)</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -26,11 +26,18 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\Release\$(TargetFrameworkVersion)</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFrameworkVersion)' == 'v4.0' ">
+    <DefineConstants>NET40</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFrameworkVersion)' == 'v4.5' ">
+    <DefineConstants>NET45</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -50,26 +57,26 @@
     <Compile Include="Converters\ConstantConverter.cs" />
     <Compile Include="Converters\ExpressionConverter.cs" />
     <Compile Include="Converters\IConverter.cs" />
-    <Compile Include="Converters\IqueryableConverters\AggregateMethodConverter.cs" />
-    <Compile Include="Converters\IqueryableConverters\AnyMethodConverter.cs" />
-    <Compile Include="Converters\IqueryableConverters\BaseIQueryableMethodConverter.cs" />
-    <Compile Include="Converters\IqueryableConverters\ContainsMethodConverter.cs" />
-    <Compile Include="Converters\IqueryableConverters\CountMethodConverter.cs" />
-    <Compile Include="Converters\IqueryableConverters\DeleteMethodConverter.cs" />
-    <Compile Include="Converters\IqueryableConverters\DistinctMethodConverter.cs" />
-    <Compile Include="Converters\IqueryableConverters\FirstMethodConverter.cs" />
-    <Compile Include="Converters\IqueryableConverters\GroupByMethodConverter.cs" />
-    <Compile Include="Converters\IqueryableConverters\InsertMethodConverter.cs" />
-    <Compile Include="Converters\IqueryableConverters\IQueryableMethodConverter.cs" />
-    <Compile Include="Converters\IqueryableConverters\JoinMethodConverter.cs" />
-    <Compile Include="Converters\IqueryableConverters\OrderByMethodConverter.cs" />
-    <Compile Include="Converters\IqueryableConverters\SelectMethodConverter.cs" />
-    <Compile Include="Converters\IqueryableConverters\SkipMethodConverter.cs" />
-    <Compile Include="Converters\IqueryableConverters\TakeMethodConverter.cs" />
-    <Compile Include="Converters\IqueryableConverters\UnionMethodConverter.cs" />
-    <Compile Include="Converters\IqueryableConverters\UpdateMethodConverter.cs" />
-    <Compile Include="Converters\IqueryableConverters\WhereMethodConverter.cs" />
-    <Compile Include="Converters\IqueryableConverters\WithIndexMethodConverter.cs" />
+    <Compile Include="Converters\IQueryableConverters\AggregateMethodConverter.cs" />
+    <Compile Include="Converters\IQueryableConverters\AnyMethodConverter.cs" />
+    <Compile Include="Converters\IQueryableConverters\BaseIQueryableMethodConverter.cs" />
+    <Compile Include="Converters\IQueryableConverters\ContainsMethodConverter.cs" />
+    <Compile Include="Converters\IQueryableConverters\CountMethodConverter.cs" />
+    <Compile Include="Converters\IQueryableConverters\DeleteMethodConverter.cs" />
+    <Compile Include="Converters\IQueryableConverters\DistinctMethodConverter.cs" />
+    <Compile Include="Converters\IQueryableConverters\FirstMethodConverter.cs" />
+    <Compile Include="Converters\IQueryableConverters\GroupByMethodConverter.cs" />
+    <Compile Include="Converters\IQueryableConverters\InsertMethodConverter.cs" />
+    <Compile Include="Converters\IQueryableConverters\IQueryableMethodConverter.cs" />
+    <Compile Include="Converters\IQueryableConverters\JoinMethodConverter.cs" />
+    <Compile Include="Converters\IQueryableConverters\OrderByMethodConverter.cs" />
+    <Compile Include="Converters\IQueryableConverters\SelectMethodConverter.cs" />
+    <Compile Include="Converters\IQueryableConverters\SkipMethodConverter.cs" />
+    <Compile Include="Converters\IQueryableConverters\TakeMethodConverter.cs" />
+    <Compile Include="Converters\IQueryableConverters\UnionMethodConverter.cs" />
+    <Compile Include="Converters\IQueryableConverters\UpdateMethodConverter.cs" />
+    <Compile Include="Converters\IQueryableConverters\WhereMethodConverter.cs" />
+    <Compile Include="Converters\IQueryableConverters\WithIndexMethodConverter.cs" />
     <Compile Include="Converters\ListInitConverter.cs" />
     <Compile Include="Converters\MemberAccessConverter.cs" />
     <Compile Include="Converters\MemberInitConverter.cs" />
@@ -94,12 +101,15 @@
     <Compile Include="Expressions\CommandExpression.cs" />
     <Compile Include="Expressions\DeleteExpression.cs" />
     <Compile Include="Expressions\EntityExpression.cs" />
+    <Compile Include="Expressions\EntityProjectionExpression.cs" />
     <Compile Include="Expressions\EntityRefExpression.cs" />
     <Compile Include="Expressions\ExistsExpression.cs" />
     <Compile Include="Expressions\ExtendedExpressionType.cs" />
     <Compile Include="Expressions\GroupByProjectionExpression.cs" />
     <Compile Include="Expressions\InsertExpression.cs" />
+    <Compile Include="Expressions\InsertSelectExpression.cs" />
     <Compile Include="Expressions\JoinExpression.cs" />
+    <Compile Include="Expressions\KeywordExpression.cs" />
     <Compile Include="Expressions\OrderByExpression.cs" />
     <Compile Include="Expressions\ProjectionExpression.cs" />
     <Compile Include="Expressions\ProjectionItem.cs" />
@@ -113,6 +123,7 @@
     <Compile Include="Entity\IInternalEntity.cs" />
     <Compile Include="AutoMap\IModelVisitor.cs" />
     <Compile Include="AutoMap\IModelVisitorContext.cs" />
+    <Compile Include="Expressions\UpdateSelectExpression.cs" />
     <Compile Include="IInternalQuery.cs" />
     <Compile Include="IQueryableExtensions.cs" />
     <Compile Include="Entity\JoinColumnAttribute.cs" />
@@ -121,6 +132,7 @@
     <Compile Include="Metadata\RelationColumnMetadata.cs" />
     <Compile Include="Metadata\NamingRules.cs" />
     <Compile Include="Metadata\NamingRulesProvider.cs" />
+    <Compile Include="SqlFunctionAttribute.cs" />
     <Compile Include="SqlServer\Metadata\SqlServerMetadata.cs" />
     <Compile Include="AutoMap\ModelMapper.cs" />
     <Compile Include="Metadata\ColumnMetadata.cs" />
@@ -143,7 +155,7 @@
     <Compile Include="QueryResultReader.cs" />
     <Compile Include="RecordNotfoundException.cs" />
     <Compile Include="AutoMap\SelectModelMapper.cs" />
-    <Compile Include="SqlFunctions.cs" />
+    <Compile Include="SqlServer\SqlFunctions.cs" />
     <Compile Include="Entity\TableAttribute.cs" />
     <Compile Include="SqlServer\SqlServerDataContext.cs" />
     <Compile Include="Transaction.cs" />
@@ -174,11 +186,7 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
   <Target Name="AfterBuild">
+    <MSBuild Condition=" '$(TargetFrameworkVersion)' != 'v4.0'" Projects="$(MSBuildProjectFile)" Properties="TargetFrameworkVersion=v4.0" RunEachTargetSeparately="true" />
   </Target>
-  -->
 </Project>

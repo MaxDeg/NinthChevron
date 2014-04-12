@@ -23,9 +23,10 @@ namespace BlueBoxSharp.Data.Metadata
 {
     public interface IDatabaseMetadata
     {
-        Dictionary<string, string> TypeMapping { get; }
         string Name { get; }
         List<ITableMetadata> Tables { get; }
         IEnumerable<IProcedureMetadata> Procedures { get; }
+
+        Type GetType(string dbType, bool isNullable);
     }
 }

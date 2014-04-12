@@ -21,7 +21,7 @@ using System.Linq.Expressions;
 using System.Text;
 using BlueBoxSharp.Data.Expressions;
 
-namespace BlueBoxSharp.Data.Converters.IqueryableConverters
+namespace BlueBoxSharp.Data.Converters.IQueryableConverters
 {
     // Equivalent of IN () in SQL
     internal class ContainsMethodConverter : BaseIQueryableMethodConverter

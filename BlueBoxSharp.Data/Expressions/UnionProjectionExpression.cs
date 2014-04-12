@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 
 namespace BlueBoxSharp.Data.Expressions
@@ -25,7 +26,7 @@ namespace BlueBoxSharp.Data.Expressions
     public class UnionProjectionExpression : ProjectionExpression
     {
         public UnionProjectionExpression(ProjectionExpression expression)
-            : base(expression.Type)
+            : base(expression)
         {
             this.Fields = expression.Fields.ToList();
         }
@@ -35,6 +36,41 @@ namespace BlueBoxSharp.Data.Expressions
         public override ExpressionType NodeType
         {
             get { return (ExpressionType)ExtendedExpressionType.UnionProjection; }
+        }
+
+        protected override IEnumerable<ProjectionItem> FindProjection(Expression expression, MemberInfo member)
+        {
+            if (expression.NodeType == ExpressionType.MemberAccess)
+                return FindProjection(expression as MemberExpression, member).ToList();
+            else if (expression.NodeType == ExpressionType.New)
+                return FindProjection(expression as NewExpression, member).ToList();
+            else if (expression.NodeType == ExpressionType.MemberInit)
+                return FindProjection(expression as MemberInitExpression, member).ToList();
+            else if (expression.NodeType == ExpressionType.Call)
+                return FindProjection(expression as MethodCallExpression, member).ToList();
+            else if (expression is BinaryExpression)
+                return FindProjection(expression as BinaryExpression, member).ToList();
+            else if (expression.NodeType == ExpressionType.Convert)
+                return FindProjection(expression as UnaryExpression, member).ToList();
+
+            else if (expression.NodeType == (ExpressionType)ExtendedExpressionType.Projection)
+                return FindProjection((ProjectionExpression)expression, member).ToList();
+            else if (expression.NodeType == (ExpressionType)ExtendedExpressionType.Entity)
+                return FindProjection((EntityExpression)expression, member).ToList();
+            else if (expression.NodeType == (ExpressionType)ExtendedExpressionType.Exists)
+                return FindProjection((ExistsExpression)expression, member).ToList();
+            else if (expression.NodeType == (ExpressionType)ExtendedExpressionType.AliasedExpression)
+                return new ProjectionItem[] { new ProjectionItem(expression, member, ((AliasedExpression)expression).Alias) };
+
+            else
+                return new ProjectionItem[] { new ProjectionItem(new AliasedExpression(expression, "Extent" + this._index), member, "Extent" + this._index++) };
+        }
+
+        protected override IEnumerable<ProjectionItem> FindProjection(ExistsExpression expression, MemberInfo member)
+        {
+            yield return new ProjectionItem(
+                new AliasedExpression(Expression.Condition(expression, Expression.Constant(1), Expression.Constant(0)), "Extent" + this._index),
+                member, "Extent" + this._index++);
         }
     }
 }

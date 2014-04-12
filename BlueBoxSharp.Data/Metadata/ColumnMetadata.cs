@@ -20,6 +20,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using BlueBoxSharp.Data.Entity;
+using System.Data.SqlClient;
 
 namespace BlueBoxSharp.Data.Metadata
 {
@@ -31,10 +32,8 @@ namespace BlueBoxSharp.Data.Metadata
             this.IsIdentity = isIdentity;
             this.IsPrimaryKey = isPrimaryKey;
             this.IsNullable = isNullable;
-            this.SqlType = this.IsNullable ? type + "_nullable" : type;
-
-            if (db.TypeMapping.ContainsKey(this.SqlType))
-                this.Type = Type.GetType(db.TypeMapping[this.SqlType], true, true);
+            this.SqlType = type;
+            this.Type = db.GetType(this.SqlType, this.IsNullable);
         }
 
         public ColumnMetadata(PropertyInfo property, ColumnAttribute attr)

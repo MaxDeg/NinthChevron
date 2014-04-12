@@ -20,7 +20,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace BlueBoxSharp.Core.Utilities
+namespace BlueBoxSharp.Utilities
 {
     public static class ObjectMerger
     {

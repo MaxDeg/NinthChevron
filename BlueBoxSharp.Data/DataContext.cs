@@ -28,6 +28,8 @@ using BlueBoxSharp.Data.Expressions;
 using BlueBoxSharp.Data.Metadata;
 using BlueBoxSharp.Data.Translators;
 using BlueBoxSharp.Helpers;
+using BlueBoxSharp.Collections;
+using System.Threading.Tasks;
 
 namespace BlueBoxSharp.Data
 {
@@ -42,7 +44,7 @@ namespace BlueBoxSharp.Data
         protected virtual void OnQueryExecuted(string query) { }
 
         protected abstract DbCommand CreateCommand(DbConnection connection, DbTransaction transaction, string query);
-        protected abstract DbConnection OpenConnection();
+        protected abstract DbConnection GetConnection(bool open = true);
 
         public DataContext(string connectionString)
         {
@@ -97,7 +99,7 @@ namespace BlueBoxSharp.Data
         /// <param name="entity"></param>
         public void Insert(IEntity entity)
         {
-            using (DbConnection connection = OpenConnection())
+            using (DbConnection connection = GetConnection())
                 this.Insert(entity, connection, null);
         }
 
@@ -107,7 +109,7 @@ namespace BlueBoxSharp.Data
         /// <param name="entity"></param>
         public void Update(IEntity entity)
         {
-            using (DbConnection connection = OpenConnection())
+            using (DbConnection connection = GetConnection())
                 this.Update(entity, connection, null);
         }
 
@@ -117,7 +119,7 @@ namespace BlueBoxSharp.Data
         /// <param name="entity"></param>
         public void Delete(IEntity entity)
         {
-            using (DbConnection connection = OpenConnection())
+            using (DbConnection connection = GetConnection())
                 this.Delete(entity, connection, null);
         }
 
@@ -225,7 +227,7 @@ namespace BlueBoxSharp.Data
         {
             TResult result = default(TResult);
 
-            using (DbConnection connection = OpenConnection())
+            using (DbConnection connection = GetConnection())
             using (DbCommand command = CreateCommand(connection, null, expression))
             {
                 if (expression is InsertExpression)
@@ -255,15 +257,13 @@ namespace BlueBoxSharp.Data
             List<TResult> list = new List<TResult>();
 
             string query = this.Translator.Translate(expression);
-            if (string.IsNullOrEmpty(query)) return list;
-
-            this.OnQueryExecuted(query);
-
+            if (string.IsNullOrWhiteSpace(query)) return list;
+            
             // Create ResultReader
             QueryResultReader queryReader = new QueryResultReader(expression.Projection);
             int skipCount = expression.SkipCount;
 
-            using (DbConnection connection = OpenConnection())
+            using (DbConnection connection = GetConnection())
             {
                 using (DbCommand command = CreateCommand(connection, null, query))
                 using (DbDataReader reader = command.ExecuteReader())
@@ -286,7 +286,36 @@ namespace BlueBoxSharp.Data
                 }
             }
         }
+        
+#if !NET40
 
+        public IAsyncEnumerable<TResult> AsyncExecute<TResult>(QueryExpression expression)
+        {
+            string query = this.Translator.Translate(expression);
+            if (string.IsNullOrWhiteSpace(query)) return AsyncEnumerable.Empty<TResult>();
+
+            // Create ResultReader
+            QueryResultReader queryReader = new QueryResultReader(expression.Projection);
+            int skipCount = expression.SkipCount;
+
+            DbConnection connection = GetConnection(false);
+            using (DbCommand command = CreateCommand(connection, null, query))
+            {
+                return new AsyncDbDataReader<TResult>(connection, command, expression.SkipCount, r =>
+                {
+                    object[] values = new object[r.FieldCount];
+                    r.GetValues(values);
+
+                    // Read result
+                    object result = queryReader.Read(values);
+
+                    if (result != null) return (TResult)Convert.ChangeType(result, typeof(TResult));
+                    else return default(TResult);
+                });
+            }
+        }
+
+#endif
         #endregion
 
         #region SQL Query/Command
@@ -296,15 +325,20 @@ namespace BlueBoxSharp.Data
             if (!TypeHelper.IsBaseType(typeof(TResult)))
                 return default(TResult);
 
-            using (DbConnection connection = OpenConnection())
-                return ExecuteScalar<TResult>(CreateCommand(connection, null, query));
+            using (DbConnection connection = GetConnection())
+            using (DbCommand command = CreateCommand(connection, null, query))
+            {
+                command.Parameters.AddRange(parameters);
+
+                return ExecuteScalar<TResult>(command);
+            }
         }
 
         public IEnumerable<DataRecord> Execute(string query, params DbParameter[] parameters)
         {
-            using (DbConnection connection = OpenConnection())
+            using (DbConnection connection = GetConnection())
+            using (DbCommand command = CreateCommand(connection, null, query))
             {
-                DbCommand command = CreateCommand(connection, null, query);
                 command.Parameters.AddRange(parameters);
 
                 return Execute(command);
@@ -313,27 +347,29 @@ namespace BlueBoxSharp.Data
 
         public void ExecuteNonQuery(string query, params DbParameter[] parameters)
         {
-            using (DbConnection connection = OpenConnection())
+            using (DbConnection connection = GetConnection())
+            using (DbCommand command = CreateCommand(connection, null, query))
             {
-                DbCommand command = CreateCommand(connection, null, query);
                 command.Parameters.AddRange(parameters);
                 ExecuteNonQuery(command);
             }
         }
-
-
+        
         public TResult ExecuteProcedureScalar<TResult>(string procedure, params object[] parameters)
         {
             if (!TypeHelper.IsBaseType(typeof(TResult)))
                 return default(TResult);
 
-            using (DbConnection connection = OpenConnection())
-                return ExecuteScalar<TResult>(CreateCommand(connection, null, CreateProcedureCall(procedure, parameters)));
+            using (DbConnection connection = GetConnection())
+            using (DbCommand command = CreateCommand(connection, null, CreateProcedureCall(procedure, parameters)))
+            {
+                return ExecuteScalar<TResult>(command);
+            }
         }
 
         public IEnumerable<IEnumerable<DataRecord>> ExecuteMultiResultSetProcedure(string procedure, params object[] parameters)
         {
-            using (DbConnection connection = OpenConnection())
+            using (DbConnection connection = GetConnection())
             using (DbCommand command = CreateCommand(connection, null, CreateProcedureCall(procedure, parameters)))
             using (DbDataReader reader = command.ExecuteReader())
             {
@@ -345,18 +381,96 @@ namespace BlueBoxSharp.Data
 
         public IEnumerable<DataRecord> ExecuteProcedure(string procedure, params object[] parameters)
         {
-            using (DbConnection connection = OpenConnection())
+            using (DbConnection connection = GetConnection())
+            {
                 return Execute(CreateCommand(connection, null, CreateProcedureCall(procedure, parameters)));
+            }
         }
 
         public void ExecuteProcedureNonQuery(string procedure, params object[] parameters)
         {
-            using (DbConnection connection = OpenConnection())
+            using (DbConnection connection = GetConnection())
+            using (DbCommand command = CreateCommand(connection, null, CreateProcedureCall(procedure, parameters)))
             {
-                DbCommand command = CreateCommand(connection, null, CreateProcedureCall(procedure, parameters));
                 ExecuteNonQuery(command);
             }
         }
+        
+#if !NET40
+
+        async public Task<TResult> ExecuteScalarAsync<TResult>(string query, params DbParameter[] parameters)
+        {
+            if (!TypeHelper.IsBaseType(typeof(TResult)))
+                return default(TResult);
+
+            using (DbConnection connection = GetConnection())
+            using (DbCommand command = CreateCommand(connection, null, query))
+            {
+                command.Parameters.AddRange(parameters);
+
+                object value = await command.ExecuteScalarAsync() ?? default(TResult);
+
+                if (value is DBNull)
+                    return default(TResult);
+
+                return (TResult)value;
+            }
+        }
+
+        public IAsyncEnumerable<DataRecord> AsyncExecute(string query, params DbParameter[] parameters)
+        {
+            DbConnection connection = GetConnection(false);
+            using (DbCommand command = CreateCommand(connection, null, query))
+            {
+                command.Parameters.AddRange(parameters);
+                return new AsyncDbDataReader<DataRecord>(connection, command, 0, r => new DataRecord(r));
+            }
+        }
+
+        async public Task ExecuteNonQueryAsync(string query, params DbParameter[] parameters)
+        {
+            using (DbConnection connection = GetConnection())
+            using (DbCommand command = CreateCommand(connection, null, query))
+            {
+                command.Parameters.AddRange(parameters);
+                await command.ExecuteNonQueryAsync();
+            }
+        }
+
+        async public Task<TResult> ExecuteProcedureScalarAsync<TResult>(string procedure, params object[] parameters)
+        {
+            if (!TypeHelper.IsBaseType(typeof(TResult)))
+                return default(TResult);
+
+            using (DbConnection connection = GetConnection())
+            using (DbCommand command = CreateCommand(connection, null, CreateProcedureCall(procedure, parameters)))
+            {
+                object value = await command.ExecuteScalarAsync() ?? default(TResult);
+
+                if (value is DBNull)
+                    return default(TResult);
+
+                return (TResult)value;
+            }
+        }
+
+        public IAsyncEnumerable<DataRecord> AsyncExecuteProcedure(string procedure, params object[] parameters)
+        {
+            DbConnection connection = GetConnection(false);
+            using (DbCommand command = CreateCommand(connection, null, CreateProcedureCall(procedure, parameters)))
+                return new AsyncDbDataReader<DataRecord>(connection, command, 0, r => new DataRecord(r));
+        }
+
+        async public Task ExecuteProcedureNonQueryAsync(string procedure, params object[] parameters)
+        {
+            using (DbConnection connection = GetConnection())
+            using (DbCommand command = CreateCommand(connection, null, CreateProcedureCall(procedure, parameters)))
+            {
+                await command.ExecuteNonQueryAsync();
+            }
+        }
+
+#endif
 
         #endregion
 

@@ -39,10 +39,10 @@ namespace BlueBoxSharp.Data.SqlServer
             return new SqlCommand(query, (SqlConnection)connection, (SqlTransaction)transaction);
         }
 
-        protected override DbConnection OpenConnection()
+        protected override DbConnection GetConnection(bool open = true)
         {
             SqlConnection connection = new SqlConnection(this.ConnectionString);
-            connection.Open();
+            if (open) connection.Open();
 
             return connection;
         }

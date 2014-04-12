@@ -172,7 +172,7 @@ namespace BlueBoxSharp.Data.Translators
                 switch (node.Method.Name)
                 {
                     case "ToString":
-                        return string.Format("CAST({0} AS NVARCHAR)", Visit(node.Object));
+                        return string.Format("CAST({0} AS VARCHAR)", Visit(node.Object));
                     case "IsNullOrEmpty":
                         return string.Format("IFNULL(LENGTH({0}), 0) <= 0", Visit(node.Arguments[0]));
                     case "StartsWith":
@@ -408,7 +408,7 @@ namespace BlueBoxSharp.Data.Translators
                 if (item.Expression.Expression.NodeType == (ExpressionType)ExtendedExpressionType.Projection)
                     projection.Add(Visit(item.Expression.Expression));
                 else
-                    projection.Add(Visit(item.Expression) + " `" + item.Expression.Alias + "`");
+                    projection.Add(Visit(item.Expression.Expression) + " `" + item.Expression.Alias + "`");
             }
 
             return string.Join(", ", projection) + " ";

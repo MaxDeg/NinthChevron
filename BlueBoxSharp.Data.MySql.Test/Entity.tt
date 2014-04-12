@@ -1,7 +1,7 @@
 ﻿<#@ template debug="false" hostspecific="true" language="C#" #>
 <#@ output extension=".cs" #>
-<#@ assembly name="$(SolutionDir)BlueBoxSharp.Data\bin\Release\BlueBoxSharp.Data.dll" #>
-<#@ assembly name="$(SolutionDir)BlueBoxSharp.Data.MySql\bin\Release\BlueBoxSharp.Data.MySql.dll" #>
+<#@ assembly name="$(SolutionDir)BlueBoxSharp.Data\bin\Release\v4.5\BlueBoxSharp.Data.dll" #>
+<#@ assembly name="$(SolutionDir)BlueBoxSharp.Data.MySql\bin\Release\v4.5\BlueBoxSharp.Data.MySql.dll" #>
 <#@ assembly name="System.Configuration.dll" #>
 <#@ assembly name="System.Core.dll" #>
 <#@ import namespace="System.Configuration" #>

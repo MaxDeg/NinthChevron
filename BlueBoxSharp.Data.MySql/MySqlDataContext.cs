@@ -40,10 +40,10 @@ namespace BlueBoxSharp.Data.MySql
             return new MySqlCommand(query, (MySqlConnection)connection, (MySqlTransaction)transaction);
         }
 
-        protected override DbConnection OpenConnection()
+        protected override DbConnection GetConnection(bool open = true)
         {
             MySqlConnection connection = new MySqlConnection(this.ConnectionString);
-            connection.Open();
+            if (open) connection.Open();
 
             return connection;
         }

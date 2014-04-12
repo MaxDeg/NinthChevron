@@ -137,7 +137,7 @@ namespace Sandbox
             return null;
         }
 
-        protected override System.Data.Common.DbConnection OpenConnection()
+        protected override System.Data.Common.DbConnection GetConnection(bool open = true)
         {
             return null;
         }

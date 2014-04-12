@@ -241,8 +241,8 @@ namespace BlueBoxSharp.Data.MySql.Test.Sakila
 	{
 		static Film()
 		{
-			Join<Language>(t => t.Language, (t, f) => t.LanguageId == f.LanguageId); // Relation
 			Join<Language>(t => t.OriginalLanguage, (t, f) => t.OriginalLanguageId == f.LanguageId); // Relation
+			Join<Language>(t => t.Language, (t, f) => t.LanguageId == f.LanguageId); // Relation
 			Join<FilmActor>(t => t.FilmFilmActor, (t, f) => t.FilmId == f.FilmId); // Reverse Relation
 			Join<FilmCategory>(t => t.FilmFilmCategory, (t, f) => t.FilmId == f.FilmId); // Reverse Relation
 			Join<Inventory>(t => t.FilmInventory, (t, f) => t.FilmId == f.FilmId); // Reverse Relation
@@ -286,16 +286,18 @@ namespace BlueBoxSharp.Data.MySql.Test.Sakila
         [NotifyPropertyChanged, Column("rating", false, false, true)]
         public System.Nullable<int> Rating { get; set; }
 		
+        [NotifyPropertyChanged, Column("special_features", false, false, true)]
+        public object SpecialFeatures { get; set; }
 		
         [NotifyPropertyChanged, Column("last_update", false, false, false)]
         public System.DateTime LastUpdate { get; set; }
 	
 		
-        [InnerJoinColumn]
-        public Language Language { get; set; }
-		
         [LeftJoinColumn]
         public Language OriginalLanguage { get; set; }
+		
+        [InnerJoinColumn]
+        public Language Language { get; set; }
 		
         [InnerJoinColumn]
         public FilmActor FilmFilmActor { get; set; }
@@ -312,8 +314,8 @@ namespace BlueBoxSharp.Data.MySql.Test.Sakila
 	{
 		static FilmActor()
 		{
-			Join<Actor>(t => t.Actor, (t, f) => t.ActorId == f.ActorId); // Relation
 			Join<Film>(t => t.Film, (t, f) => t.FilmId == f.FilmId); // Relation
+			Join<Actor>(t => t.Actor, (t, f) => t.ActorId == f.ActorId); // Relation
 		}
 
 		
@@ -328,10 +330,10 @@ namespace BlueBoxSharp.Data.MySql.Test.Sakila
 	
 		
         [InnerJoinColumn]
-        public Actor Actor { get; set; }
+        public Film Film { get; set; }
 		
         [InnerJoinColumn]
-        public Film Film { get; set; }
+        public Actor Actor { get; set; }
 	}
 
 	[Table("film_category", "", "sakila")]
@@ -385,8 +387,8 @@ namespace BlueBoxSharp.Data.MySql.Test.Sakila
 	{
 		static Inventory()
 		{
-			Join<Store>(t => t.Store, (t, f) => t.StoreId == f.StoreId); // Relation
 			Join<Film>(t => t.Film, (t, f) => t.FilmId == f.FilmId); // Relation
+			Join<Store>(t => t.Store, (t, f) => t.StoreId == f.StoreId); // Relation
 			Join<Rental>(t => t.InventoryRental, (t, f) => t.InventoryId == f.InventoryId); // Reverse Relation
 		}
 
@@ -409,10 +411,10 @@ namespace BlueBoxSharp.Data.MySql.Test.Sakila
 	
 		
         [InnerJoinColumn]
-        public Store Store { get; set; }
+        public Film Film { get; set; }
 		
         [InnerJoinColumn]
-        public Film Film { get; set; }
+        public Store Store { get; set; }
 		
         [InnerJoinColumn]
         public Rental InventoryRental { get; set; }
@@ -423,8 +425,8 @@ namespace BlueBoxSharp.Data.MySql.Test.Sakila
 	{
 		static Language()
 		{
-			Join<Film>(t => t.LanguageFilm, (t, f) => t.LanguageId == f.LanguageId); // Reverse Relation
 			Join<Film>(t => t.OriginalLanguageFilm, (t, f) => t.LanguageId == f.OriginalLanguageId); // Reverse Relation
+			Join<Film>(t => t.LanguageFilm, (t, f) => t.LanguageId == f.LanguageId); // Reverse Relation
 		}
 
 		
@@ -442,11 +444,11 @@ namespace BlueBoxSharp.Data.MySql.Test.Sakila
         public System.DateTime LastUpdate { get; set; }
 	
 		
-        [InnerJoinColumn]
-        public Film LanguageFilm { get; set; }
-		
         [LeftJoinColumn]
         public Film OriginalLanguageFilm { get; set; }
+		
+        [InnerJoinColumn]
+        public Film LanguageFilm { get; set; }
 	}
 
 	[Table("payment", "", "sakila")]
@@ -454,9 +456,9 @@ namespace BlueBoxSharp.Data.MySql.Test.Sakila
 	{
 		static Payment()
 		{
-			Join<Staff>(t => t.Staff, (t, f) => t.StaffId == f.StaffId); // Relation
 			Join<Customer>(t => t.Customer, (t, f) => t.CustomerId == f.CustomerId); // Relation
 			Join<Rental>(t => t.Rental, (t, f) => t.RentalId == f.RentalId); // Relation
+			Join<Staff>(t => t.Staff, (t, f) => t.StaffId == f.StaffId); // Relation
 		}
 
 		
@@ -487,13 +489,13 @@ namespace BlueBoxSharp.Data.MySql.Test.Sakila
 	
 		
         [InnerJoinColumn]
-        public Staff Staff { get; set; }
-		
-        [InnerJoinColumn]
         public Customer Customer { get; set; }
 		
         [LeftJoinColumn]
         public Rental Rental { get; set; }
+		
+        [InnerJoinColumn]
+        public Staff Staff { get; set; }
 	}
 
 	[Table("rental", "", "sakila")]
@@ -502,9 +504,9 @@ namespace BlueBoxSharp.Data.MySql.Test.Sakila
 		static Rental()
 		{
 			Join<Payment>(t => t.RentalPayment, (t, f) => t.RentalId == f.RentalId); // Reverse Relation
-			Join<Inventory>(t => t.Inventory, (t, f) => t.InventoryId == f.InventoryId); // Relation
 			Join<Staff>(t => t.Staff, (t, f) => t.StaffId == f.StaffId); // Relation
 			Join<Customer>(t => t.Customer, (t, f) => t.CustomerId == f.CustomerId); // Relation
+			Join<Inventory>(t => t.Inventory, (t, f) => t.InventoryId == f.InventoryId); // Relation
 		}
 
 		
@@ -538,13 +540,13 @@ namespace BlueBoxSharp.Data.MySql.Test.Sakila
         public Payment RentalPayment { get; set; }
 		
         [InnerJoinColumn]
-        public Inventory Inventory { get; set; }
-		
-        [InnerJoinColumn]
         public Staff Staff { get; set; }
 		
         [InnerJoinColumn]
         public Customer Customer { get; set; }
+		
+        [InnerJoinColumn]
+        public Inventory Inventory { get; set; }
 	}
 
 	[Table("staff", "", "sakila")]
@@ -622,8 +624,8 @@ namespace BlueBoxSharp.Data.MySql.Test.Sakila
 			Join<Customer>(t => t.StoreCustomer, (t, f) => t.StoreId == f.StoreId); // Reverse Relation
 			Join<Inventory>(t => t.StoreInventory, (t, f) => t.StoreId == f.StoreId); // Reverse Relation
 			Join<Staff>(t => t.StoreStaff, (t, f) => t.StoreId == f.StoreId); // Reverse Relation
-			Join<Staff>(t => t.ManagerStaff, (t, f) => t.ManagerStaffId == f.StaffId); // Relation
 			Join<Address>(t => t.Address, (t, f) => t.AddressId == f.AddressId); // Relation
+			Join<Staff>(t => t.ManagerStaff, (t, f) => t.ManagerStaffId == f.StaffId); // Relation
 		}
 
 		
@@ -654,10 +656,10 @@ namespace BlueBoxSharp.Data.MySql.Test.Sakila
         public Staff StoreStaff { get; set; }
 		
         [InnerJoinColumn]
-        public Staff ManagerStaff { get; set; }
+        public Address Address { get; set; }
 		
         [InnerJoinColumn]
-        public Address Address { get; set; }
+        public Staff ManagerStaff { get; set; }
 	}
 
 	[Table("tbl_billinginfo_bli", "", "sakila")]

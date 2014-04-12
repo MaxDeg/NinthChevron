@@ -39,7 +39,7 @@ namespace BlueBoxSharp.ILInjector.Build
             {
                 NotifyPropertyChangesInjector injector = new NotifyPropertyChangesInjector(Assembly);
                 injector.Run();
-
+                
                 return true;
             }
             catch (Exception e)

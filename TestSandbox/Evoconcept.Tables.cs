@@ -613,11 +613,11 @@ namespace TestSandbox.Evoconcept
 			Join<Alias>(t => t.AliasDomain, (t, f) => t.Id == f.DomainId); // Reverse Relation
 			Join<Dnsrecord>(t => t.DnsrecordSdm, (t, f) => t.Id == f.SdmId); // Reverse Relation
 			Join<Dnsrecord>(t => t.DnsrecordDomain, (t, f) => t.Id == f.DomainId); // Reverse Relation
-			Join<Evobox>(t => t.Evobox, (t, f) => t.EvoboxId == f.Id); // Relation
 			Join<Service>(t => t.PrimaryService, (t, f) => t.PrimaryServiceId == f.Id); // Relation
 			Join<Domain>(t => t.ParentDomain, (t, f) => t.ParentDomainId == f.Id); // Relation
 			Join<Domain>(t => t.DomainParentDomain, (t, f) => t.Id == f.ParentDomainId); // Reverse Relation
 			Join<Service>(t => t.SecondaryService, (t, f) => t.SecondaryServiceId == f.Id); // Relation
+			Join<Evobox>(t => t.Evobox, (t, f) => t.EvoboxId == f.Id); // Relation
 			Join<Email>(t => t.EmailDomain, (t, f) => t.Id == f.DomainId); // Reverse Relation
 			Join<Website>(t => t.WebsiteDomain, (t, f) => t.Id == f.DomainId); // Reverse Relation
 		}
@@ -677,9 +677,6 @@ namespace TestSandbox.Evoconcept
         public Dnsrecord DnsrecordDomain { get; set; }
 		
         [LeftJoinColumn]
-        public Evobox Evobox { get; set; }
-		
-        [LeftJoinColumn]
         public Service PrimaryService { get; set; }
 		
         [LeftJoinColumn]
@@ -690,6 +687,9 @@ namespace TestSandbox.Evoconcept
 		
         [LeftJoinColumn]
         public Service SecondaryService { get; set; }
+		
+        [LeftJoinColumn]
+        public Evobox Evobox { get; set; }
 		
         [InnerJoinColumn]
         public Email EmailDomain { get; set; }
@@ -766,8 +766,8 @@ namespace TestSandbox.Evoconcept
 			Join<Database>(t => t.DatabaseEvobox, (t, f) => t.Id == f.EvoboxId); // Reverse Relation
 			Join<Domain>(t => t.DomainEvobox, (t, f) => t.Id == f.EvoboxId); // Reverse Relation
 			Join<Email>(t => t.EmailDerivedEvobox, (t, f) => t.Id == f.DerivedEvoboxId); // Reverse Relation
-			Join<Service>(t => t.StatsService, (t, f) => t.StatsServiceId == f.Id); // Relation
 			Join<Offer>(t => t.Offer, (t, f) => t.OfferId == f.Id); // Relation
+			Join<Service>(t => t.StatsService, (t, f) => t.StatsServiceId == f.Id); // Relation
 			Join<Ftpaccount>(t => t.FtpaccountEvobox, (t, f) => t.Id == f.EvoboxId); // Reverse Relation
 			Join<Transaction>(t => t.TransactionEvobox, (t, f) => t.Id == f.EvoboxId); // Reverse Relation
 			Join<UsrEbx>(t => t.UsrEbxEvobox, (t, f) => t.Id == f.EvoboxId); // Reverse Relation
@@ -836,11 +836,11 @@ namespace TestSandbox.Evoconcept
         [InnerJoinColumn]
         public Email EmailDerivedEvobox { get; set; }
 		
-        [LeftJoinColumn]
-        public Service StatsService { get; set; }
-		
         [InnerJoinColumn]
         public Offer Offer { get; set; }
+		
+        [LeftJoinColumn]
+        public Service StatsService { get; set; }
 		
         [InnerJoinColumn]
         public Ftpaccount FtpaccountEvobox { get; set; }
@@ -1425,8 +1425,8 @@ namespace TestSandbox.Evoconcept
 			Join<Bill>(t => t.BillTransaction, (t, f) => t.Id == f.TransactionId); // Reverse Relation
 			Join<Order>(t => t.OrderTransaction, (t, f) => t.Id == f.TransactionId); // Reverse Relation
 			Join<Transactionattribute>(t => t.TransactionattributeTransaction, (t, f) => t.Id == f.TransactionId); // Reverse Relation
-			Join<Evobox>(t => t.Evobox, (t, f) => t.EvoboxId == f.Id); // Relation
 			Join<User>(t => t.User, (t, f) => t.UserId == f.Id); // Relation
+			Join<Evobox>(t => t.Evobox, (t, f) => t.EvoboxId == f.Id); // Relation
 		}
 
 		
@@ -1474,11 +1474,11 @@ namespace TestSandbox.Evoconcept
         [InnerJoinColumn]
         public Transactionattribute TransactionattributeTransaction { get; set; }
 		
-        [LeftJoinColumn]
-        public Evobox Evobox { get; set; }
-		
         [InnerJoinColumn]
         public User User { get; set; }
+		
+        [LeftJoinColumn]
+        public Evobox Evobox { get; set; }
 	}
 	[Table("tbl_useractivationkey_uak", "", "evoconcept")]
 	public partial class Useractivationkey : Entity<Useractivationkey>
@@ -1669,8 +1669,8 @@ namespace TestSandbox.Evoconcept
 	{
 		static Website()
 		{
-			Join<Application>(t => t.Application, (t, f) => t.ApplicationId == f.Id); // Relation
 			Join<Domain>(t => t.Domain, (t, f) => t.DomainId == f.Id); // Relation
+			Join<Application>(t => t.Application, (t, f) => t.ApplicationId == f.Id); // Relation
 		}
 
 		
@@ -1695,9 +1695,9 @@ namespace TestSandbox.Evoconcept
 	
 		
         [InnerJoinColumn]
-        public Application Application { get; set; }
+        public Domain Domain { get; set; }
 		
         [InnerJoinColumn]
-        public Domain Domain { get; set; }
+        public Application Application { get; set; }
 	}
 }

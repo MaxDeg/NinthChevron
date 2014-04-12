@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsyncDbDataReader.cs" />
     <Compile Include="Entity\ColumnAttribute.cs" />
     <Compile Include="Converters\BaseConverter.cs" />
     <Compile Include="Converters\BinaryConverter.cs" />
@@ -124,7 +125,10 @@
     <Compile Include="AutoMap\IModelVisitor.cs" />
     <Compile Include="AutoMap\IModelVisitorContext.cs" />
     <Compile Include="Expressions\UpdateSelectExpression.cs" />
+    <Compile Include="IAsyncEnumerableExtensions.cs" />
+    <Compile Include="IAsyncQueryProvider.cs" />
     <Compile Include="IInternalQuery.cs" />
+    <Compile Include="IQueryableAsyncExtensions.cs" />
     <Compile Include="IQueryableExtensions.cs" />
     <Compile Include="Entity\JoinColumnAttribute.cs" />
     <Compile Include="Metadata\IRelationColumnMetadata.cs" />
@@ -166,6 +170,9 @@
     <Compile Include="AutoMap\WhereClauseMapper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="__NugetPackage\BlueBoxSharp.Data.targets">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="__NugetPackage\Entities.tt.pp" />
     <None Include="__NugetPackage\BlueBoxSharp.Data.props">
       <SubType>Designer</SubType>

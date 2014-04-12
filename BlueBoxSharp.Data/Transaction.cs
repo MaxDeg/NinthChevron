@@ -21,6 +21,8 @@ using System.Linq;
 using System.Text;
 using BlueBoxSharp.Data.Entity;
 using BlueBoxSharp.Helpers;
+using System.Threading.Tasks;
+using BlueBoxSharp.Collections;
 
 namespace BlueBoxSharp.Data
 {
@@ -35,7 +37,7 @@ namespace BlueBoxSharp.Data
             internal Transaction(DataContext context)
             {
                 this._context = context;
-                this._dbTransaction = context.OpenConnection().BeginTransaction();
+                this._dbTransaction = context.GetConnection().BeginTransaction();
             }
 
             public void Insert<TEntity>(TEntity entity) where TEntity : Entity<TEntity>, new()
@@ -143,6 +145,61 @@ namespace BlueBoxSharp.Data
                     throw e;
                 }
             }
+            
+#if !NET40
+
+            async public Task<TResult> ExecuteScalarAsync<TResult>(string query, params DbParameter[] parameters)
+            {
+                if (!TypeHelper.IsBaseType(typeof(TResult)))
+                    return default(TResult);
+
+                using (DbCommand command = this._context.CreateCommand(this._dbTransaction.Connection, this._dbTransaction, query))
+                {
+                    command.Parameters.AddRange(parameters);
+
+                    object value = await command.ExecuteScalarAsync() ?? default(TResult);
+
+                    if (value is DBNull)
+                        return default(TResult);
+
+                    return (TResult)value;
+                }
+            }
+
+            async public Task ExecuteNonQueryAsync(string query, params DbParameter[] parameters)
+            {
+                using (DbCommand command = this._context.CreateCommand(this._dbTransaction.Connection, this._dbTransaction, query))
+                {
+                    command.Parameters.AddRange(parameters);
+                    await command.ExecuteNonQueryAsync();
+                }
+            }
+
+            async public Task<TResult> ExecuteProcedureScalarAsync<TResult>(string procedure, params object[] parameters)
+            {
+                if (!TypeHelper.IsBaseType(typeof(TResult)))
+                    return default(TResult);
+
+                using (DbCommand command = this._context.CreateCommand(this._dbTransaction.Connection, this._dbTransaction, this._context.CreateProcedureCall(procedure, parameters)))
+                {
+                    object value = await command.ExecuteScalarAsync() ?? default(TResult);
+
+                    if (value is DBNull)
+                        return default(TResult);
+
+                    return (TResult)value;
+                }
+            }
+
+            async public Task ExecuteProcedureNonQueryAsync(string procedure, params object[] parameters)
+            {
+                using (DbCommand command = this._context.CreateCommand(this._dbTransaction.Connection, this._dbTransaction, this._context.CreateProcedureCall(procedure, parameters)))
+                {
+                    await command.ExecuteNonQueryAsync();
+                }
+            }
+
+#endif
 
             public void Dispose()
             {

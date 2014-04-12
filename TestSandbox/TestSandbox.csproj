@@ -4,9 +4,6 @@
   <Import Project="..\packages\BlueBoxSharp.Data.MySql.1.0.0.0\build\BlueBoxSharp.Data.MySql.props" Condition="Exists('..\packages\BlueBoxSharp.Data.MySql.1.0.0.0\build\BlueBoxSharp.Data.MySql.props')" />
   <Import Project="..\packages\BlueBoxSharp.Data.1.0.0.0\build\BlueBoxSharp.Data.props" Condition="Exists('..\packages\BlueBoxSharp.Data.1.0.0.0\build\BlueBoxSharp.Data.props')" />
   <Import Project="..\packages\BlueBoxSharp.AppConfig.1.0.0.0\build\BlueBoxSharp.AppConfig.props" Condition="Exists('..\packages\BlueBoxSharp.AppConfig.1.0.0.0\build\BlueBoxSharp.AppConfig.props')" />
-  <Import Project="..\packages\NeuNeuSoft.AppConfig.1.0.0.1\build\NeuNeuSoft.AppConfig.props" Condition="Exists('..\packages\NeuNeuSoft.AppConfig.1.0.0.1\build\NeuNeuSoft.AppConfig.props')" />
-  <Import Project="..\packages\NeuNeuSoft.Data.MySql.1.0.0.2\build\NeuNeuSoft.Data.MySql.props" Condition="Exists('..\packages\NeuNeuSoft.Data.MySql.1.0.0.2\build\NeuNeuSoft.Data.MySql.props')" />
-  <Import Project="..\packages\NeuNeuSoft.Data.1.0.2.3\build\NeuNeuSoft.Data.props" Condition="Exists('..\packages\NeuNeuSoft.Data.1.0.2.3\build\NeuNeuSoft.Data.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -100,7 +97,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Import Project="..\packages\NeuNeuSoft.Core.1.0.1.9\build\NeuNeuSoft.Core.targets" Condition="Exists('..\packages\NeuNeuSoft.Core.1.0.1.9\build\NeuNeuSoft.Core.targets')" />
   <Import Project="..\packages\BlueBoxSharp.Core.1.0.0.2\build\BlueBoxSharp.Core.targets" Condition="Exists('..\packages\BlueBoxSharp.Core.1.0.0.2\build\BlueBoxSharp.Core.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

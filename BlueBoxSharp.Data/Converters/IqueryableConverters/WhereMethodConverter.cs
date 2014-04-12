@@ -20,6 +20,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using BlueBoxSharp.Data.Expressions;
+using BlueBoxSharp.Helpers;
 
 namespace BlueBoxSharp.Data.Converters.IQueryableConverters
 {
@@ -38,7 +39,9 @@ namespace BlueBoxSharp.Data.Converters.IQueryableConverters
 
         public static void ConvertPredicate(ExpressionConverter converter, QueryExpression context, LambdaExpression lambda)
         {
-            Expression whereExp = converter.Convert(lambda.Body, new Binding(lambda.Parameters[0], context));
+            Expression whereExp = converter.Convert(lambda.Body, new Binding(lambda.Parameters[0], context.Projection));
+            if (TypeHelper.NonNullableType(whereExp.Type) == typeof(bool) && (whereExp is MemberExpression || whereExp is ConstantExpression))
+                whereExp = Expression.Equal(whereExp, Expression.Constant(true));
 
             if (context.Where == null)
                 context.Where = whereExp;

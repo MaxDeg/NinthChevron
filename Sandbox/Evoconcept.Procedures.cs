@@ -16,7 +16,7 @@ namespace Sandbox.Entities.Evoconcept
         /// <para>[IN] p_store_id   int</para>
         /// <para>[OUT] p_film_count   int</para>
         /// </summary>
-        public static IEnumerable<DataRecord> FilmInStock(DataContext context, object inPFilmId, object inPStoreId, object outPFilmCount) 
+        public static IEnumerable<DataRecord> FilmInStock(DataContext context, System.Nullable<int> inPFilmId, System.Nullable<int> inPStoreId, System.Nullable<int> outPFilmCount) 
         { 
             return context.ExecuteProcedure("`sakila`.`film_in_stock`", inPFilmId, inPStoreId, outPFilmCount);
         }
@@ -27,7 +27,7 @@ namespace Sandbox.Entities.Evoconcept
         /// <para>[IN] p_store_id   int</para>
         /// <para>[OUT] p_film_count   int</para>
         /// </summary>
-        public static IEnumerable<DataRecord> FilmNotInStock(DataContext context, object inPFilmId, object inPStoreId, object outPFilmCount) 
+        public static IEnumerable<DataRecord> FilmNotInStock(DataContext context, System.Nullable<int> inPFilmId, System.Nullable<int> inPStoreId, System.Nullable<int> outPFilmCount) 
         { 
             return context.ExecuteProcedure("`sakila`.`film_not_in_stock`", inPFilmId, inPStoreId, outPFilmCount);
         }
@@ -37,7 +37,7 @@ namespace Sandbox.Entities.Evoconcept
         /// <para>[IN] domId   int</para>
         /// <para>[OUT] boxId   int</para>
         /// </summary>
-        public static IEnumerable<DataRecord> GetDomBoxId(DataContext context, object inDomId, object outBoxId) 
+        public static IEnumerable<DataRecord> GetDomBoxId(DataContext context, System.Nullable<int> inDomId, System.Nullable<int> outBoxId) 
         { 
             return context.ExecuteProcedure("`evoconcept`.`get_dom_box_id`", inDomId, outBoxId);
         }
@@ -56,7 +56,7 @@ namespace Sandbox.Entities.Evoconcept
         /// <para>[IN] min_dollar_amount_purchased   udecimal(10)</para>
         /// <para>[OUT] count_rewardees   int</para>
         /// </summary>
-        public static IEnumerable<DataRecord> RewardsReport(DataContext context, object inMinMonthlyPurchases, object inMinDollarAmountPurchased, object outCountRewardees) 
+        public static IEnumerable<DataRecord> RewardsReport(DataContext context, System.Nullable<byte> inMinMonthlyPurchases, System.Nullable<decimal> inMinDollarAmountPurchased, System.Nullable<int> outCountRewardees) 
         { 
             return context.ExecuteProcedure("`sakila`.`rewards_report`", inMinMonthlyPurchases, inMinDollarAmountPurchased, outCountRewardees);
         }

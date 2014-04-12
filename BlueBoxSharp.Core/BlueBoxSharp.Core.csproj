@@ -51,10 +51,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\AsyncEnumerable.cs" />
+    <Compile Include="Collections\EmptyAsyncEnumerable.cs" />
+    <Compile Include="Collections\IAsyncEnumerable.cs" />
+    <Compile Include="Collections\IAsyncEnumerable`.cs" />
+    <Compile Include="Collections\IAsyncEnumerator.cs" />
+    <Compile Include="Collections\IAsyncEnumerator`.cs" />
     <Compile Include="Collections\ObservableDictionary.cs" />
     <Compile Include="ComponentModel\DataAnnotations\NotifyPropertyChangedAttribute.cs" />
     <Compile Include="Core\MayBe.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Helpers\ContractHelper.cs" />
     <Compile Include="Helpers\DateTimeHelper.cs" />
     <Compile Include="Extensions\DbDataReaderExtensions.cs" />
     <Compile Include="Helpers\TypeDescriptorHelper.cs" />

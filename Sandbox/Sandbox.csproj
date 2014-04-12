@@ -78,7 +78,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <UsingTask AssemblyFile="$(SolutionDir)BlueBoxSharp.ILInjector\bin\Release\BlueBoxSharp.ILInjector.dll" TaskName="InjectCode" />
+  <UsingTask AssemblyFile="$(SolutionDir)BlueBoxSharp.ILInjector\bin\Release\v4.5\BlueBoxSharp.ILInjector.dll" TaskName="InjectCode" />
   <Target Name="InjectCode" AfterTargets="Build">
     <InjectCode Assembly="$(TargetPath)" />
   </Target>

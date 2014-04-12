@@ -33,7 +33,7 @@ namespace BlueBoxSharp.Data.Converters.IQueryableConverters
             LambdaExpression lambda;
 
             lambda = converter.GetLambdaExpression(expression.Arguments[2]);
-            Expression outerRef = converter.Convert(lambda.Body, new Binding(lambda.Parameters[0], context));
+            Expression outerRef = converter.Convert(lambda.Body, new Binding(lambda.Parameters[0], context.Projection));
 
             lambda = converter.GetLambdaExpression(expression.Arguments[3]);
             Expression innerRef = converter.Convert(lambda.Body, new Binding(lambda.Parameters[0], (ConstantExpression)expression.Arguments[1]));
@@ -59,7 +59,7 @@ namespace BlueBoxSharp.Data.Converters.IQueryableConverters
             lambda = converter.GetLambdaExpression(expression.Arguments[4]);
             Expression projection = converter.Convert(lambda.Body, new Binding(lambda.Parameters[0], context), new Binding(lambda.Parameters[1], innerRef));
 
-            context.Project(new ProjectionExpression(projection));
+            context.Project(converter, lambda);
 
             return context;
         }

@@ -20,10 +20,16 @@ using System.Linq;
 using System.Linq.Expressions;
 using BlueBoxSharp.Data.Converters;
 using BlueBoxSharp.Data.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
+using BlueBoxSharp.Collections;
 
 namespace BlueBoxSharp.Data
 {
     internal class QueryProvider : IQueryProvider
+#if !NET40
+, IAsyncQueryProvider
+#endif
     {
         public IQueryable<TElement> CreateQuery<TElement>(Expression expression)
         {
@@ -93,5 +99,54 @@ namespace BlueBoxSharp.Data
 
             return default(TResult);
         }
+
+#if !NET40
+
+        public Task ExecuteAsync(Expression expression, CancellationToken token)
+        {
+            return ExecuteAsync<object>(expression, token);
+        }
+
+        async public Task<TResult> ExecuteAsync<TResult>(Expression expression, CancellationToken token)
+        {
+            ExpressionConverter converter = new ExpressionConverter(expression);
+            QueryExpression query = (QueryExpression)converter.Convert();
+
+            token.ThrowIfCancellationRequested();
+
+            IAsyncEnumerable<TResult> collection = query.Context.AsyncExecute<TResult>(query);
+
+            token.ThrowIfCancellationRequested();
+
+            if (query.ResultType == QueryReturnType.Single || query.ResultType == QueryReturnType.Aggregate)
+                try
+                {
+                    return (TResult)await collection.SingleAsync();
+                }
+                catch (InvalidOperationException)
+                {
+                    throw new RecordNotfoundException();
+                }
+
+            else if (query.ResultType == QueryReturnType.SingleOrDefault)
+                return (TResult)await collection.SingleOrDefaultAsync();
+
+            else if (query.ResultType == QueryReturnType.First)
+                try
+                {
+                    return (TResult)await collection.FirstAsync();
+                }
+                catch (InvalidOperationException)
+                {
+                    throw new RecordNotfoundException();
+                }
+
+            else if (query.ResultType == QueryReturnType.FirstOrDefault)
+                return (TResult)await collection.FirstOrDefaultAsync();
+
+            return default(TResult);
+        }
+
+#endif
     }
 }

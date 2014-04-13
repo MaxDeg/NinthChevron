@@ -103,7 +103,7 @@
   </Choose>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <UsingTask AssemblyFile="$(SolutionDir)BlueBoxSharp.ILInjector\bin\Release\BlueBoxSharp.ILInjector.dll" TaskName="InjectCode" />
+  <UsingTask AssemblyFile="$(SolutionDir)BlueBoxSharp.ILInjector\bin\Release\v4.5\BlueBoxSharp.ILInjector.dll" TaskName="InjectCode" />
   <Target Name="InjectCode" AfterTargets="Build">
     <InjectCode Assembly="$(TargetPath)" />
   </Target>

@@ -21,14 +21,32 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using BlueBoxSharp.Data.Entity;
+using BlueBoxSharp.Data.Metadata;
 
 namespace BlueBoxSharp.Data
 {
     public static class EntityQueryable
     {
-        public static IQueryable<TSource> WithIndex<TSource, TKey>(IQueryable<TSource> enumerable, Expression<Func<TSource, TKey>> propertySelector, IEnumerable<ConstantExpression> indexes)
+        public static IQueryable<TSource> WithIndex<TSource, TKey>(
+            IQueryable<TSource> enumerable, 
+            Expression<Func<TSource, TKey>> propertySelector, 
+            IEnumerable<ConstantExpression> indexes
+            )
         {
             return enumerable;
+        }
+
+
+        public static IQueryable<TProjection> DynamicJoin<TSource, TKey, TJoinSource, TProjection>(
+            IQueryable<TSource> enumerable,
+            JoinType type,
+            Expression<Func<TSource, TKey>> propertySelector,
+            IQueryable<TJoinSource> joinEnumerable,
+            Expression<Func<TKey, TJoinSource, bool>> clause,
+            Expression<Func<TSource, TJoinSource, TProjection>> projectionSelector
+            )
+        {
+            return null;
         }
     }
 }

@@ -24,8 +24,9 @@ using System.Text;
 using BlueBoxSharp.Data.Expressions;
 using BlueBoxSharp.Data.Metadata;
 using BlueBoxSharp.Helpers;
+using BlueBoxSharp.Data.Translators;
 
-namespace BlueBoxSharp.Data.Translators
+namespace BlueBoxSharp.Data.SqlServer.Translators
 {
     public class TSqlTranslator : SqlExpressionVisitor, ITranslator
     {

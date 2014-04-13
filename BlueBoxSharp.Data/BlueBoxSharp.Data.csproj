@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsyncDbDataReader.cs" />
+    <Compile Include="Converters\IQueryableConverters\DynamicJoinMethodConverter.cs" />
     <Compile Include="Entity\ColumnAttribute.cs" />
     <Compile Include="Converters\BaseConverter.cs" />
     <Compile Include="Converters\BinaryConverter.cs" />
@@ -137,7 +138,6 @@
     <Compile Include="Metadata\NamingRules.cs" />
     <Compile Include="Metadata\NamingRulesProvider.cs" />
     <Compile Include="SqlFunctionAttribute.cs" />
-    <Compile Include="SqlServer\Metadata\SqlServerMetadata.cs" />
     <Compile Include="AutoMap\ModelMapper.cs" />
     <Compile Include="Metadata\ColumnMetadata.cs" />
     <Compile Include="Metadata\GeneratorHelper.cs" />
@@ -147,7 +147,6 @@
     <Compile Include="Metadata\ITableMetadata.cs" />
     <Compile Include="Metadata\MappingProvider.cs" />
     <Compile Include="Metadata\ProcedureParameterMetadata.cs" />
-    <Compile Include="SqlServer\Metadata\SqlServerProcedureMetadata.cs" />
     <Compile Include="Metadata\TableMetadata.cs" />
     <Compile Include="AutoMap\ModelVisitor.cs" />
     <Compile Include="AutoMap\ModelVisitorContext.cs" />
@@ -159,21 +158,16 @@
     <Compile Include="QueryResultReader.cs" />
     <Compile Include="RecordNotfoundException.cs" />
     <Compile Include="AutoMap\SelectModelMapper.cs" />
-    <Compile Include="SqlServer\SqlFunctions.cs" />
     <Compile Include="Entity\TableAttribute.cs" />
-    <Compile Include="SqlServer\SqlServerDataContext.cs" />
     <Compile Include="Transaction.cs" />
     <Compile Include="Translators\ITranslator.cs" />
     <Compile Include="Translators\SqlExpressionVisitor.cs" />
-    <Compile Include="SqlServer\Translators\TSqlTranslator.cs" />
-    <Compile Include="SqlServer\Translators\TSqlTranslator2005.cs" />
     <Compile Include="AutoMap\WhereClauseMapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="__NugetPackage\BlueBoxSharp.Data.targets">
       <SubType>Designer</SubType>
     </None>
-    <None Include="__NugetPackage\Entities.tt.pp" />
     <None Include="__NugetPackage\BlueBoxSharp.Data.props">
       <SubType>Designer</SubType>
     </None>

@@ -92,8 +92,8 @@ namespace BlueBoxSharp.Data.Expressions
         {
             return string.Format("[{0} {1}]", this._type, this.Alias);
         }
-
-        internal JoinExpression Join(ExpressionConverter converter, MemberInfo member, Type type)
+                    
+        internal EntityProjectionExpression Join(ExpressionConverter converter, MemberInfo member, Type type)
         {
             if (!typeof(IEntity).IsAssignableFrom(type))
                 throw new ArgumentException("Type doesn't implements IEntity");
@@ -108,7 +108,7 @@ namespace BlueBoxSharp.Data.Expressions
                 if (clause != null && joinType != JoinType.None)
                 {
                     LambdaExpression lambda = converter.GetLambdaExpression(clause);
-
+                    
                     clause = converter.Convert(
                         lambda.Body,
                         new Binding(lambda.Parameters[0], this),
@@ -118,22 +118,21 @@ namespace BlueBoxSharp.Data.Expressions
                     if (entityRef.Where != null)
                         clause = Expression.AndAlso(clause, entityRef.Where);
 
-                    expression = new JoinExpression(member, entityRef, joinType, clause);
+                    expression = new JoinExpression(member.Name, entityRef, joinType, clause);
                     this._joins.Add(member.Name, expression);
-
                 }
                 else
                     throw new Exception("No Join clause found");
             }
 
-            return expression;
+            return new EntityProjectionExpression(expression.Entity);
         }
 
-        internal JoinExpression Join(ExpressionConverter converter, EntityExpression entity, JoinExpression join)
+        internal EntityProjectionExpression Join(ExpressionConverter converter, EntityExpression entity, JoinExpression join)
         {
             JoinExpression joinExpression;
             Expression clause;
-            JoinType joinType = MappingProvider.GetMetadata(entity._type).TryGetJoin(join.Member.Name, out clause);
+            JoinType joinType = MappingProvider.GetMetadata(entity._type).TryGetJoin(join.Key, out clause);
 
             if (clause != null && joinType != JoinType.None)
             {
@@ -148,15 +147,24 @@ namespace BlueBoxSharp.Data.Expressions
                 if (entity.Where != null)
                     clause = Expression.AndAlso(clause, entity.Where);
 
-                joinExpression = new JoinExpression(join.Member, entity, joinType, clause);
-                this._joins.Add(join.Member.Name, joinExpression);
+                joinExpression = new JoinExpression(join.Key, entity, joinType, clause);
+                this._joins.Add(join.Key, joinExpression);
             }
             else
                 throw new Exception("No Join clause found");
 
-            return joinExpression;
+            //return joinExpression;
+            return new EntityProjectionExpression(joinExpression.Entity);
         }
 
+        internal EntityProjectionExpression Join(ExpressionConverter converter, JoinExpression join)
+        {
+            this._joins.Add(join.Key, join);
+
+            //return join;
+            return new EntityProjectionExpression(join.Entity);
+        }
+        
         internal void AddIndexes(List<string> indexes)
         {
             this._indexes.AddRange(indexes);

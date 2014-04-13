@@ -3,18 +3,18 @@
 <#@ assembly name="System.Xml" #>
 <#@ assembly name="System.Core.dll" #>
 <#@ assembly name="System.Configuration.dll" #>
-<#@ assembly name="$(BBSharpCoreNugetPath)lib\$(BBSharpFrameworkVersion)\BlueBoxSharp.Core.dll" #>
-<#@ assembly name="$(BBSharpDataNugetPath)lib\$(BBSharpFrameworkVersion)\BlueBoxSharp.Data.dll" #>
-<#@ assembly name="$(BBSharpDataMySqlNugetPath)lib\$(BBSharpFrameworkVersion)\BlueBoxSharp.Data.MySql.dll" #>
+<#@ assembly name="$(BBSharpDataLibPath)BlueBoxSharp.Data.dll" #>
+<#@ assembly name="$(BBSharpDataMySqlLibPath)BlueBoxSharp.Data.MySql.dll" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Xml" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="BlueBoxSharp.Data" #>
-<#@ import namespace="BlueBoxSharp.Data.MySql" #>
 <#@ import namespace="BlueBoxSharp.Data.Metadata" #>
-<#@ include file="$(BBSharpDataNugetPath)build\T4TemplateHelpers.t4" #>
+<#@ import namespace="BlueBoxSharp.Data.MySql" #>
+<#@ import namespace="BlueBoxSharp.Data.MySql.Metadata" #>
+<#@ include file="$(BBSharpDataBuildPath)T4TemplateHelpers.t4" #>
 <#
 	string path = Host.ResolvePath(@"App.config");
 	System.Configuration.Configuration configuration = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(
@@ -22,7 +22,7 @@
 															System.Configuration.ConfigurationUserLevel.None
 														);
 		
-	MySqlMetadata meta = new MySqlMetadata(configuration.ConnectionStrings.ConnectionStrings["T4Connection"].ConnectionString, "evoconcept");
+	MySqlMetadata meta = new MySqlMetadata(configuration.ConnectionStrings.ConnectionStrings["T4Connection"].ConnectionString);
 
 foreach (var group in meta.Tables.GroupBy(t => new { Database = t.Database, Schema = t.Schema })) 
 {

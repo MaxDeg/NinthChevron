@@ -18,6 +18,5 @@
 
         <file src="__NugetPackage\BlueBoxSharp.Data.props" target="build\BlueBoxSharp.Data.props" />
         <file src="__NugetPackage\T4TemplateHelpers.t4" target="build\T4TemplateHelpers.t4" />
-        <file src="__NugetPackage\Entities.tt.pp" target="content\Entities.tt.pp" />
     </files>
 </package>

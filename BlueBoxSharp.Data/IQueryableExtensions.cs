@@ -102,7 +102,96 @@ namespace BlueBoxSharp.Data
 
             return enumerable;
         }
-        
+
+        public static IQueryable<TProjection> LeftJoin<TSource, TJoinSource, TProjection>(
+                        this IQueryable<TSource> enumerable,
+                        IQueryable<TJoinSource> joinEnumerable,
+                        Expression<Func<TSource, TJoinSource, bool>> clause,
+                        Expression<Func<TSource, TJoinSource, TProjection>> projectionSelector)
+            where TSource : Entity<TSource>, new()
+        {
+            return Join(enumerable, JoinType.Left, p => p, joinEnumerable, clause, projectionSelector);
+        }
+
+        public static IQueryable<TProjection> RightJoin<TSource, TJoinSource, TProjection>(
+                        this IQueryable<TSource> enumerable,
+                        IQueryable<TJoinSource> joinEnumerable,
+                        Expression<Func<TSource, TJoinSource, bool>> clause,
+                        Expression<Func<TSource, TJoinSource, TProjection>> projectionSelector)
+            where TSource : Entity<TSource>, new()
+        {
+            return Join(enumerable, JoinType.Right, p => p, joinEnumerable, clause, projectionSelector);
+        }
+
+        public static IQueryable<TProjection> InnerJoin<TSource, TJoinSource, TProjection>(
+                        this IQueryable<TSource> enumerable,
+                        IQueryable<TJoinSource> joinEnumerable,
+                        Expression<Func<TSource, TJoinSource, bool>> clause,
+                        Expression<Func<TSource, TJoinSource, TProjection>> projectionSelector)
+            where TSource : Entity<TSource>, new()
+        {
+            return Join(enumerable, JoinType.Inner, p => p, joinEnumerable, clause, projectionSelector);
+        }
+
+        public static IQueryable<TProjection> LeftJoin<TSource, TKey, TJoinSource, TProjection>(
+                        this IQueryable<TSource> enumerable,
+                        Expression<Func<TSource, TKey>> propertySelector,
+                        IQueryable<TJoinSource> joinEnumerable,
+                        Expression<Func<TKey, TJoinSource, bool>> clause,
+                        Expression<Func<TSource, TJoinSource, TProjection>> projectionSelector)
+            where TKey : Entity<TKey>, new()
+        {
+            return Join(enumerable, JoinType.Left, propertySelector, joinEnumerable, clause, projectionSelector);
+        }
+
+        public static IQueryable<TProjection> RightJoin<TSource, TKey, TJoinSource, TProjection>(
+                        this IQueryable<TSource> enumerable,
+                        Expression<Func<TSource, TKey>> propertySelector,
+                        IQueryable<TJoinSource> joinEnumerable,
+                        Expression<Func<TKey, TJoinSource, bool>> clause,
+                        Expression<Func<TSource, TJoinSource, TProjection>> projectionSelector)
+            where TKey : Entity<TKey>, new()
+        {
+            return Join(enumerable, JoinType.Right, propertySelector, joinEnumerable, clause, projectionSelector);
+        }
+
+        public static IQueryable<TProjection> InnerJoin<TSource, TKey, TJoinSource, TProjection>(
+                        this IQueryable<TSource> enumerable,
+                        Expression<Func<TSource, TKey>> propertySelector,
+                        IQueryable<TJoinSource> joinEnumerable,
+                        Expression<Func<TKey, TJoinSource, bool>> clause,
+                        Expression<Func<TSource, TJoinSource, TProjection>> projectionSelector)
+            where TKey : Entity<TKey>, new()
+        {
+            return Join(enumerable, JoinType.Inner, propertySelector, joinEnumerable, clause, projectionSelector);
+        }
+
+        private static IQueryable<TProjection> Join<TSource, TKey, TJoinSource, TProjection>(
+                        this IQueryable<TSource> enumerable,
+                        JoinType type,
+                        Expression<Func<TSource, TKey>> propertySelector,
+                        IQueryable<TJoinSource> joinEnumerable,
+                        Expression<Func<TKey, TJoinSource, bool>> clause,
+                        Expression<Func<TSource, TJoinSource, TProjection>> projectionSelector)
+            where TKey : Entity<TKey>, new()
+        {
+            if (enumerable == null)
+                throw new ArgumentNullException("enumerable");
+            if (joinEnumerable == null)
+                throw new ArgumentNullException("joinEnumerable");
+            if (clause == null)
+                throw new ArgumentNullException("clause");
+            if (propertySelector == null)
+                throw new ArgumentNullException("propertySelector");
+
+            return enumerable.Provider.CreateQuery<TProjection>(
+                Expression.Call(
+                    null,
+                    typeof(EntityQueryable).GetMethod("DynamicJoin").MakeGenericMethod(typeof(TSource), typeof(TKey), typeof(TJoinSource), typeof(TProjection)),
+                    new Expression[] { enumerable.Expression, Expression.Constant(type), propertySelector, joinEnumerable.Expression, clause, projectionSelector }
+                    ));
+        }
+
         public static IQueryable<TSource> OrderBy<TSource, TKey>(this IQueryable<TSource> enumerable, bool condition, Expression<Func<TSource, TKey>> keySelector)
         {
             if (condition)

@@ -32,8 +32,8 @@ namespace BlueBoxSharp.Data.Expressions
         private List<QueryExpression> _subQueries;
 
         public bool Distinct { get; internal set; }
-        public virtual int SkipCount { get; internal set; }
-        public virtual int RowCount { get; internal set; }
+        public virtual int SkipCount { get; set; }
+        public virtual int RowCount { get; set; }
         public QueryReturnType ResultType { get; internal set; }
         public bool IsDefaultProjection { get; protected set; }
         public bool IsSubQuery { get { return this._parentQuery != null; } }

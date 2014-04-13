@@ -28,16 +28,16 @@ namespace BlueBoxSharp.Data.Expressions
         private List<string> _indexes;
         public IEnumerable<string> Indexes { get { return this._indexes; } }
 
-        internal JoinExpression(MemberInfo member, EntityExpression entityRef, JoinType type, Expression joinClause)
+        internal JoinExpression(string key, EntityExpression entityRef, JoinType type, Expression joinClause)
         {
-            this.Member = member;
+            this.Key = key;
             this.Entity = entityRef;
             this.JoinType = type;
             this.JoinClause = joinClause;
             this._indexes = new List<string>();
         }
 
-        public MemberInfo Member { get; private set; }
+        public string Key { get; private set; }
         public EntityExpression Entity { get; private set; }
         public JoinType JoinType { get; private set; }
         public Expression JoinClause { get; private set; }

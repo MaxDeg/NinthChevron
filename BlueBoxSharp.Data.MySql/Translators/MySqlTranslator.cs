@@ -16,6 +16,7 @@
 
 using BlueBoxSharp.Data.Expressions;
 using BlueBoxSharp.Data.Metadata;
+using BlueBoxSharp.Data.Translators;
 using BlueBoxSharp.Helpers;
 using System;
 using System.Collections;
@@ -25,7 +26,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace BlueBoxSharp.Data.Translators
+namespace BlueBoxSharp.Data.MySql.Translators
 {
     public class MySqlTranslator : SqlExpressionVisitor, ITranslator
     {

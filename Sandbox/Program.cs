@@ -1,6 +1,8 @@
 ﻿using BlueBoxSharp.Data;
 using BlueBoxSharp.Data.Metadata;
+using BlueBoxSharp.Data.MySql.Metadata;
 using BlueBoxSharp.Data.SqlServer;
+using BlueBoxSharp.Data.SqlServer.Metadata;
 using BlueBoxSharp.Data.Translators;
 using System;
 using System.Collections.Generic;
@@ -17,8 +19,10 @@ namespace Sandbox
         {
             Console.WriteLine("Ok it's start");
 
+            SqlServerMetadata mssqlMeta = new SqlServerMetadata(@"Data Source=(localdb)\Projects;Initial Catalog=AdventureWorks2012;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False");
+
             //MySqlMetadata meta = new MySqlMetadata("Server=localhost;Database=sakila;Uid=root;Pwd=Secret.123456;");
-            MySqlMetadata meta = new MySqlMetadata("Server=localhost;Database=sakila;Uid=root;Pwd=Secret.123456;");
+            MySqlMetadata meta = new MySqlMetadata("Server=localhost;Database=sakila;Uid=root;Pwd=password;");
 
             //foreach (ITableMetadata table in meta.Tables.Where(t => t.Name == "store"))
             //{

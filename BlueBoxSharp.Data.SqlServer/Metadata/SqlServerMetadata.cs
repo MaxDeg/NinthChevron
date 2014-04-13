@@ -14,19 +14,20 @@
  *  limitations under the License.
  */
 
+using BlueBoxSharp.Data.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
-namespace BlueBoxSharp.Data.Metadata
+namespace BlueBoxSharp.Data.SqlServer.Metadata
 {
     public class SqlServerMetadata : IDatabaseMetadata
     {
         public SqlServerMetadata(string connectionString, params string[] schemas)
         {
-            if (connectionString.IndexOf("initial catalog") < 0)
+            if (connectionString.ToLower().IndexOf("initial catalog") < 0)
                 throw new ArgumentException("'initial catalog' option missing in connection string");
 
             string schemaClause = string.Empty;
@@ -41,32 +42,34 @@ namespace BlueBoxSharp.Data.Metadata
                 connection.Open();
                 SqlCommand cmd = new SqlCommand(@"​SELECT DISTINCT
                                                                 columns.table_catalog,
-                                                                CASE WHEN columns.table_schema = 'dbo' THEN '' ELSE columns.table_schema END,
+                                                                CASE WHEN columns.table_schema = 'dbo' THEN '' ELSE columns.table_schema END AS TableSchema,
 														        columns.table_name, 
 														        columns.column_name, 
 														        columns.data_type, 
 														        CASE WHEN columns.is_nullable = 'YES' THEN 1 ELSE 0 END AS IsNullable,  
-														        CASE WHEN constraints.Constraint_type = 'PRIMARY KEY' THEN 1 ELSE 0 END AS IsPK,
-				                                                COLUMNPROPERTY(object_id(columns.table_name), columns.column_name, 'IsIdentity') AS IsIdentity,
+														        CASE WHEN EXISTS(SELECT * 
+							                                                    FROM		information_schema.constraint_column_usage usage
+							                                                    LEFT JOIN	information_schema.table_constraints constraints
+							                                                    ON			usage.table_catalog = constraints.table_catalog
+									                                                    AND usage.table_schema = constraints.table_schema
+									                                                    AND usage.table_name = constraints.table_name
+									                                                    AND usage.constraint_name = constraints.constraint_name
+									                                                    AND constraints.Constraint_type = 'PRIMARY KEY'
+							                                                    WHERE		columns.table_catalog = usage.table_catalog
+									                                                    AND columns.table_schema = usage.table_schema
+									                                                    AND columns.table_name = usage.table_name
+									                                                    AND columns.column_name = usage.column_name
+						                                                    ) THEN 1 ELSE 0 END AS IsPK,
+				                                                COLUMNPROPERTY(object_id(columns.table_schema + '.' + columns.table_name), columns.column_name, 'IsIdentity') AS IsIdentity,
                                                                 columns.ordinal_position
 											        FROM		information_schema.columns columns
-											        LEFT JOIN	information_schema.constraint_column_usage usage
-											        ON			columns.table_catalog = usage.table_catalog
-													        AND columns.table_schema = usage.table_schema
-													        AND columns.table_name = usage.table_name
-													        AND columns.column_name = usage.column_name
-											        LEFT JOIN	information_schema.table_constraints constraints
-											        ON			usage.table_catalog = constraints.table_catalog
-													        AND usage.table_schema = constraints.table_schema
-													        AND usage.table_name = constraints.table_name
-													        AND usage.constraint_name = constraints.constraint_name
                                                     INNER JOIN information_schema.tables tables
                                                     ON			columns.table_catalog = tables.table_catalog
 		                                                    AND columns.table_schema = tables.table_schema
 		                                                    AND columns.table_name = tables.table_name
 											        WHERE		columns.table_name NOT IN ('dtproperties', 'sysconstraints', 'syssegments', 'sysdiagrams')
-		                                                    AND tables.table_type = 'BASE TABLE'" + schemaClause + 
-											        @"ORDER BY	columns.table_name, columns.ordinal_position", connection);
+		                                                    AND tables.table_type = 'BASE TABLE'" + schemaClause +
+                                                    @"ORDER BY	columns.table_catalog, TableSchema, columns.table_name, columns.ordinal_position", connection);
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -149,7 +152,7 @@ namespace BlueBoxSharp.Data.Metadata
                         string sourceSchema = reader.GetString(0);
                         string sourceTableName = reader.GetString(1);
                         string sourceColumn = reader.GetString(2);
-                        bool isNullable = reader.GetBoolean(3);
+                        bool isNullable = reader.GetInt32(3) == 1 ? true : false;
                         string foreignSchema = reader.GetString(4);
                         string foreignTableName = reader.GetString(5);
                         string foreignColumn = reader.GetString(6);

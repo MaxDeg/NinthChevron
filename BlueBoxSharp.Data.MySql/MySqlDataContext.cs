@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using MySql.Data.MySqlClient;
 using BlueBoxSharp.Data.Translators;
+using BlueBoxSharp.Data.MySql.Translators;
 
 namespace BlueBoxSharp.Data.MySql
 {

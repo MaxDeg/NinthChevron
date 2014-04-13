@@ -14,12 +14,13 @@
  *  limitations under the License.
  */
 
+using BlueBoxSharp.Data.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BlueBoxSharp.Data.Metadata
+namespace BlueBoxSharp.Data.SqlServer.Metadata
 {
     public class SqlServerProcedureMetadata : IProcedureMetadata
     {

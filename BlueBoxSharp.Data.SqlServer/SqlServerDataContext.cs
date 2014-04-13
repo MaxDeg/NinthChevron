@@ -21,6 +21,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using BlueBoxSharp.Data.Translators;
+using BlueBoxSharp.Data.SqlServer.Translators;
 
 namespace BlueBoxSharp.Data.SqlServer
 {

@@ -20,5 +20,6 @@
         <file src="bin\Release\v4.5\MySql.Data.dll" target="lib\net45\MySql.Data.dll" />
 
         <file src="__NugetPackage\BlueBoxSharp.Data.MySql.props" target="build\BlueBoxSharp.Data.MySql.props" />
+        <file src="__NugetPackage\Entities.tt.pp" target="content\Entities.tt.pp" />
     </files>
 </package>

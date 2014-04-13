@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2013 for Windows Desktop
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueBoxSharp.Data", "BlueBoxSharp.Data\BlueBoxSharp.Data.csproj", "{62FF886F-4096-4869-8C42-6C0D8BF0724F}"
 EndProject
@@ -40,6 +40,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlueBoxSharp.AppConfig", "B
 		BlueBoxSharp.AppConfig\BlueBoxSharp.AppConfig.props = BlueBoxSharp.AppConfig\BlueBoxSharp.AppConfig.props
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueBoxSharp.Data.SqlServer", "BlueBoxSharp.Data.SqlServer\BlueBoxSharp.Data.SqlServer.csproj", "{BAA7763C-8842-44A7-B450-813FDCAEF0B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,7 +65,6 @@ Global
 		{4F4B2E07-9845-446C-ACB6-9402F0DEC48D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F4B2E07-9845-446C-ACB6-9402F0DEC48D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{89FE026E-AABB-4076-AC70-4BDBF9ECD682}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{89FE026E-AABB-4076-AC70-4BDBF9ECD682}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89FE026E-AABB-4076-AC70-4BDBF9ECD682}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2DED9F4-C3EB-426B-92D0-94AA34BCB1BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A2DED9F4-C3EB-426B-92D0-94AA34BCB1BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
@@ -77,6 +78,10 @@ Global
 		{0053A9E9-AFEF-4390-BAEC-3FC0A332DF88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0053A9E9-AFEF-4390-BAEC-3FC0A332DF88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0053A9E9-AFEF-4390-BAEC-3FC0A332DF88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAA7763C-8842-44A7-B450-813FDCAEF0B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAA7763C-8842-44A7-B450-813FDCAEF0B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAA7763C-8842-44A7-B450-813FDCAEF0B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAA7763C-8842-44A7-B450-813FDCAEF0B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

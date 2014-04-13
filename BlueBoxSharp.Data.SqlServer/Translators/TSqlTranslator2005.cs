@@ -21,7 +21,7 @@ using System.Linq.Expressions;
 using System.Text;
 using BlueBoxSharp.Data.Expressions;
 
-namespace BlueBoxSharp.Data.Translators
+namespace BlueBoxSharp.Data.SqlServer.Translators
 {
     public class TSqlTranslator2005 : TSqlTranslator
     {

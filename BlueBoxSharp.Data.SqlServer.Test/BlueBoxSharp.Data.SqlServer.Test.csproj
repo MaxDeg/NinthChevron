@@ -50,6 +50,42 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="AdventureWorks2012.HumanResourcesSchema.Procedures.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdventureWorks2012.HumanResourcesSchema.Tables.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdventureWorks2012.PersonSchema.Procedures.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdventureWorks2012.PersonSchema.Tables.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdventureWorks2012.Procedures.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdventureWorks2012.ProductionSchema.Procedures.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdventureWorks2012.ProductionSchema.Tables.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdventureWorks2012.PurchasingSchema.Procedures.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdventureWorks2012.PurchasingSchema.Tables.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdventureWorks2012.SalesSchema.Procedures.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdventureWorks2012.SalesSchema.Tables.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdventureWorks2012.Tables.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -26,6 +26,7 @@ namespace BlueBoxSharp.Data.Metadata
         public RelationColumnMetadata(bool isReverse, ITableMetadata table, string name, bool isNullable, ITableMetadata foreignTable, string foreignColumn)
         {
             this.IsReverseRelation = isReverse;
+            this.Table = table;
             this.Name = name;
             this.IsNullable = isNullable;
             this.ForeignTable = foreignTable;

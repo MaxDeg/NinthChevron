@@ -5,7 +5,7 @@ using BlueBoxSharp.Data.Entity;
 using BlueBoxSharp.Helpers;
 using BlueBoxSharp.ComponentModel.DataAnnotations;
 
-namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
+namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.ProductionSchema
 {
 	public class Procedures
 	{

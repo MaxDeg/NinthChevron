@@ -5,17 +5,23 @@ using BlueBoxSharp.Data.Entity;
 using BlueBoxSharp.Helpers;
 using BlueBoxSharp.ComponentModel.DataAnnotations;
 
-namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012;
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.HumanResourcesSchema;
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.ProductionSchema;
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.PurchasingSchema;
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.SalesSchema;
+
+namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.PersonSchema
 {
 	[Table("Address", "Person", "AdventureWorks2012")]
 	public partial class Address : Entity<Address>
 	{
 		static Address()
 		{
-			Join<BusinessEntityAddress>(t => t.AddressIDBusinessEntityAddress, (t, f) => t.AddressID == f.AddressID); // Reverse Relation
-			Join<SalesOrderHeader>(t => t.BillToAddressIDSalesOrderHeader, (t, f) => t.AddressID == f.BillToAddressID); // Reverse Relation
-			Join<SalesOrderHeader>(t => t.ShipToAddressIDSalesOrderHeader, (t, f) => t.AddressID == f.ShipToAddressID); // Reverse Relation
-			Join<StateProvince>(t => t.StateProvinceID, (t, f) => t.StateProvinceID == f.StateProvinceID); // Relation
+			Join<BusinessEntityAddress>(t => t.AddressBusinessEntityAddress, (t, f) => t.AddressID == f.AddressID); // Reverse Relation
+			Join<SalesOrderHeader>(t => t.BillToAddressSalesOrderHeader, (t, f) => t.AddressID == f.BillToAddressID); // Reverse Relation
+			Join<SalesOrderHeader>(t => t.ShipToAddressSalesOrderHeader, (t, f) => t.AddressID == f.ShipToAddressID); // Reverse Relation
+			Join<StateProvince>(t => t.StateProvinceStateProvince, (t, f) => t.StateProvinceID == f.StateProvinceID); // Relation
 		}
 
 		
@@ -52,16 +58,16 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	
 		
         [InnerJoinColumn]
-        public BusinessEntityAddress AddressIDBusinessEntityAddress { get; set; }
+        public BusinessEntityAddress AddressBusinessEntityAddress { get; set; }
 		
         [InnerJoinColumn]
-        public SalesOrderHeader BillToAddressIDSalesOrderHeader { get; set; }
+        public SalesOrderHeader BillToAddressSalesOrderHeader { get; set; }
 		
         [InnerJoinColumn]
-        public SalesOrderHeader ShipToAddressIDSalesOrderHeader { get; set; }
+        public SalesOrderHeader ShipToAddressSalesOrderHeader { get; set; }
 		
         [InnerJoinColumn]
-        public StateProvince StateProvinceID { get; set; }
+        public StateProvince StateProvinceStateProvince { get; set; }
 	}
 
 	[Table("AddressType", "Person", "AdventureWorks2012")]
@@ -69,7 +75,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	{
 		static AddressType()
 		{
-			Join<BusinessEntityAddress>(t => t.AddressTypeIDBusinessEntityAddress, (t, f) => t.AddressTypeID == f.AddressTypeID); // Reverse Relation
+			Join<BusinessEntityAddress>(t => t.AddressTypeBusinessEntityAddress, (t, f) => t.AddressTypeID == f.AddressTypeID); // Reverse Relation
 		}
 
 		
@@ -91,7 +97,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	
 		
         [InnerJoinColumn]
-        public BusinessEntityAddress AddressTypeIDBusinessEntityAddress { get; set; }
+        public BusinessEntityAddress AddressTypeBusinessEntityAddress { get; set; }
 	}
 
 	[Table("BusinessEntity", "Person", "AdventureWorks2012")]
@@ -99,11 +105,11 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	{
 		static BusinessEntity()
 		{
-			Join<BusinessEntityAddress>(t => t.BusinessEntityIDBusinessEntityAddress, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
-			Join<BusinessEntityContact>(t => t.BusinessEntityIDBusinessEntityContact, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
-			Join<Person>(t => t.BusinessEntityIDPerson, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
-			Join<Vendor>(t => t.BusinessEntityIDVendor, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
-			Join<Store>(t => t.BusinessEntityIDStore, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
+			Join<BusinessEntityAddress>(t => t.BusinessEntityBusinessEntityAddress, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
+			Join<BusinessEntityContact>(t => t.BusinessEntityBusinessEntityContact, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
+			Join<Person>(t => t.BusinessEntityPerson, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
+			Join<Vendor>(t => t.BusinessEntityVendor, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
+			Join<Store>(t => t.BusinessEntityStore, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
 		}
 
 		
@@ -122,19 +128,19 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	
 		
         [InnerJoinColumn]
-        public BusinessEntityAddress BusinessEntityIDBusinessEntityAddress { get; set; }
+        public BusinessEntityAddress BusinessEntityBusinessEntityAddress { get; set; }
 		
         [InnerJoinColumn]
-        public BusinessEntityContact BusinessEntityIDBusinessEntityContact { get; set; }
+        public BusinessEntityContact BusinessEntityBusinessEntityContact { get; set; }
 		
         [InnerJoinColumn]
-        public Person BusinessEntityIDPerson { get; set; }
+        public Person BusinessEntityPerson { get; set; }
 		
         [InnerJoinColumn]
-        public Vendor BusinessEntityIDVendor { get; set; }
+        public Vendor BusinessEntityVendor { get; set; }
 		
         [InnerJoinColumn]
-        public Store BusinessEntityIDStore { get; set; }
+        public Store BusinessEntityStore { get; set; }
 	}
 
 	[Table("BusinessEntityAddress", "Person", "AdventureWorks2012")]
@@ -142,9 +148,9 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	{
 		static BusinessEntityAddress()
 		{
-			Join<Address>(t => t.AddressID, (t, f) => t.AddressID == f.AddressID); // Relation
-			Join<AddressType>(t => t.AddressTypeID, (t, f) => t.AddressTypeID == f.AddressTypeID); // Relation
-			Join<BusinessEntity>(t => t.BusinessEntityID, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
+			Join<Address>(t => t.AddressAddress, (t, f) => t.AddressID == f.AddressID); // Relation
+			Join<AddressType>(t => t.AddressTypeAddressType, (t, f) => t.AddressTypeID == f.AddressTypeID); // Relation
+			Join<BusinessEntity>(t => t.BusinessEntityBusinessEntity, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
 		}
 
 		
@@ -165,13 +171,13 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	
 		
         [InnerJoinColumn]
-        public Address AddressID { get; set; }
+        public Address AddressAddress { get; set; }
 		
         [InnerJoinColumn]
-        public AddressType AddressTypeID { get; set; }
+        public AddressType AddressTypeAddressType { get; set; }
 		
         [InnerJoinColumn]
-        public BusinessEntity BusinessEntityID { get; set; }
+        public BusinessEntity BusinessEntityBusinessEntity { get; set; }
 	}
 
 	[Table("BusinessEntityContact", "Person", "AdventureWorks2012")]
@@ -179,9 +185,9 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	{
 		static BusinessEntityContact()
 		{
-			Join<BusinessEntity>(t => t.BusinessEntityID, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
-			Join<ContactType>(t => t.ContactTypeID, (t, f) => t.ContactTypeID == f.ContactTypeID); // Relation
-			Join<Person>(t => t.PersonID, (t, f) => t.PersonID == f.BusinessEntityID); // Relation
+			Join<BusinessEntity>(t => t.BusinessEntityBusinessEntity, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
+			Join<ContactType>(t => t.ContactTypeContactType, (t, f) => t.ContactTypeID == f.ContactTypeID); // Relation
+			Join<Person>(t => t.PersonPerson, (t, f) => t.PersonID == f.BusinessEntityID); // Relation
 		}
 
 		
@@ -202,13 +208,13 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	
 		
         [InnerJoinColumn]
-        public BusinessEntity BusinessEntityID { get; set; }
+        public BusinessEntity BusinessEntityBusinessEntity { get; set; }
 		
         [InnerJoinColumn]
-        public ContactType ContactTypeID { get; set; }
+        public ContactType ContactTypeContactType { get; set; }
 		
         [InnerJoinColumn]
-        public Person PersonID { get; set; }
+        public Person PersonPerson { get; set; }
 	}
 
 	[Table("ContactType", "Person", "AdventureWorks2012")]
@@ -216,7 +222,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	{
 		static ContactType()
 		{
-			Join<BusinessEntityContact>(t => t.ContactTypeIDBusinessEntityContact, (t, f) => t.ContactTypeID == f.ContactTypeID); // Reverse Relation
+			Join<BusinessEntityContact>(t => t.ContactTypeBusinessEntityContact, (t, f) => t.ContactTypeID == f.ContactTypeID); // Reverse Relation
 		}
 
 		
@@ -235,7 +241,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	
 		
         [InnerJoinColumn]
-        public BusinessEntityContact ContactTypeIDBusinessEntityContact { get; set; }
+        public BusinessEntityContact ContactTypeBusinessEntityContact { get; set; }
 	}
 
 	[Table("CountryRegion", "Person", "AdventureWorks2012")]
@@ -274,7 +280,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	{
 		static EmailAddress()
 		{
-			Join<Person>(t => t.BusinessEntityID, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
+			Join<Person>(t => t.BusinessEntityPerson, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
 		}
 
 		
@@ -289,7 +295,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
         }
 		
         [NotifyPropertyChanged, Column("EmailAddress", false, false, true)]
-        public string EmailAddress { get; set; }
+        public string EmailAddress_ { get; set; }
 		
         [NotifyPropertyChanged, Column("rowguid", false, false, false)]
         public System.Guid Rowguid { get; set; }
@@ -299,7 +305,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	
 		
         [InnerJoinColumn]
-        public Person BusinessEntityID { get; set; }
+        public Person BusinessEntityPerson { get; set; }
 	}
 
 	[Table("Password", "Person", "AdventureWorks2012")]
@@ -307,7 +313,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	{
 		static Password()
 		{
-			Join<Person>(t => t.BusinessEntityID, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
+			Join<Person>(t => t.BusinessEntityPerson, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
 		}
 
 		
@@ -328,7 +334,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	
 		
         [InnerJoinColumn]
-        public Person BusinessEntityID { get; set; }
+        public Person BusinessEntityPerson { get; set; }
 	}
 
 	[Table("Person", "Person", "AdventureWorks2012")]
@@ -336,14 +342,14 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	{
 		static Person()
 		{
-			Join<BusinessEntity>(t => t.BusinessEntityID, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
-			Join<Customer>(t => t.PersonIDCustomer, (t, f) => t.BusinessEntityID == f.PersonID); // Reverse Relation
-			Join<PersonCreditCard>(t => t.BusinessEntityIDPersonCreditCard, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
-			Join<PersonPhone>(t => t.BusinessEntityIDPersonPhone, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
-			Join<BusinessEntityContact>(t => t.PersonIDBusinessEntityContact, (t, f) => t.BusinessEntityID == f.PersonID); // Reverse Relation
-			Join<EmailAddress>(t => t.BusinessEntityIDEmailAddress, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
-			Join<Password>(t => t.BusinessEntityIDPassword, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
-			Join<Employee>(t => t.BusinessEntityIDEmployee, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
+			Join<BusinessEntity>(t => t.BusinessEntityBusinessEntity, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
+			Join<Customer>(t => t.PersonCustomer, (t, f) => t.BusinessEntityID == f.PersonID); // Reverse Relation
+			Join<PersonCreditCard>(t => t.BusinessEntityPersonCreditCard, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
+			Join<PersonPhone>(t => t.BusinessEntityPersonPhone, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
+			Join<BusinessEntityContact>(t => t.PersonBusinessEntityContact, (t, f) => t.BusinessEntityID == f.PersonID); // Reverse Relation
+			Join<EmailAddress>(t => t.BusinessEntityEmailAddress, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
+			Join<Password>(t => t.BusinessEntityPassword, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
+			Join<Employee>(t => t.BusinessEntityEmployee, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
 		}
 
 		
@@ -388,28 +394,28 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	
 		
         [InnerJoinColumn]
-        public BusinessEntity BusinessEntityID { get; set; }
+        public BusinessEntity BusinessEntityBusinessEntity { get; set; }
 		
         [InnerJoinColumn]
-        public Customer PersonIDCustomer { get; set; }
+        public Customer PersonCustomer { get; set; }
 		
         [InnerJoinColumn]
-        public PersonCreditCard BusinessEntityIDPersonCreditCard { get; set; }
+        public PersonCreditCard BusinessEntityPersonCreditCard { get; set; }
 		
         [InnerJoinColumn]
-        public PersonPhone BusinessEntityIDPersonPhone { get; set; }
+        public PersonPhone BusinessEntityPersonPhone { get; set; }
 		
         [InnerJoinColumn]
-        public BusinessEntityContact PersonIDBusinessEntityContact { get; set; }
+        public BusinessEntityContact PersonBusinessEntityContact { get; set; }
 		
         [InnerJoinColumn]
-        public EmailAddress BusinessEntityIDEmailAddress { get; set; }
+        public EmailAddress BusinessEntityEmailAddress { get; set; }
 		
         [InnerJoinColumn]
-        public Password BusinessEntityIDPassword { get; set; }
+        public Password BusinessEntityPassword { get; set; }
 		
         [InnerJoinColumn]
-        public Employee BusinessEntityIDEmployee { get; set; }
+        public Employee BusinessEntityEmployee { get; set; }
 	}
 
 	[Table("PersonPhone", "Person", "AdventureWorks2012")]
@@ -417,8 +423,8 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	{
 		static PersonPhone()
 		{
-			Join<Person>(t => t.BusinessEntityID, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
-			Join<PhoneNumberType>(t => t.PhoneNumberTypeID, (t, f) => t.PhoneNumberTypeID == f.PhoneNumberTypeID); // Relation
+			Join<Person>(t => t.BusinessEntityPerson, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
+			Join<PhoneNumberType>(t => t.PhoneNumberTypePhoneNumberType, (t, f) => t.PhoneNumberTypeID == f.PhoneNumberTypeID); // Relation
 		}
 
 		
@@ -436,10 +442,10 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	
 		
         [InnerJoinColumn]
-        public Person BusinessEntityID { get; set; }
+        public Person BusinessEntityPerson { get; set; }
 		
         [InnerJoinColumn]
-        public PhoneNumberType PhoneNumberTypeID { get; set; }
+        public PhoneNumberType PhoneNumberTypePhoneNumberType { get; set; }
 	}
 
 	[Table("PhoneNumberType", "Person", "AdventureWorks2012")]
@@ -447,7 +453,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	{
 		static PhoneNumberType()
 		{
-			Join<PersonPhone>(t => t.PhoneNumberTypeIDPersonPhone, (t, f) => t.PhoneNumberTypeID == f.PhoneNumberTypeID); // Reverse Relation
+			Join<PersonPhone>(t => t.PhoneNumberTypePersonPhone, (t, f) => t.PhoneNumberTypeID == f.PhoneNumberTypeID); // Reverse Relation
 		}
 
 		
@@ -466,7 +472,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	
 		
         [InnerJoinColumn]
-        public PersonPhone PhoneNumberTypeIDPersonPhone { get; set; }
+        public PersonPhone PhoneNumberTypePersonPhone { get; set; }
 	}
 
 	[Table("StateProvince", "Person", "AdventureWorks2012")]
@@ -474,10 +480,10 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	{
 		static StateProvince()
 		{
-			Join<CountryRegion>(t => t.CountryRegionCode, (t, f) => t.CountryRegionCode == f.CountryRegionCode); // Relation
-			Join<Address>(t => t.StateProvinceIDAddress, (t, f) => t.StateProvinceID == f.StateProvinceID); // Reverse Relation
-			Join<SalesTaxRate>(t => t.StateProvinceIDSalesTaxRate, (t, f) => t.StateProvinceID == f.StateProvinceID); // Reverse Relation
-			Join<SalesTerritory>(t => t.TerritoryID, (t, f) => t.TerritoryID == f.TerritoryID); // Relation
+			Join<CountryRegion>(t => t.CountryRegionCodeCountryRegion, (t, f) => t.CountryRegionCode == f.CountryRegionCode); // Relation
+			Join<Address>(t => t.StateProvinceAddress, (t, f) => t.StateProvinceID == f.StateProvinceID); // Reverse Relation
+			Join<SalesTaxRate>(t => t.StateProvinceSalesTaxRate, (t, f) => t.StateProvinceID == f.StateProvinceID); // Reverse Relation
+			Join<SalesTerritory>(t => t.TerritorySalesTerritory, (t, f) => t.TerritoryID == f.TerritoryID); // Relation
 		}
 
 		
@@ -511,16 +517,16 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Person
 	
 		
         [InnerJoinColumn]
-        public CountryRegion CountryRegionCode { get; set; }
+        public CountryRegion CountryRegionCodeCountryRegion { get; set; }
 		
         [InnerJoinColumn]
-        public Address StateProvinceIDAddress { get; set; }
+        public Address StateProvinceAddress { get; set; }
 		
         [InnerJoinColumn]
-        public SalesTaxRate StateProvinceIDSalesTaxRate { get; set; }
+        public SalesTaxRate StateProvinceSalesTaxRate { get; set; }
 		
         [InnerJoinColumn]
-        public SalesTerritory TerritoryID { get; set; }
+        public SalesTerritory TerritorySalesTerritory { get; set; }
 	}
 
 

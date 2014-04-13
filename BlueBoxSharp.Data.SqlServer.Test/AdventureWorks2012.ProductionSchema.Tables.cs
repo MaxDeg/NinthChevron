@@ -5,16 +5,22 @@ using BlueBoxSharp.Data.Entity;
 using BlueBoxSharp.Helpers;
 using BlueBoxSharp.ComponentModel.DataAnnotations;
 
-namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012;
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.HumanResourcesSchema;
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.PersonSchema;
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.PurchasingSchema;
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.SalesSchema;
+
+namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.ProductionSchema
 {
 	[Table("BillOfMaterials", "Production", "AdventureWorks2012")]
 	public partial class BillOfMaterials : Entity<BillOfMaterials>
 	{
 		static BillOfMaterials()
 		{
-			Join<Product>(t => t.ComponentID, (t, f) => t.ComponentID == f.ProductID); // Relation
-			Join<Product>(t => t.ProductAssemblyID, (t, f) => t.ProductAssemblyID == f.ProductID); // Relation
-			Join<UnitMeasure>(t => t.UnitMeasureCode, (t, f) => t.UnitMeasureCode == f.UnitMeasureCode); // Relation
+			Join<Product>(t => t.ComponentProduct, (t, f) => t.ComponentID == f.ProductID); // Relation
+			Join<Product>(t => t.ProductAssemblyProduct, (t, f) => t.ProductAssemblyID == f.ProductID); // Relation
+			Join<UnitMeasure>(t => t.UnitMeasureCodeUnitMeasure, (t, f) => t.UnitMeasureCode == f.UnitMeasureCode); // Relation
 		}
 
 		
@@ -51,13 +57,13 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public Product ComponentID { get; set; }
+        public Product ComponentProduct { get; set; }
 		
         [InnerJoinColumn]
-        public Product ProductAssemblyID { get; set; }
+        public Product ProductAssemblyProduct { get; set; }
 		
         [InnerJoinColumn]
-        public UnitMeasure UnitMeasureCode { get; set; }
+        public UnitMeasure UnitMeasureCodeUnitMeasure { get; set; }
 	}
 
 	[Table("Culture", "Production", "AdventureWorks2012")]
@@ -65,7 +71,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	{
 		static Culture()
 		{
-			Join<ProductModelProductDescriptionCulture>(t => t.CultureIDProductModelProductDescriptionCulture, (t, f) => t.CultureID == f.CultureID); // Reverse Relation
+			Join<ProductModelProductDescriptionCulture>(t => t.CultureProductModelProductDescriptionCulture, (t, f) => t.CultureID == f.CultureID); // Reverse Relation
 		}
 
 		
@@ -80,7 +86,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public ProductModelProductDescriptionCulture CultureIDProductModelProductDescriptionCulture { get; set; }
+        public ProductModelProductDescriptionCulture CultureProductModelProductDescriptionCulture { get; set; }
 	}
 
 	[Table("Document", "Production", "AdventureWorks2012")]
@@ -88,7 +94,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	{
 		static Document()
 		{
-			Join<Employee>(t => t.Owner, (t, f) => t.Owner == f.BusinessEntityID); // Relation
+			Join<Employee>(t => t.OwnerEmployee, (t, f) => t.Owner == f.BusinessEntityID); // Relation
 			Join<ProductDocument>(t => t.DocumentNodeProductDocument, (t, f) => t.DocumentNode == f.DocumentNode); // Reverse Relation
 		}
 
@@ -127,7 +133,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
         public string DocumentSummary { get; set; }
 		
         [NotifyPropertyChanged, Column("Document", false, false, true)]
-        public byte[] Document { get; set; }
+        public byte[] Document_ { get; set; }
 		
         [NotifyPropertyChanged, Column("rowguid", true, false, false)]
         public System.Guid Rowguid { get; set; }
@@ -137,7 +143,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public Employee Owner { get; set; }
+        public Employee OwnerEmployee { get; set; }
 		
         [InnerJoinColumn]
         public ProductDocument DocumentNodeProductDocument { get; set; }
@@ -148,7 +154,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	{
 		static Illustration()
 		{
-			Join<ProductModelIllustration>(t => t.IllustrationIDProductModelIllustration, (t, f) => t.IllustrationID == f.IllustrationID); // Reverse Relation
+			Join<ProductModelIllustration>(t => t.IllustrationProductModelIllustration, (t, f) => t.IllustrationID == f.IllustrationID); // Reverse Relation
 		}
 
 		
@@ -167,7 +173,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public ProductModelIllustration IllustrationIDProductModelIllustration { get; set; }
+        public ProductModelIllustration IllustrationProductModelIllustration { get; set; }
 	}
 
 	[Table("Location", "Production", "AdventureWorks2012")]
@@ -175,8 +181,8 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	{
 		static Location()
 		{
-			Join<ProductInventory>(t => t.LocationIDProductInventory, (t, f) => t.LocationID == f.LocationID); // Reverse Relation
-			Join<WorkOrderRouting>(t => t.LocationIDWorkOrderRouting, (t, f) => t.LocationID == f.LocationID); // Reverse Relation
+			Join<ProductInventory>(t => t.LocationProductInventory, (t, f) => t.LocationID == f.LocationID); // Reverse Relation
+			Join<WorkOrderRouting>(t => t.LocationWorkOrderRouting, (t, f) => t.LocationID == f.LocationID); // Reverse Relation
 		}
 
 		
@@ -201,10 +207,10 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public ProductInventory LocationIDProductInventory { get; set; }
+        public ProductInventory LocationProductInventory { get; set; }
 		
         [InnerJoinColumn]
-        public WorkOrderRouting LocationIDWorkOrderRouting { get; set; }
+        public WorkOrderRouting LocationWorkOrderRouting { get; set; }
 	}
 
 	[Table("Product", "Production", "AdventureWorks2012")]
@@ -212,24 +218,24 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	{
 		static Product()
 		{
-			Join<TransactionHistory>(t => t.ProductIDTransactionHistory, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
-			Join<WorkOrder>(t => t.ProductIDWorkOrder, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
-			Join<ProductProductPhoto>(t => t.ProductIDProductProductPhoto, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
-			Join<ProductReview>(t => t.ProductIDProductReview, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
-			Join<ProductVendor>(t => t.ProductIDProductVendor, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
-			Join<PurchaseOrderDetail>(t => t.ProductIDPurchaseOrderDetail, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
-			Join<ProductInventory>(t => t.ProductIDProductInventory, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
-			Join<ProductListPriceHistory>(t => t.ProductIDProductListPriceHistory, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
-			Join<ProductDocument>(t => t.ProductIDProductDocument, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
-			Join<ProductCostHistory>(t => t.ProductIDProductCostHistory, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
-			Join<BillOfMaterials>(t => t.ComponentIDBillOfMaterials, (t, f) => t.ProductID == f.ComponentID); // Reverse Relation
-			Join<BillOfMaterials>(t => t.ProductAssemblyIDBillOfMaterials, (t, f) => t.ProductID == f.ProductAssemblyID); // Reverse Relation
-			Join<ShoppingCartItem>(t => t.ProductIDShoppingCartItem, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
-			Join<SpecialOfferProduct>(t => t.ProductIDSpecialOfferProduct, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
-			Join<ProductModel>(t => t.ProductModelID, (t, f) => t.ProductModelID == f.ProductModelID); // Relation
-			Join<ProductSubcategory>(t => t.ProductSubcategoryID, (t, f) => t.ProductSubcategoryID == f.ProductSubcategoryID); // Relation
-			Join<UnitMeasure>(t => t.SizeUnitMeasureCode, (t, f) => t.SizeUnitMeasureCode == f.UnitMeasureCode); // Relation
-			Join<UnitMeasure>(t => t.WeightUnitMeasureCode, (t, f) => t.WeightUnitMeasureCode == f.UnitMeasureCode); // Relation
+			Join<TransactionHistory>(t => t.ProductTransactionHistory, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
+			Join<WorkOrder>(t => t.ProductWorkOrder, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
+			Join<ProductProductPhoto>(t => t.ProductProductProductPhoto, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
+			Join<ProductReview>(t => t.ProductProductReview, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
+			Join<ProductVendor>(t => t.ProductProductVendor, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
+			Join<PurchaseOrderDetail>(t => t.ProductPurchaseOrderDetail, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
+			Join<ProductInventory>(t => t.ProductProductInventory, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
+			Join<ProductListPriceHistory>(t => t.ProductProductListPriceHistory, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
+			Join<ProductDocument>(t => t.ProductProductDocument, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
+			Join<ProductCostHistory>(t => t.ProductProductCostHistory, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
+			Join<BillOfMaterials>(t => t.ComponentBillOfMaterials, (t, f) => t.ProductID == f.ComponentID); // Reverse Relation
+			Join<BillOfMaterials>(t => t.ProductAssemblyBillOfMaterials, (t, f) => t.ProductID == f.ProductAssemblyID); // Reverse Relation
+			Join<ShoppingCartItem>(t => t.ProductShoppingCartItem, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
+			Join<SpecialOfferProduct>(t => t.ProductSpecialOfferProduct, (t, f) => t.ProductID == f.ProductID); // Reverse Relation
+			Join<ProductModel>(t => t.ProductModelProductModel, (t, f) => t.ProductModelID == f.ProductModelID); // Relation
+			Join<ProductSubcategory>(t => t.ProductSubcategoryProductSubcategory, (t, f) => t.ProductSubcategoryID == f.ProductSubcategoryID); // Relation
+			Join<UnitMeasure>(t => t.SizeUnitMeasureCodeUnitMeasure, (t, f) => t.SizeUnitMeasureCode == f.UnitMeasureCode); // Relation
+			Join<UnitMeasure>(t => t.WeightUnitMeasureCodeUnitMeasure, (t, f) => t.WeightUnitMeasureCode == f.UnitMeasureCode); // Relation
 		}
 
 		
@@ -314,58 +320,58 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public TransactionHistory ProductIDTransactionHistory { get; set; }
+        public TransactionHistory ProductTransactionHistory { get; set; }
 		
         [InnerJoinColumn]
-        public WorkOrder ProductIDWorkOrder { get; set; }
+        public WorkOrder ProductWorkOrder { get; set; }
 		
         [InnerJoinColumn]
-        public ProductProductPhoto ProductIDProductProductPhoto { get; set; }
+        public ProductProductPhoto ProductProductProductPhoto { get; set; }
 		
         [InnerJoinColumn]
-        public ProductReview ProductIDProductReview { get; set; }
+        public ProductReview ProductProductReview { get; set; }
 		
         [InnerJoinColumn]
-        public ProductVendor ProductIDProductVendor { get; set; }
+        public ProductVendor ProductProductVendor { get; set; }
 		
         [InnerJoinColumn]
-        public PurchaseOrderDetail ProductIDPurchaseOrderDetail { get; set; }
+        public PurchaseOrderDetail ProductPurchaseOrderDetail { get; set; }
 		
         [InnerJoinColumn]
-        public ProductInventory ProductIDProductInventory { get; set; }
+        public ProductInventory ProductProductInventory { get; set; }
 		
         [InnerJoinColumn]
-        public ProductListPriceHistory ProductIDProductListPriceHistory { get; set; }
+        public ProductListPriceHistory ProductProductListPriceHistory { get; set; }
 		
         [InnerJoinColumn]
-        public ProductDocument ProductIDProductDocument { get; set; }
+        public ProductDocument ProductProductDocument { get; set; }
 		
         [InnerJoinColumn]
-        public ProductCostHistory ProductIDProductCostHistory { get; set; }
+        public ProductCostHistory ProductProductCostHistory { get; set; }
 		
         [InnerJoinColumn]
-        public BillOfMaterials ComponentIDBillOfMaterials { get; set; }
+        public BillOfMaterials ComponentBillOfMaterials { get; set; }
 		
         [InnerJoinColumn]
-        public BillOfMaterials ProductAssemblyIDBillOfMaterials { get; set; }
+        public BillOfMaterials ProductAssemblyBillOfMaterials { get; set; }
 		
         [InnerJoinColumn]
-        public ShoppingCartItem ProductIDShoppingCartItem { get; set; }
+        public ShoppingCartItem ProductShoppingCartItem { get; set; }
 		
         [InnerJoinColumn]
-        public SpecialOfferProduct ProductIDSpecialOfferProduct { get; set; }
+        public SpecialOfferProduct ProductSpecialOfferProduct { get; set; }
 		
         [InnerJoinColumn]
-        public ProductModel ProductModelID { get; set; }
+        public ProductModel ProductModelProductModel { get; set; }
 		
         [InnerJoinColumn]
-        public ProductSubcategory ProductSubcategoryID { get; set; }
+        public ProductSubcategory ProductSubcategoryProductSubcategory { get; set; }
 		
         [InnerJoinColumn]
-        public UnitMeasure SizeUnitMeasureCode { get; set; }
+        public UnitMeasure SizeUnitMeasureCodeUnitMeasure { get; set; }
 		
         [InnerJoinColumn]
-        public UnitMeasure WeightUnitMeasureCode { get; set; }
+        public UnitMeasure WeightUnitMeasureCodeUnitMeasure { get; set; }
 	}
 
 	[Table("ProductCategory", "Production", "AdventureWorks2012")]
@@ -373,7 +379,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	{
 		static ProductCategory()
 		{
-			Join<ProductSubcategory>(t => t.ProductCategoryIDProductSubcategory, (t, f) => t.ProductCategoryID == f.ProductCategoryID); // Reverse Relation
+			Join<ProductSubcategory>(t => t.ProductCategoryProductSubcategory, (t, f) => t.ProductCategoryID == f.ProductCategoryID); // Reverse Relation
 		}
 
 		
@@ -395,7 +401,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public ProductSubcategory ProductCategoryIDProductSubcategory { get; set; }
+        public ProductSubcategory ProductCategoryProductSubcategory { get; set; }
 	}
 
 	[Table("ProductCostHistory", "Production", "AdventureWorks2012")]
@@ -403,7 +409,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	{
 		static ProductCostHistory()
 		{
-			Join<Product>(t => t.ProductID, (t, f) => t.ProductID == f.ProductID); // Relation
+			Join<Product>(t => t.ProductProduct, (t, f) => t.ProductID == f.ProductID); // Relation
 		}
 
 		
@@ -424,7 +430,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public Product ProductID { get; set; }
+        public Product ProductProduct { get; set; }
 	}
 
 	[Table("ProductDescription", "Production", "AdventureWorks2012")]
@@ -432,7 +438,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	{
 		static ProductDescription()
 		{
-			Join<ProductModelProductDescriptionCulture>(t => t.ProductDescriptionIDProductModelProductDescriptionCulture, (t, f) => t.ProductDescriptionID == f.ProductDescriptionID); // Reverse Relation
+			Join<ProductModelProductDescriptionCulture>(t => t.ProductDescriptionProductModelProductDescriptionCulture, (t, f) => t.ProductDescriptionID == f.ProductDescriptionID); // Reverse Relation
 		}
 
 		
@@ -454,7 +460,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public ProductModelProductDescriptionCulture ProductDescriptionIDProductModelProductDescriptionCulture { get; set; }
+        public ProductModelProductDescriptionCulture ProductDescriptionProductModelProductDescriptionCulture { get; set; }
 	}
 
 	[Table("ProductDocument", "Production", "AdventureWorks2012")]
@@ -462,8 +468,8 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	{
 		static ProductDocument()
 		{
-			Join<Document>(t => t.DocumentNode, (t, f) => t.DocumentNode == f.DocumentNode); // Relation
-			Join<Product>(t => t.ProductID, (t, f) => t.ProductID == f.ProductID); // Relation
+			Join<Document>(t => t.DocumentNodeDocument, (t, f) => t.DocumentNode == f.DocumentNode); // Relation
+			Join<Product>(t => t.ProductProduct, (t, f) => t.ProductID == f.ProductID); // Relation
 		}
 
 		
@@ -478,10 +484,10 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public Document DocumentNode { get; set; }
+        public Document DocumentNodeDocument { get; set; }
 		
         [InnerJoinColumn]
-        public Product ProductID { get; set; }
+        public Product ProductProduct { get; set; }
 	}
 
 	[Table("ProductInventory", "Production", "AdventureWorks2012")]
@@ -489,8 +495,8 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	{
 		static ProductInventory()
 		{
-			Join<Location>(t => t.LocationID, (t, f) => t.LocationID == f.LocationID); // Relation
-			Join<Product>(t => t.ProductID, (t, f) => t.ProductID == f.ProductID); // Relation
+			Join<Location>(t => t.LocationLocation, (t, f) => t.LocationID == f.LocationID); // Relation
+			Join<Product>(t => t.ProductProduct, (t, f) => t.ProductID == f.ProductID); // Relation
 		}
 
 		
@@ -517,10 +523,10 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public Location LocationID { get; set; }
+        public Location LocationLocation { get; set; }
 		
         [InnerJoinColumn]
-        public Product ProductID { get; set; }
+        public Product ProductProduct { get; set; }
 	}
 
 	[Table("ProductListPriceHistory", "Production", "AdventureWorks2012")]
@@ -528,7 +534,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	{
 		static ProductListPriceHistory()
 		{
-			Join<Product>(t => t.ProductID, (t, f) => t.ProductID == f.ProductID); // Relation
+			Join<Product>(t => t.ProductProduct, (t, f) => t.ProductID == f.ProductID); // Relation
 		}
 
 		
@@ -549,7 +555,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public Product ProductID { get; set; }
+        public Product ProductProduct { get; set; }
 	}
 
 	[Table("ProductModel", "Production", "AdventureWorks2012")]
@@ -557,9 +563,9 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	{
 		static ProductModel()
 		{
-			Join<ProductModelProductDescriptionCulture>(t => t.ProductModelIDProductModelProductDescriptionCulture, (t, f) => t.ProductModelID == f.ProductModelID); // Reverse Relation
-			Join<ProductModelIllustration>(t => t.ProductModelIDProductModelIllustration, (t, f) => t.ProductModelID == f.ProductModelID); // Reverse Relation
-			Join<Product>(t => t.ProductModelIDProduct, (t, f) => t.ProductModelID == f.ProductModelID); // Reverse Relation
+			Join<ProductModelProductDescriptionCulture>(t => t.ProductModelProductModelProductDescriptionCulture, (t, f) => t.ProductModelID == f.ProductModelID); // Reverse Relation
+			Join<ProductModelIllustration>(t => t.ProductModelProductModelIllustration, (t, f) => t.ProductModelID == f.ProductModelID); // Reverse Relation
+			Join<Product>(t => t.ProductModelProduct, (t, f) => t.ProductModelID == f.ProductModelID); // Reverse Relation
 		}
 
 		
@@ -587,13 +593,13 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public ProductModelProductDescriptionCulture ProductModelIDProductModelProductDescriptionCulture { get; set; }
+        public ProductModelProductDescriptionCulture ProductModelProductModelProductDescriptionCulture { get; set; }
 		
         [InnerJoinColumn]
-        public ProductModelIllustration ProductModelIDProductModelIllustration { get; set; }
+        public ProductModelIllustration ProductModelProductModelIllustration { get; set; }
 		
         [InnerJoinColumn]
-        public Product ProductModelIDProduct { get; set; }
+        public Product ProductModelProduct { get; set; }
 	}
 
 	[Table("ProductModelIllustration", "Production", "AdventureWorks2012")]
@@ -601,8 +607,8 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	{
 		static ProductModelIllustration()
 		{
-			Join<Illustration>(t => t.IllustrationID, (t, f) => t.IllustrationID == f.IllustrationID); // Relation
-			Join<ProductModel>(t => t.ProductModelID, (t, f) => t.ProductModelID == f.ProductModelID); // Relation
+			Join<Illustration>(t => t.IllustrationIllustration, (t, f) => t.IllustrationID == f.IllustrationID); // Relation
+			Join<ProductModel>(t => t.ProductModelProductModel, (t, f) => t.ProductModelID == f.ProductModelID); // Relation
 		}
 
 		
@@ -617,10 +623,10 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public Illustration IllustrationID { get; set; }
+        public Illustration IllustrationIllustration { get; set; }
 		
         [InnerJoinColumn]
-        public ProductModel ProductModelID { get; set; }
+        public ProductModel ProductModelProductModel { get; set; }
 	}
 
 	[Table("ProductModelProductDescriptionCulture", "Production", "AdventureWorks2012")]
@@ -628,9 +634,9 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	{
 		static ProductModelProductDescriptionCulture()
 		{
-			Join<Culture>(t => t.CultureID, (t, f) => t.CultureID == f.CultureID); // Relation
-			Join<ProductDescription>(t => t.ProductDescriptionID, (t, f) => t.ProductDescriptionID == f.ProductDescriptionID); // Relation
-			Join<ProductModel>(t => t.ProductModelID, (t, f) => t.ProductModelID == f.ProductModelID); // Relation
+			Join<Culture>(t => t.CultureCulture, (t, f) => t.CultureID == f.CultureID); // Relation
+			Join<ProductDescription>(t => t.ProductDescriptionProductDescription, (t, f) => t.ProductDescriptionID == f.ProductDescriptionID); // Relation
+			Join<ProductModel>(t => t.ProductModelProductModel, (t, f) => t.ProductModelID == f.ProductModelID); // Relation
 		}
 
 		
@@ -648,13 +654,13 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public Culture CultureID { get; set; }
+        public Culture CultureCulture { get; set; }
 		
         [InnerJoinColumn]
-        public ProductDescription ProductDescriptionID { get; set; }
+        public ProductDescription ProductDescriptionProductDescription { get; set; }
 		
         [InnerJoinColumn]
-        public ProductModel ProductModelID { get; set; }
+        public ProductModel ProductModelProductModel { get; set; }
 	}
 
 	[Table("ProductPhoto", "Production", "AdventureWorks2012")]
@@ -662,7 +668,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	{
 		static ProductPhoto()
 		{
-			Join<ProductProductPhoto>(t => t.ProductPhotoIDProductProductPhoto, (t, f) => t.ProductPhotoID == f.ProductPhotoID); // Reverse Relation
+			Join<ProductProductPhoto>(t => t.ProductPhotoProductProductPhoto, (t, f) => t.ProductPhotoID == f.ProductPhotoID); // Reverse Relation
 		}
 
 		
@@ -690,7 +696,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public ProductProductPhoto ProductPhotoIDProductProductPhoto { get; set; }
+        public ProductProductPhoto ProductPhotoProductProductPhoto { get; set; }
 	}
 
 	[Table("ProductProductPhoto", "Production", "AdventureWorks2012")]
@@ -698,8 +704,8 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	{
 		static ProductProductPhoto()
 		{
-			Join<Product>(t => t.ProductID, (t, f) => t.ProductID == f.ProductID); // Relation
-			Join<ProductPhoto>(t => t.ProductPhotoID, (t, f) => t.ProductPhotoID == f.ProductPhotoID); // Relation
+			Join<Product>(t => t.ProductProduct, (t, f) => t.ProductID == f.ProductID); // Relation
+			Join<ProductPhoto>(t => t.ProductPhotoProductPhoto, (t, f) => t.ProductPhotoID == f.ProductPhotoID); // Relation
 		}
 
 		
@@ -717,10 +723,10 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public Product ProductID { get; set; }
+        public Product ProductProduct { get; set; }
 		
         [InnerJoinColumn]
-        public ProductPhoto ProductPhotoID { get; set; }
+        public ProductPhoto ProductPhotoProductPhoto { get; set; }
 	}
 
 	[Table("ProductReview", "Production", "AdventureWorks2012")]
@@ -728,7 +734,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	{
 		static ProductReview()
 		{
-			Join<Product>(t => t.ProductID, (t, f) => t.ProductID == f.ProductID); // Relation
+			Join<Product>(t => t.ProductProduct, (t, f) => t.ProductID == f.ProductID); // Relation
 		}
 
 		
@@ -762,7 +768,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public Product ProductID { get; set; }
+        public Product ProductProduct { get; set; }
 	}
 
 	[Table("ProductSubcategory", "Production", "AdventureWorks2012")]
@@ -770,8 +776,8 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	{
 		static ProductSubcategory()
 		{
-			Join<ProductCategory>(t => t.ProductCategoryID, (t, f) => t.ProductCategoryID == f.ProductCategoryID); // Relation
-			Join<Product>(t => t.ProductSubcategoryIDProduct, (t, f) => t.ProductSubcategoryID == f.ProductSubcategoryID); // Reverse Relation
+			Join<ProductCategory>(t => t.ProductCategoryProductCategory, (t, f) => t.ProductCategoryID == f.ProductCategoryID); // Relation
+			Join<Product>(t => t.ProductSubcategoryProduct, (t, f) => t.ProductSubcategoryID == f.ProductSubcategoryID); // Reverse Relation
 		}
 
 		
@@ -796,10 +802,10 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public ProductCategory ProductCategoryID { get; set; }
+        public ProductCategory ProductCategoryProductCategory { get; set; }
 		
         [InnerJoinColumn]
-        public Product ProductSubcategoryIDProduct { get; set; }
+        public Product ProductSubcategoryProduct { get; set; }
 	}
 
 	[Table("ScrapReason", "Production", "AdventureWorks2012")]
@@ -807,7 +813,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	{
 		static ScrapReason()
 		{
-			Join<WorkOrder>(t => t.ScrapReasonIDWorkOrder, (t, f) => t.ScrapReasonID == f.ScrapReasonID); // Reverse Relation
+			Join<WorkOrder>(t => t.ScrapReasonWorkOrder, (t, f) => t.ScrapReasonID == f.ScrapReasonID); // Reverse Relation
 		}
 
 		
@@ -826,7 +832,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public WorkOrder ScrapReasonIDWorkOrder { get; set; }
+        public WorkOrder ScrapReasonWorkOrder { get; set; }
 	}
 
 	[Table("TransactionHistory", "Production", "AdventureWorks2012")]
@@ -834,7 +840,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	{
 		static TransactionHistory()
 		{
-			Join<Product>(t => t.ProductID, (t, f) => t.ProductID == f.ProductID); // Relation
+			Join<Product>(t => t.ProductProduct, (t, f) => t.ProductID == f.ProductID); // Relation
 		}
 
 		
@@ -871,7 +877,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public Product ProductID { get; set; }
+        public Product ProductProduct { get; set; }
 	}
 
 	[Table("TransactionHistoryArchive", "Production", "AdventureWorks2012")]
@@ -951,9 +957,9 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	{
 		static WorkOrder()
 		{
-			Join<Product>(t => t.ProductID, (t, f) => t.ProductID == f.ProductID); // Relation
-			Join<ScrapReason>(t => t.ScrapReasonID, (t, f) => t.ScrapReasonID == f.ScrapReasonID); // Relation
-			Join<WorkOrderRouting>(t => t.WorkOrderIDWorkOrderRouting, (t, f) => t.WorkOrderID == f.WorkOrderID); // Reverse Relation
+			Join<Product>(t => t.ProductProduct, (t, f) => t.ProductID == f.ProductID); // Relation
+			Join<ScrapReason>(t => t.ScrapReasonScrapReason, (t, f) => t.ScrapReasonID == f.ScrapReasonID); // Relation
+			Join<WorkOrderRouting>(t => t.WorkOrderWorkOrderRouting, (t, f) => t.WorkOrderID == f.WorkOrderID); // Reverse Relation
 		}
 
 		
@@ -993,13 +999,13 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public Product ProductID { get; set; }
+        public Product ProductProduct { get; set; }
 		
         [InnerJoinColumn]
-        public ScrapReason ScrapReasonID { get; set; }
+        public ScrapReason ScrapReasonScrapReason { get; set; }
 		
         [InnerJoinColumn]
-        public WorkOrderRouting WorkOrderIDWorkOrderRouting { get; set; }
+        public WorkOrderRouting WorkOrderWorkOrderRouting { get; set; }
 	}
 
 	[Table("WorkOrderRouting", "Production", "AdventureWorks2012")]
@@ -1007,8 +1013,8 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	{
 		static WorkOrderRouting()
 		{
-			Join<Location>(t => t.LocationID, (t, f) => t.LocationID == f.LocationID); // Relation
-			Join<WorkOrder>(t => t.WorkOrderID, (t, f) => t.WorkOrderID == f.WorkOrderID); // Relation
+			Join<Location>(t => t.LocationLocation, (t, f) => t.LocationID == f.LocationID); // Relation
+			Join<WorkOrder>(t => t.WorkOrderWorkOrder, (t, f) => t.WorkOrderID == f.WorkOrderID); // Relation
 		}
 
 		
@@ -1050,10 +1056,10 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Production
 	
 		
         [InnerJoinColumn]
-        public Location LocationID { get; set; }
+        public Location LocationLocation { get; set; }
 		
         [InnerJoinColumn]
-        public WorkOrder WorkOrderID { get; set; }
+        public WorkOrder WorkOrderWorkOrder { get; set; }
 	}
 
 

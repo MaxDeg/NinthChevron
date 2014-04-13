@@ -20,9 +20,29 @@ namespace Sandbox
             Console.WriteLine("Ok it's start");
 
             SqlServerMetadata mssqlMeta = new SqlServerMetadata(@"Data Source=(localdb)\Projects;Initial Catalog=AdventureWorks2012;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False");
+            foreach (var group in mssqlMeta.Tables.GroupBy(t => new { Database = t.Database, Schema = t.Schema }))
+            {
+                string dbName = GeneratorHelper.ToCSharpName(group.Key.Database, NameType.None);
+                string schemaName = GeneratorHelper.ToCSharpName(group.Key.Schema, NameType.Schema);
+                string namespaceName = dbName + (!string.IsNullOrEmpty(group.Key.Schema) ? "." + schemaName + "Schema" : "");
+
+                foreach (ITableMetadata tab in group)
+                {
+                    foreach (IColumnMetadata c in tab.Columns.Values)
+                    {
+                        Console.WriteLine(GeneratorHelper.CreateProperty(c));
+                    }
+
+                    foreach (IRelationColumnMetadata c in tab.Relations)
+                    {
+                        Console.WriteLine(GeneratorHelper.CreateRelationDefinition(c));
+                    }
+                }
+            }
+
 
             //MySqlMetadata meta = new MySqlMetadata("Server=localhost;Database=sakila;Uid=root;Pwd=Secret.123456;");
-            MySqlMetadata meta = new MySqlMetadata("Server=localhost;Database=sakila;Uid=root;Pwd=password;");
+            //MySqlMetadata meta = new MySqlMetadata("Server=localhost;Database=sakila;Uid=root;Pwd=password;");
 
             //foreach (ITableMetadata table in meta.Tables.Where(t => t.Name == "store"))
             //{
@@ -39,45 +59,45 @@ namespace Sandbox
             //    }
             //}
 
-            FakeContext context = new FakeContext();
+            //FakeContext context = new FakeContext();
 
-            for (int i = 0; i < 5; i++)
-            {
-                try
-                {
-                    User usr = new User { Email = i + "@evoconcept.net", Name = i.ToString(), LastName = i.ToString() };
-                    context.Insert(usr);
-                }
-                catch { }
-            }
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    try
+            //    {
+            //        User usr = new User { Email = i + "@evoconcept.net", Name = i.ToString(), LastName = i.ToString() };
+            //        context.Insert(usr);
+            //    }
+            //    catch { }
+            //}
 
-            try
-            {
-                context.Query<User>().Select(u => new Profile { UserId = u.Id, PictureUrl = "http://evoconcept.net" }).Insert();
-            }
-            catch { }
+            //try
+            //{
+            //    context.Query<User>().Select(u => new Profile { UserId = u.Id, PictureUrl = "http://evoconcept.net" }).Insert();
+            //}
+            //catch { }
 
-            try
-            {
-                context.Query<User>().Insert(u => new Profile { UserId = u.Id, PictureUrl = "http://evoconcept.net" });
-            }
-            catch { }
+            //try
+            //{
+            //    context.Query<User>().Insert(u => new Profile { UserId = u.Id, PictureUrl = "http://evoconcept.net" });
+            //}
+            //catch { }
 
 
-            try
-            {
-                context.Query<User>().Where(u => u.Name.Contains("items")).Delete();
-            }
-            catch { }
+            //try
+            //{
+            //    context.Query<User>().Where(u => u.Name.Contains("items")).Delete();
+            //}
+            //catch { }
 
-            try
-            {
-                context.Query<User>().Where(u => u.Name.Contains("items")).Update(u => new User { LastAccess = DateTime.Now });
-            }
-            catch { }
+            //try
+            //{
+            //    context.Query<User>().Where(u => u.Name.Contains("items")).Update(u => new User { LastAccess = DateTime.Now });
+            //}
+            //catch { }
 
-            Console.WriteLine("Ok it's end");
-            Console.ReadKey();
+            //Console.WriteLine("Ok it's end");
+            //Console.ReadKey();
             /*
             NamingRulesProvider.TableName = name =>
             {

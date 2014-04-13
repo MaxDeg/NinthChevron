@@ -28,6 +28,7 @@ namespace BlueBoxSharp.Data.Metadata
     {
         public ColumnMetadata(IDatabaseMetadata db, ITableMetadata table, string name, string type, bool isPrimaryKey, bool isIdentity, bool isNullable)
         {
+            this.Table = table;
             this.Name = name;
             this.IsIdentity = isIdentity;
             this.IsPrimaryKey = isPrimaryKey;
@@ -36,8 +37,9 @@ namespace BlueBoxSharp.Data.Metadata
             this.Type = db.GetType(this.SqlType, this.IsNullable);
         }
 
-        public ColumnMetadata(PropertyInfo property, ColumnAttribute attr)
+        public ColumnMetadata(ITableMetadata table, PropertyInfo property, ColumnAttribute attr)
         {
+            this.Table = table;
             this.Name = attr.Name;
             this.IsIdentity = attr.IsIdentity;
             this.IsNullable = attr.IsNullable;
@@ -45,6 +47,7 @@ namespace BlueBoxSharp.Data.Metadata
             this.Type = property.PropertyType;
         }
 
+        public ITableMetadata Table { get; private set; }
         public string Name { get; private set; }
         public bool IsPrimaryKey { get; private set; }
         public bool IsIdentity { get; private set; }

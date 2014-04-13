@@ -23,6 +23,7 @@ namespace BlueBoxSharp.Data.Metadata
 {
     public interface IColumnMetadata
     {
+        ITableMetadata Table { get; }
         string Name { get; }
         bool IsPrimaryKey { get; }
         bool IsIdentity { get;  }

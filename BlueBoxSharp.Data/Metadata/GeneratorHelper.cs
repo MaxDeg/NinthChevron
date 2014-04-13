@@ -46,7 +46,7 @@ namespace BlueBoxSharp.Data.Metadata
                 meta.IsIdentity ? "true" : "false",
                 meta.IsNullable ? "true" : "false",
                 provider.GetTypeOutput(new CodeTypeReference(meta.Type)),
-                ToCSharpName(meta.Name, NameType.Column));
+                ToCSharpName(meta.Name, NameType.Column, meta.Table));
 
             return string.Format(@"
         [NotifyPropertyChanged, Column(""{0}"", {1}, {2}, {3})]
@@ -56,7 +56,7 @@ namespace BlueBoxSharp.Data.Metadata
                 meta.IsIdentity ? "true" : "false",
                 meta.IsNullable ? "true" : "false",
                 provider.GetTypeOutput(new CodeTypeReference(meta.Type)),
-                ToCSharpName(meta.Name, NameType.Column));
+                ToCSharpName(meta.Name, NameType.Column, meta.Table));
         }
 
         public static string CreateRelationProperty(IRelationColumnMetadata meta)
@@ -77,8 +77,8 @@ namespace BlueBoxSharp.Data.Metadata
                 ToCSharpName(meta.ForeignTable.Name, NameType.Table),
                 meta.IsReverseRelation ? ToCSharpName(meta.ForeignColumn, NameType.ReverseRelationColumn, meta.ForeignTable)
                                         : ToCSharpName(meta.Name, NameType.RelationColumn, meta.ForeignTable),
-                ToCSharpName(meta.Name, NameType.Column),
-                ToCSharpName(meta.ForeignColumn, NameType.Column));
+                ToCSharpName(meta.Name, NameType.Column, meta.Table),
+                ToCSharpName(meta.ForeignColumn, NameType.Column, meta.Table));
         }
 
         public static string CreateConstant(IProcedureMetadata meta)
@@ -130,7 +130,7 @@ namespace BlueBoxSharp.Data.Metadata
                     );
         }
 
-        public static string ToCSharpName(string name, NameType nameType, ITableMetadata foreign = null)
+        public static string ToCSharpName(string name, NameType nameType, ITableMetadata table = null)
         {
             string result = string.Empty;
 
@@ -145,15 +145,15 @@ namespace BlueBoxSharp.Data.Metadata
                     break;
 
                 case NameType.Column:
-                    result = NamingRulesProvider.Current.ColumnName(name);
+                    result = NamingRulesProvider.Current.ColumnName(table, name);
                     break;
 
                 case NameType.RelationColumn:
-                    result = NamingRulesProvider.Current.RelationColumnName(foreign, name, false);
+                    result = NamingRulesProvider.Current.RelationColumnName(table, name, false);
                     break;
 
                 case NameType.ReverseRelationColumn:
-                    result = NamingRulesProvider.Current.RelationColumnName(foreign, name, true);
+                    result = NamingRulesProvider.Current.RelationColumnName(table, name, true);
                     break;
 
                 case NameType.Procedure:

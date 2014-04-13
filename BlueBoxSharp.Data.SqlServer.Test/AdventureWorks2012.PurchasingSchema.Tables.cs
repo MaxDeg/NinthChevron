@@ -5,16 +5,22 @@ using BlueBoxSharp.Data.Entity;
 using BlueBoxSharp.Helpers;
 using BlueBoxSharp.ComponentModel.DataAnnotations;
 
-namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Purchasing
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012;
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.HumanResourcesSchema;
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.PersonSchema;
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.ProductionSchema;
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.SalesSchema;
+
+namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.PurchasingSchema
 {
 	[Table("ProductVendor", "Purchasing", "AdventureWorks2012")]
 	public partial class ProductVendor : Entity<ProductVendor>
 	{
 		static ProductVendor()
 		{
-			Join<Product>(t => t.ProductID, (t, f) => t.ProductID == f.ProductID); // Relation
-			Join<UnitMeasure>(t => t.UnitMeasureCode, (t, f) => t.UnitMeasureCode == f.UnitMeasureCode); // Relation
-			Join<Vendor>(t => t.BusinessEntityID, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
+			Join<Product>(t => t.ProductProduct, (t, f) => t.ProductID == f.ProductID); // Relation
+			Join<UnitMeasure>(t => t.UnitMeasureCodeUnitMeasure, (t, f) => t.UnitMeasureCode == f.UnitMeasureCode); // Relation
+			Join<Vendor>(t => t.BusinessEntityVendor, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
 		}
 
 		
@@ -53,13 +59,13 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Purchasing
 	
 		
         [InnerJoinColumn]
-        public Product ProductID { get; set; }
+        public Product ProductProduct { get; set; }
 		
         [InnerJoinColumn]
-        public UnitMeasure UnitMeasureCode { get; set; }
+        public UnitMeasure UnitMeasureCodeUnitMeasure { get; set; }
 		
         [InnerJoinColumn]
-        public Vendor BusinessEntityID { get; set; }
+        public Vendor BusinessEntityVendor { get; set; }
 	}
 
 	[Table("PurchaseOrderDetail", "Purchasing", "AdventureWorks2012")]
@@ -67,8 +73,8 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Purchasing
 	{
 		static PurchaseOrderDetail()
 		{
-			Join<Product>(t => t.ProductID, (t, f) => t.ProductID == f.ProductID); // Relation
-			Join<PurchaseOrderHeader>(t => t.PurchaseOrderID, (t, f) => t.PurchaseOrderID == f.PurchaseOrderID); // Relation
+			Join<Product>(t => t.ProductProduct, (t, f) => t.ProductID == f.ProductID); // Relation
+			Join<PurchaseOrderHeader>(t => t.PurchaseOrderPurchaseOrderHeader, (t, f) => t.PurchaseOrderID == f.PurchaseOrderID); // Relation
 		}
 
 		
@@ -111,10 +117,10 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Purchasing
 	
 		
         [InnerJoinColumn]
-        public Product ProductID { get; set; }
+        public Product ProductProduct { get; set; }
 		
         [InnerJoinColumn]
-        public PurchaseOrderHeader PurchaseOrderID { get; set; }
+        public PurchaseOrderHeader PurchaseOrderPurchaseOrderHeader { get; set; }
 	}
 
 	[Table("PurchaseOrderHeader", "Purchasing", "AdventureWorks2012")]
@@ -122,10 +128,10 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Purchasing
 	{
 		static PurchaseOrderHeader()
 		{
-			Join<Employee>(t => t.EmployeeID, (t, f) => t.EmployeeID == f.BusinessEntityID); // Relation
-			Join<PurchaseOrderDetail>(t => t.PurchaseOrderIDPurchaseOrderDetail, (t, f) => t.PurchaseOrderID == f.PurchaseOrderID); // Reverse Relation
-			Join<ShipMethod>(t => t.ShipMethodID, (t, f) => t.ShipMethodID == f.ShipMethodID); // Relation
-			Join<Vendor>(t => t.VendorID, (t, f) => t.VendorID == f.BusinessEntityID); // Relation
+			Join<Employee>(t => t.EmployeeEmployee, (t, f) => t.EmployeeID == f.BusinessEntityID); // Relation
+			Join<PurchaseOrderDetail>(t => t.PurchaseOrderPurchaseOrderDetail, (t, f) => t.PurchaseOrderID == f.PurchaseOrderID); // Reverse Relation
+			Join<ShipMethod>(t => t.ShipMethodShipMethod, (t, f) => t.ShipMethodID == f.ShipMethodID); // Relation
+			Join<Vendor>(t => t.VendorVendor, (t, f) => t.VendorID == f.BusinessEntityID); // Relation
 		}
 
 		
@@ -174,16 +180,16 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Purchasing
 	
 		
         [InnerJoinColumn]
-        public Employee EmployeeID { get; set; }
+        public Employee EmployeeEmployee { get; set; }
 		
         [InnerJoinColumn]
-        public PurchaseOrderDetail PurchaseOrderIDPurchaseOrderDetail { get; set; }
+        public PurchaseOrderDetail PurchaseOrderPurchaseOrderDetail { get; set; }
 		
         [InnerJoinColumn]
-        public ShipMethod ShipMethodID { get; set; }
+        public ShipMethod ShipMethodShipMethod { get; set; }
 		
         [InnerJoinColumn]
-        public Vendor VendorID { get; set; }
+        public Vendor VendorVendor { get; set; }
 	}
 
 	[Table("ShipMethod", "Purchasing", "AdventureWorks2012")]
@@ -191,8 +197,8 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Purchasing
 	{
 		static ShipMethod()
 		{
-			Join<PurchaseOrderHeader>(t => t.ShipMethodIDPurchaseOrderHeader, (t, f) => t.ShipMethodID == f.ShipMethodID); // Reverse Relation
-			Join<SalesOrderHeader>(t => t.ShipMethodIDSalesOrderHeader, (t, f) => t.ShipMethodID == f.ShipMethodID); // Reverse Relation
+			Join<PurchaseOrderHeader>(t => t.ShipMethodPurchaseOrderHeader, (t, f) => t.ShipMethodID == f.ShipMethodID); // Reverse Relation
+			Join<SalesOrderHeader>(t => t.ShipMethodSalesOrderHeader, (t, f) => t.ShipMethodID == f.ShipMethodID); // Reverse Relation
 		}
 
 		
@@ -220,10 +226,10 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Purchasing
 	
 		
         [InnerJoinColumn]
-        public PurchaseOrderHeader ShipMethodIDPurchaseOrderHeader { get; set; }
+        public PurchaseOrderHeader ShipMethodPurchaseOrderHeader { get; set; }
 		
         [InnerJoinColumn]
-        public SalesOrderHeader ShipMethodIDSalesOrderHeader { get; set; }
+        public SalesOrderHeader ShipMethodSalesOrderHeader { get; set; }
 	}
 
 	[Table("Vendor", "Purchasing", "AdventureWorks2012")]
@@ -231,9 +237,9 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Purchasing
 	{
 		static Vendor()
 		{
-			Join<BusinessEntity>(t => t.BusinessEntityID, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
-			Join<PurchaseOrderHeader>(t => t.VendorIDPurchaseOrderHeader, (t, f) => t.BusinessEntityID == f.VendorID); // Reverse Relation
-			Join<ProductVendor>(t => t.BusinessEntityIDProductVendor, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
+			Join<BusinessEntity>(t => t.BusinessEntityBusinessEntity, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
+			Join<PurchaseOrderHeader>(t => t.VendorPurchaseOrderHeader, (t, f) => t.BusinessEntityID == f.VendorID); // Reverse Relation
+			Join<ProductVendor>(t => t.BusinessEntityProductVendor, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
 		}
 
 		
@@ -263,13 +269,13 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.Purchasing
 	
 		
         [InnerJoinColumn]
-        public BusinessEntity BusinessEntityID { get; set; }
+        public BusinessEntity BusinessEntityBusinessEntity { get; set; }
 		
         [InnerJoinColumn]
-        public PurchaseOrderHeader VendorIDPurchaseOrderHeader { get; set; }
+        public PurchaseOrderHeader VendorPurchaseOrderHeader { get; set; }
 		
         [InnerJoinColumn]
-        public ProductVendor BusinessEntityIDProductVendor { get; set; }
+        public ProductVendor BusinessEntityProductVendor { get; set; }
 	}
 
 

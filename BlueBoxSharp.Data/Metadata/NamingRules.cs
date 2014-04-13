@@ -27,7 +27,7 @@ namespace BlueBoxSharp.Data.Metadata
         {
             SchemaName = name => name;
             TableName = name => name;
-            ColumnName = name => name;
+            ColumnName = (table, name) => table.Name == name ? name + "_" : name;
             RelationColumnName = (foreignTable, name, isReverse) =>
             {
                 string result;
@@ -48,7 +48,7 @@ namespace BlueBoxSharp.Data.Metadata
 
         public Func<string, string> SchemaName { get; set; }
         public Func<string, string> TableName { get; set; }
-        public Func<string, string> ColumnName { get; set; }
+        public Func<ITableMetadata, string, string> ColumnName { get; set; }
         public Func<ITableMetadata, string, bool, string> RelationColumnName { get; set; }
         public Func<string, string> ProcedureName { get; set; }
     }

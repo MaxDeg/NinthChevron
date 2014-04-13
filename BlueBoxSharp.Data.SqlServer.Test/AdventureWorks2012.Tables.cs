@@ -7,6 +7,12 @@ using BlueBoxSharp.Data.Entity;
 using BlueBoxSharp.Helpers;
 using BlueBoxSharp.ComponentModel.DataAnnotations;
 
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.HumanResourcesSchema;
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.PersonSchema;
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.ProductionSchema;
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.PurchasingSchema;
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.SalesSchema;
+
 namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012
 {
 	[Table("AWBuildVersion", "", "AdventureWorks2012")]

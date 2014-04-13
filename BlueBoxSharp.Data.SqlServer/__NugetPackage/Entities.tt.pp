@@ -28,7 +28,7 @@ foreach (var group in meta.Tables.GroupBy(t => new { Database = t.Database, Sche
 {
 	string dbName = GeneratorHelper.ToCSharpName(group.Key.Database, NameType.None);
 	string schemaName = GeneratorHelper.ToCSharpName(group.Key.Schema, NameType.Schema);
-	string namespaceName = dbName + (!string.IsNullOrEmpty(group.Key.Schema) ? "." + schemaName : "");
+	string namespaceName = dbName + (!string.IsNullOrEmpty(group.Key.Schema) ? "." + schemaName + "Schema" : "");
 
 #>
 using System;
@@ -37,6 +37,15 @@ using BlueBoxSharp.Data;
 using BlueBoxSharp.Data.Entity;
 using BlueBoxSharp.Helpers;
 using BlueBoxSharp.ComponentModel.DataAnnotations;
+
+<#
+foreach (var schema in meta.Tables.Where(t => t.Schema != group.Key.Schema).Select(t => new { Database = t.Database, Schema = t.Schema }).Distinct())
+{
+#>
+using $rootnamespace$.<#= dbName + (!string.IsNullOrEmpty(schema.Schema) ? "." + GeneratorHelper.ToCSharpName(schema.Schema, NameType.Schema) + "Schema" : "") #>;
+<#
+}
+#>
 
 namespace $rootnamespace$.<#= namespaceName #>
 {

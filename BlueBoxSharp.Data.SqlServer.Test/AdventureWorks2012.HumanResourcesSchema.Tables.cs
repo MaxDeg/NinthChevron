@@ -5,14 +5,20 @@ using BlueBoxSharp.Data.Entity;
 using BlueBoxSharp.Helpers;
 using BlueBoxSharp.ComponentModel.DataAnnotations;
 
-namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.HumanResources
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012;
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.PersonSchema;
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.ProductionSchema;
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.PurchasingSchema;
+using BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.SalesSchema;
+
+namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.HumanResourcesSchema
 {
 	[Table("Department", "HumanResources", "AdventureWorks2012")]
 	public partial class Department : Entity<Department>
 	{
 		static Department()
 		{
-			Join<EmployeeDepartmentHistory>(t => t.DepartmentIDEmployeeDepartmentHistory, (t, f) => t.DepartmentID == f.DepartmentID); // Reverse Relation
+			Join<EmployeeDepartmentHistory>(t => t.DepartmentEmployeeDepartmentHistory, (t, f) => t.DepartmentID == f.DepartmentID); // Reverse Relation
 		}
 
 		
@@ -34,7 +40,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.HumanResources
 	
 		
         [InnerJoinColumn]
-        public EmployeeDepartmentHistory DepartmentIDEmployeeDepartmentHistory { get; set; }
+        public EmployeeDepartmentHistory DepartmentEmployeeDepartmentHistory { get; set; }
 	}
 
 	[Table("Employee", "HumanResources", "AdventureWorks2012")]
@@ -42,13 +48,13 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.HumanResources
 	{
 		static Employee()
 		{
-			Join<EmployeeDepartmentHistory>(t => t.BusinessEntityIDEmployeeDepartmentHistory, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
-			Join<EmployeePayHistory>(t => t.BusinessEntityIDEmployeePayHistory, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
-			Join<JobCandidate>(t => t.BusinessEntityIDJobCandidate, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
+			Join<EmployeeDepartmentHistory>(t => t.BusinessEntityEmployeeDepartmentHistory, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
+			Join<EmployeePayHistory>(t => t.BusinessEntityEmployeePayHistory, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
+			Join<JobCandidate>(t => t.BusinessEntityJobCandidate, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
 			Join<Document>(t => t.OwnerDocument, (t, f) => t.BusinessEntityID == f.Owner); // Reverse Relation
-			Join<PurchaseOrderHeader>(t => t.EmployeeIDPurchaseOrderHeader, (t, f) => t.BusinessEntityID == f.EmployeeID); // Reverse Relation
-			Join<SalesPerson>(t => t.BusinessEntityIDSalesPerson, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
-			Join<Person>(t => t.BusinessEntityID, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
+			Join<PurchaseOrderHeader>(t => t.EmployeePurchaseOrderHeader, (t, f) => t.BusinessEntityID == f.EmployeeID); // Reverse Relation
+			Join<SalesPerson>(t => t.BusinessEntitySalesPerson, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Reverse Relation
+			Join<Person>(t => t.BusinessEntityPerson, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
 		}
 
 		
@@ -102,25 +108,25 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.HumanResources
 	
 		
         [InnerJoinColumn]
-        public EmployeeDepartmentHistory BusinessEntityIDEmployeeDepartmentHistory { get; set; }
+        public EmployeeDepartmentHistory BusinessEntityEmployeeDepartmentHistory { get; set; }
 		
         [InnerJoinColumn]
-        public EmployeePayHistory BusinessEntityIDEmployeePayHistory { get; set; }
+        public EmployeePayHistory BusinessEntityEmployeePayHistory { get; set; }
 		
         [InnerJoinColumn]
-        public JobCandidate BusinessEntityIDJobCandidate { get; set; }
+        public JobCandidate BusinessEntityJobCandidate { get; set; }
 		
         [InnerJoinColumn]
         public Document OwnerDocument { get; set; }
 		
         [InnerJoinColumn]
-        public PurchaseOrderHeader EmployeeIDPurchaseOrderHeader { get; set; }
+        public PurchaseOrderHeader EmployeePurchaseOrderHeader { get; set; }
 		
         [InnerJoinColumn]
-        public SalesPerson BusinessEntityIDSalesPerson { get; set; }
+        public SalesPerson BusinessEntitySalesPerson { get; set; }
 		
         [InnerJoinColumn]
-        public Person BusinessEntityID { get; set; }
+        public Person BusinessEntityPerson { get; set; }
 	}
 
 	[Table("EmployeeDepartmentHistory", "HumanResources", "AdventureWorks2012")]
@@ -128,9 +134,9 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.HumanResources
 	{
 		static EmployeeDepartmentHistory()
 		{
-			Join<Department>(t => t.DepartmentID, (t, f) => t.DepartmentID == f.DepartmentID); // Relation
-			Join<Employee>(t => t.BusinessEntityID, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
-			Join<Shift>(t => t.ShiftID, (t, f) => t.ShiftID == f.ShiftID); // Relation
+			Join<Department>(t => t.DepartmentDepartment, (t, f) => t.DepartmentID == f.DepartmentID); // Relation
+			Join<Employee>(t => t.BusinessEntityEmployee, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
+			Join<Shift>(t => t.ShiftShift, (t, f) => t.ShiftID == f.ShiftID); // Relation
 		}
 
 		
@@ -154,13 +160,13 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.HumanResources
 	
 		
         [InnerJoinColumn]
-        public Department DepartmentID { get; set; }
+        public Department DepartmentDepartment { get; set; }
 		
         [InnerJoinColumn]
-        public Employee BusinessEntityID { get; set; }
+        public Employee BusinessEntityEmployee { get; set; }
 		
         [InnerJoinColumn]
-        public Shift ShiftID { get; set; }
+        public Shift ShiftShift { get; set; }
 	}
 
 	[Table("EmployeePayHistory", "HumanResources", "AdventureWorks2012")]
@@ -168,7 +174,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.HumanResources
 	{
 		static EmployeePayHistory()
 		{
-			Join<Employee>(t => t.BusinessEntityID, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
+			Join<Employee>(t => t.BusinessEntityEmployee, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
 		}
 
 		
@@ -189,7 +195,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.HumanResources
 	
 		
         [InnerJoinColumn]
-        public Employee BusinessEntityID { get; set; }
+        public Employee BusinessEntityEmployee { get; set; }
 	}
 
 	[Table("JobCandidate", "HumanResources", "AdventureWorks2012")]
@@ -197,7 +203,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.HumanResources
 	{
 		static JobCandidate()
 		{
-			Join<Employee>(t => t.BusinessEntityID, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
+			Join<Employee>(t => t.BusinessEntityEmployee, (t, f) => t.BusinessEntityID == f.BusinessEntityID); // Relation
 		}
 
 		
@@ -219,7 +225,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.HumanResources
 	
 		
         [InnerJoinColumn]
-        public Employee BusinessEntityID { get; set; }
+        public Employee BusinessEntityEmployee { get; set; }
 	}
 
 	[Table("Shift", "HumanResources", "AdventureWorks2012")]
@@ -227,7 +233,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.HumanResources
 	{
 		static Shift()
 		{
-			Join<EmployeeDepartmentHistory>(t => t.ShiftIDEmployeeDepartmentHistory, (t, f) => t.ShiftID == f.ShiftID); // Reverse Relation
+			Join<EmployeeDepartmentHistory>(t => t.ShiftEmployeeDepartmentHistory, (t, f) => t.ShiftID == f.ShiftID); // Reverse Relation
 		}
 
 		
@@ -252,7 +258,7 @@ namespace BlueBoxSharp.Data.SqlServer.Test.AdventureWorks2012.HumanResources
 	
 		
         [InnerJoinColumn]
-        public EmployeeDepartmentHistory ShiftIDEmployeeDepartmentHistory { get; set; }
+        public EmployeeDepartmentHistory ShiftEmployeeDepartmentHistory { get; set; }
 	}
 
 

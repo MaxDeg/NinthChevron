@@ -86,7 +86,7 @@ namespace BlueBoxSharp.Data.Metadata
                     if (fieldAttr.IsPrimaryKey)
                         this._primaryKeyColumnNames.Add(prop.Name);
 
-                    this.Columns.Add(prop.Name, new ColumnMetadata(prop, fieldAttr));
+                    this.Columns.Add(prop.Name, new ColumnMetadata(this, prop, fieldAttr));
                     continue;
                 }
 

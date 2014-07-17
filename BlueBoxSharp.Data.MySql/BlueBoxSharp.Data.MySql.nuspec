@@ -1,25 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-    <metadata>
-        <id>BlueBoxSharp.Data.MySql</id>
-		<version>$version$</version>
-        <title>BlueBoxSharp.Data.MySql</title>
-        <authors>$author$</authors>
-        <owners>$author$</owners>
-        <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>$description$</description>
-		<copyright>Copyright 2013</copyright>
-    </metadata>
-    <files>
-        <file src="bin\Release\v4.0\BlueBoxSharp.Data.MySql.dll" target="lib\net40\BlueBoxSharp.Data.MySql.dll" />
-        <file src="bin\Release\v4.0\BlueBoxSharp.Data.MySql.pdb" target="lib\net40\BlueBoxSharp.Data.MySql.pdb" />
-        <file src="bin\Release\v4.5\BlueBoxSharp.Data.MySql.dll" target="lib\net45\BlueBoxSharp.Data.MySql.dll" />
-        <file src="bin\Release\v4.5\BlueBoxSharp.Data.MySql.pdb" target="lib\net45\BlueBoxSharp.Data.MySql.pdb" />
+  <metadata>
+    <id>BlueBoxSharp.Data.MySql</id>
+    <version>$version$</version>
+    <title>BlueBoxSharp.Data.MySql</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <copyright>Copyright 2013</copyright>
+  </metadata>
+  <files>
+    <file src="bin\Release\v4.0\BlueBoxSharp.Data.MySql.dll" target="lib\net40\BlueBoxSharp.Data.MySql.dll" />
+    <file src="bin\Release\v4.0\BlueBoxSharp.Data.MySql.pdb" target="lib\net40\BlueBoxSharp.Data.MySql.pdb" />
+    <file src="bin\Release\v4.5\BlueBoxSharp.Data.MySql.dll" target="lib\net45\BlueBoxSharp.Data.MySql.dll" />
+    <file src="bin\Release\v4.5\BlueBoxSharp.Data.MySql.pdb" target="lib\net45\BlueBoxSharp.Data.MySql.pdb" />
 
-        <file src="bin\Release\v4.0\MySql.Data.dll" target="lib\net40\MySql.Data.dll" />
-        <file src="bin\Release\v4.5\MySql.Data.dll" target="lib\net45\MySql.Data.dll" />
+    <file src="bin\Release\v4.0\MySql.Data.dll" target="lib\net40\MySql.Data.dll" />
+    <file src="bin\Release\v4.5\MySql.Data.dll" target="lib\net45\MySql.Data.dll" />
 
-        <file src="__NugetPackage\BlueBoxSharp.Data.MySql.props" target="build\BlueBoxSharp.Data.MySql.props" />
-        <file src="__NugetPackage\Entities.tt.pp" target="content\Entities.tt.pp" />
-    </files>
+    <file src="__NugetPackage\BlueBoxSharp.Data.MySql.net40.props" target="build\net40\BlueBoxSharp.Data.MySql.props" />
+    <file src="__NugetPackage\BlueBoxSharp.Data.MySql.net45.props" target="build\net45\BlueBoxSharp.Data.MySql.props" />
+    <file src="__NugetPackage\Entities.tt.pp" target="content\Entities.tt.pp" />
+  </files>
 </package>

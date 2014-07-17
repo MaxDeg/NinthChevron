@@ -3,6 +3,7 @@
 <#@ assembly name="System.Xml" #>
 <#@ assembly name="System.Core.dll" #>
 <#@ assembly name="System.Configuration.dll" #>
+<#@ assembly name="$(BBSharpCoreLibPath)BlueBoxSharp.Core.dll" #>
 <#@ assembly name="$(BBSharpDataLibPath)BlueBoxSharp.Data.dll" #>
 <#@ assembly name="$(BBSharpDataMySqlLibPath)BlueBoxSharp.Data.MySql.dll" #>
 <#@ import namespace="System.IO" #>

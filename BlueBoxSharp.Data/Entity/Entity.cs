@@ -22,6 +22,7 @@ using System.Linq.Expressions;
 using System.Text;
 using BlueBoxSharp.Data.AutoMap;
 using BlueBoxSharp.Data.Metadata;
+using System.Runtime.CompilerServices;
 
 namespace BlueBoxSharp.Data.Entity
 {
@@ -30,12 +31,18 @@ namespace BlueBoxSharp.Data.Entity
         public event PropertyChangedEventHandler PropertyChanged;
 
         private bool _propertyChangeScope;
+        protected object _entityIdentity;
 
         public EntityChangeTracker ChangeTracker { get; private set; }
 
         public Entity()
         {
             this.ChangeTracker = new EntityChangeTracker(this);
+        }
+
+        public Entity(object identity)
+        {
+            this._entityIdentity = identity;
         }
 
         public static Entity<TEntity> Create<TModel>(TModel model)
@@ -48,7 +55,11 @@ namespace BlueBoxSharp.Data.Entity
             return entity;
         }
 
-        public object EntityIdentity { get; set; }
+        public object EntityIdentity
+        {
+            get { return this._entityIdentity; }
+            set { this._entityIdentity = value; }
+        }
 
         public virtual Expression<Func<TEntity, bool>> Filter(DataContext repository) { return null; }
 
@@ -62,23 +73,28 @@ namespace BlueBoxSharp.Data.Entity
             this.ChangeTracker = new EntityChangeTracker(this);
         }
 
-        protected void __RaisePropertyChanged(string property, object oldValue, object newValue)
+        protected void __Set<T>(ref T field, T value, [CallerMemberName] string property = "")
         {
             if (this._propertyChangeScope || PropertyChanged == null)
+            {
                 return;
+            }
+
+            object oldValue = field;
+            object newValue = value;
 
             if (oldValue == null && newValue == null) return;
-            if (oldValue is string && (string)oldValue == "" && newValue == null) return;
+            if (typeof(T) == typeof(string) && (string)oldValue == "" && newValue == null) return;
 
             TableMetadata tableMeta = MappingProvider.GetMetadata(typeof(TEntity));
             IColumnMetadata columnMeta = tableMeta.Columns[property];
 
             if (newValue == null && !columnMeta.IsNullable)
             {
-                if (columnMeta.Type == typeof(string))
+                if (typeof(T) == typeof(string))
                     newValue = string.Empty;
                 else if (columnMeta.Type.IsValueType)
-                    newValue = Activator.CreateInstance(columnMeta.Type);
+                    newValue = Activator.CreateInstance<T>();
                 else
                     throw new NullReferenceException(string.Format("{0} is not nullable", property));
             }

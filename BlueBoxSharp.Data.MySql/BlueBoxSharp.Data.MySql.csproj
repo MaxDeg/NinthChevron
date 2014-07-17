@@ -68,7 +68,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="__NugetPackage\BlueBoxSharp.Data.MySql.props" />
+    <None Include="__NugetPackage\BlueBoxSharp.Data.MySql.net40.props" />
+    <None Include="__NugetPackage\BlueBoxSharp.Data.MySql.net45.props" />
     <None Include="__NugetPackage\Entities.tt.pp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

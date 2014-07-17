@@ -18,7 +18,7 @@ namespace Sandbox
         static void Main(string[] args)
         {
             Console.WriteLine("Ok it's start");
-
+            
             SqlServerMetadata mssqlMeta = new SqlServerMetadata(@"Data Source=(localdb)\Projects;Initial Catalog=AdventureWorks2012;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False");
             foreach (var group in mssqlMeta.Tables.GroupBy(t => new { Database = t.Database, Schema = t.Schema }))
             {

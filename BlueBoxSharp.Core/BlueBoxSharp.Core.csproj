@@ -59,6 +59,7 @@
     <Compile Include="Collections\IAsyncEnumerator`.cs" />
     <Compile Include="Collections\ObservableDictionary.cs" />
     <Compile Include="ComponentModel\DataAnnotations\NotifyPropertyChangedAttribute.cs" />
+    <Compile Include="CallerMemberNameAttribute.cs" />
     <Compile Include="Core\MayBe.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Helpers\ContractHelper.cs" />
@@ -72,7 +73,10 @@
     <Compile Include="Utilities\SimpleLogger.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="__NugetPackage\BlueBoxSharp.Core.props">
+    <None Include="__NugetPackage\BlueBoxSharp.Core.net40.props">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="__NugetPackage\BlueBoxSharp.Core.net45.props">
       <SubType>Designer</SubType>
     </None>
     <None Include="__NugetPackage\BlueBoxSharp.Core.targets">

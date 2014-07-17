@@ -3,18 +3,19 @@
 <#@ assembly name="System.Xml" #>
 <#@ assembly name="System.Core.dll" #>
 <#@ assembly name="System.Configuration.dll" #>
-<#@ assembly name="$(BBSharpCoreNugetPath)lib\net40\BlueBoxSharp.Core.dll" #>
-<#@ assembly name="$(BBSharpDataNugetPath)lib\net40\BlueBoxSharp.Data.dll" #>
-<#@ assembly name="$(BBSharpDataMySqlNugetPath)lib\net40\BlueBoxSharp.Data.MySql.dll" #>
+<#@ assembly name="$(BBSharpCoreLibPath)BlueBoxSharp.Core.dll" #>
+<#@ assembly name="$(BBSharpDataLibPath)BlueBoxSharp.Data.dll" #>
+<#@ assembly name="$(BBSharpDataMySqlLibPath)BlueBoxSharp.Data.MySql.dll" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Xml" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="BlueBoxSharp.Data" #>
-<#@ import namespace="BlueBoxSharp.Data.MySql" #>
 <#@ import namespace="BlueBoxSharp.Data.Metadata" #>
-<#@ include file="$(BBSharpDataNugetPath)build\T4TemplateHelpers.t4" #>
+<#@ import namespace="BlueBoxSharp.Data.MySql" #>
+<#@ import namespace="BlueBoxSharp.Data.MySql.Metadata" #>
+<#@ include file="$(BBSharpDataBuildPath)T4TemplateHelpers.t4" #>
 <#
 	string path = Host.ResolvePath(@"App.config");
 	System.Configuration.Configuration configuration = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(
@@ -22,13 +23,13 @@
 															System.Configuration.ConfigurationUserLevel.None
 														);
 		
-	MySqlMetadata meta = new MySqlMetadata(configuration.ConnectionStrings.ConnectionStrings["T4Connection"].ConnectionString, "evoconcept");
+	MySqlMetadata meta = new MySqlMetadata(configuration.ConnectionStrings.ConnectionStrings["T4Connection"].ConnectionString);
 
 foreach (var group in meta.Tables.GroupBy(t => new { Database = t.Database, Schema = t.Schema })) 
 {
 	string dbName = GeneratorHelper.ToCSharpName(group.Key.Database, NameType.None);
 	string schemaName = GeneratorHelper.ToCSharpName(group.Key.Schema, NameType.Schema);
-	string namespaceName = dbName + (!string.IsNullOrEmpty(group.Key.Schema) ? "." + schemaName : "");
+	string namespaceName = dbName + (!string.IsNullOrEmpty(group.Key.Schema) ? "." + schemaName + "Schema" : "");
 
 #>
 using System;
@@ -37,6 +38,15 @@ using BlueBoxSharp.Data;
 using BlueBoxSharp.Data.Entity;
 using BlueBoxSharp.Helpers;
 using BlueBoxSharp.ComponentModel.DataAnnotations;
+
+<#
+foreach (var schema in meta.Tables.Where(t => t.Schema != group.Key.Schema).Select(t => new { Database = t.Database, Schema = t.Schema }).Distinct())
+{
+#>
+using TestSandbox.<#= dbName + (!string.IsNullOrEmpty(schema.Schema) ? "." + GeneratorHelper.ToCSharpName(schema.Schema, NameType.Schema) + "Schema" : "") #>;
+<#
+}
+#>
 
 namespace TestSandbox.<#= namespaceName #>
 {
@@ -77,10 +87,13 @@ foreach (ITableMetadata tab in group)
 	}
 	#>
 }
+
 <# 
 }
 #>
+
 }
+
 <# 
 	SaveOutput(namespaceName + ".Tables.cs");
 #>

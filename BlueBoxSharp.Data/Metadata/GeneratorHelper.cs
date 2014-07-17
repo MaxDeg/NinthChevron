@@ -32,31 +32,35 @@ namespace BlueBoxSharp.Data.Metadata
             if (meta.Type == null) return string.Empty;
 
             CSharpCodeProvider provider = new CSharpCodeProvider();
+            string name = ToCSharpName(meta.Name, NameType.Column, meta.Table);
 
             if (meta.IsIdentity)
+            {
                 return string.Format(@"
-        [NotifyPropertyChanged, Column(""{0}"", {1}, {2}, {3})]
+        [Column(""{0}"", {1}, {2}, {3})]
         public {4} {5}
         {{
-	        get {{ return this.EntityIdentity == null ? TypeHelper.GetDefault<{4}>() : ({4})Convert.ChangeType(this.EntityIdentity, typeof({4})); }}
-	        set {{ this.EntityIdentity = ({4})value; }}
+	        get {{ return this._entityIdentity == null ? TypeHelper.GetDefault<{4}>() : ({4})Convert.ChangeType(this._entityIdentity, typeof({4})); }}
+	        set {{ this.__Set(ref this._entityIdentity, ({4})value); }}
         }}",
-                meta.Name,
-                meta.IsPrimaryKey ? "true" : "false",
-                meta.IsIdentity ? "true" : "false",
-                meta.IsNullable ? "true" : "false",
-                provider.GetTypeOutput(new CodeTypeReference(meta.Type)),
-                ToCSharpName(meta.Name, NameType.Column, meta.Table));
+                    meta.Name,
+                    meta.IsPrimaryKey ? "true" : "false",
+                    meta.IsIdentity ? "true" : "false",
+                    meta.IsNullable ? "true" : "false",
+                    provider.GetTypeOutput(new CodeTypeReference(meta.Type)),
+                    name);
+            }
 
             return string.Format(@"
-        [NotifyPropertyChanged, Column(""{0}"", {1}, {2}, {3})]
-        public {4} {5} {{ get; set; }}",
+        private {4} _{6};
+        [Column(""{0}"", {1}, {2}, {3})]
+        public {4} {5} {{ get {{ return this._{6}; }} set {{ this.__Set(ref this._{6}, value); }} }}",
                 meta.Name,
                 meta.IsPrimaryKey ? "true" : "false",
                 meta.IsIdentity ? "true" : "false",
                 meta.IsNullable ? "true" : "false",
                 provider.GetTypeOutput(new CodeTypeReference(meta.Type)),
-                ToCSharpName(meta.Name, NameType.Column, meta.Table));
+                name, name.ToLowerCamelCase());
         }
 
         public static string CreateRelationProperty(IRelationColumnMetadata meta)
@@ -67,7 +71,7 @@ namespace BlueBoxSharp.Data.Metadata
                             meta.IsNullable ? "Left" : "Inner",
                             meta.ForeignTable.IsMappingTable() ? "private" : "public",
                             ToCSharpName(meta.ForeignTable.Name, NameType.Table),
-                            meta.IsReverseRelation ? ToCSharpName(meta.ForeignColumn, NameType.ReverseRelationColumn, meta.ForeignTable) 
+                            meta.IsReverseRelation ? ToCSharpName(meta.ForeignColumn, NameType.ReverseRelationColumn, meta.ForeignTable)
                                                     : ToCSharpName(meta.Name, NameType.RelationColumn, meta.ForeignTable));
         }
 
@@ -96,17 +100,17 @@ namespace BlueBoxSharp.Data.Metadata
         /// <para>[{0}] {1}   {2}{3}</para>", p.Mode, p.Name, p.SqlType, p.Precision.HasValue ? "(" + p.Precision.Value + ")" : ""))
                 ));
         }
-        
+
         public static string CreateDelegate(IProcedureMetadata meta)
         {
             CSharpCodeProvider provider = new CSharpCodeProvider();
-            
+
             string commentParameters = string.Join("",
                     meta.Parameters
                     .Select(p => string.Format(@"
         /// <para>[{0}] {1}   {2}{3}</para>", p.Mode, p.Name, p.SqlType, p.Precision.HasValue ? "(" + p.Precision.Value + ")" : "")));
 
-            string parameters = string.Join(", ", meta.Parameters.Select(p => 
+            string parameters = string.Join(", ", meta.Parameters.Select(p =>
                                                         string.Format("{0} {1}",
                                                             provider.GetTypeOutput(new CodeTypeReference(meta.Database.GetType(p.SqlType, true))),
                                                             p.Mode.ToLower() + ToCSharpName(p.Name.Replace("@", ""), NameType.None)
@@ -121,7 +125,7 @@ namespace BlueBoxSharp.Data.Metadata
         public static IEnumerable<DataRecord> {1}(DataContext context{2}) 
         {{ 
             return context.ExecuteProcedure(""{3}""{4});
-        }}", 
+        }}",
                     commentParameters,
                     ToCSharpName(meta.Name, NameType.Procedure),
                     meta.Parameters.Count > 0 ? ", " + parameters : "",

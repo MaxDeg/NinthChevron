@@ -64,7 +64,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="__NugetPackage\BlueBoxSharp.Data.SqlServer.props" />
+    <None Include="__NugetPackage\BlueBoxSharp.Data.SqlServer.net40.props" />
+    <None Include="__NugetPackage\BlueBoxSharp.Data.SqlServer.net45.props" />
     <None Include="__NugetPackage\Entities.tt.pp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -21,6 +21,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="BlueBoxSharp.Data" #>
 <#@ import namespace="BlueBoxSharp.Data.MySql" #>
+<#@ import namespace="BlueBoxSharp.Data.MySql.Metadata" #>
 <#@ import namespace="BlueBoxSharp.Data.Metadata" #>
 <#
 	string path = Host.ResolvePath(@"App.config");
@@ -42,7 +43,7 @@
 
 			return string.Join("_", parts);
 		},
-		ColumnName = name =>
+		ColumnName = (table, name) =>
 		{
 			IEnumerable<string> parts = name.Split('_').Skip(1);
 

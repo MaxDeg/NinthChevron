@@ -165,10 +165,10 @@
     <Compile Include="AutoMap\WhereClauseMapper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="__NugetPackage\BlueBoxSharp.Data.targets">
+    <None Include="__NugetPackage\BlueBoxSharp.Data.net40.props">
       <SubType>Designer</SubType>
     </None>
-    <None Include="__NugetPackage\BlueBoxSharp.Data.props">
+    <None Include="__NugetPackage\BlueBoxSharp.Data.net45.props">
       <SubType>Designer</SubType>
     </None>
     <None Include="__NugetPackage\T4TemplateHelpers.t4" />

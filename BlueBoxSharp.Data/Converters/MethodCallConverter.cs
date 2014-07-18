@@ -26,7 +26,7 @@ namespace BlueBoxSharp.Data.Converters
 {
     internal class MethodCallConverter : BaseConverter<MethodCallExpression>
     {
-        private List<Type> _queryableTypes = new List<Type> { typeof(Queryable), typeof(EntityQueryable) };
+        private List<Type> _queryableTypes = new List<Type> { typeof(Queryable), typeof(EntityQueryable), typeof(IQueryableExtensions) };
 
         internal MethodCallConverter()
             : base(ExpressionType.Call)

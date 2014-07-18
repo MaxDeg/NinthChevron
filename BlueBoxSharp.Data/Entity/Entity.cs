@@ -45,7 +45,7 @@ namespace BlueBoxSharp.Data.Entity
             this._entityIdentity = identity;
         }
 
-        public static Entity<TEntity> Create<TModel>(TModel model)
+        public static TEntity Create<TModel>(TModel model)
         {
             if (model == null) throw new ArgumentNullException("model");
 
@@ -102,6 +102,7 @@ namespace BlueBoxSharp.Data.Entity
             EntityPropertyChangedEventArgs args = new EntityPropertyChangedEventArgs(property);
             args.OldValue = oldValue;
             args.NewValue = newValue;
+            field = value;
 
             // Call PropertyChanged (! avoid infinite loop)
             this._propertyChangeScope = true;

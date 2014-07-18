@@ -95,19 +95,22 @@ namespace BlueBoxSharp.Data.AutoMap
                 ColumnAttribute columnAttr = entityProp.Attributes.OfType<ColumnAttribute>().FirstOrDefault();
                 if (columnAttr == null || (columnAttr.IsIdentity || columnAttr.IsPrimaryKey) && !this._isPreLoading) return;
 
+                object value = entityProp.GetValue(entityObject);
+                object newValue = property.GetValue(context.Model);
+                if (value != null && value.Equals(newValue) && !this._isPreLoading) return;
+
                 if (property.PropertyType == entityProp.PropertyType)
                     entityProp.SetValue(entityObject, property.GetValue(context.Model));
                 else
                 {
                     if (TypeHelper.NonNullableType(property.PropertyType) == typeof(bool) && TypeHelper.NonNullableType(entityProp.PropertyType) == typeof(int))
-                        entityProp.SetValue(entityObject, (bool)(property.GetValue(context.Model) ?? false) ? 1 : 0);
+                        entityProp.SetValue(entityObject, (bool)(newValue ?? false) ? 1 : 0);
                     else if (property.PropertyType.IsSubclassOf(typeof(Enum)) && TypeHelper.IsBaseType(entityProp.PropertyType))
-                        entityProp.SetValue(entityObject, Convert.ChangeType(property.GetValue(context.Model), entityProp.PropertyType));
+                        entityProp.SetValue(entityObject, Convert.ChangeType(newValue, entityProp.PropertyType));
                     else
                     {
-                        object value = property.GetValue(context.Model);
-                        if (value != null)
-                            entityProp.SetValue(entityObject, Convert.ChangeType(value, entityProp.PropertyType));
+                        if (newValue != null)
+                            entityProp.SetValue(entityObject, Convert.ChangeType(newValue, entityProp.PropertyType));
                     }
                 }
             }

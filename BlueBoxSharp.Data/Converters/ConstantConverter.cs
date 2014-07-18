@@ -35,6 +35,10 @@ namespace BlueBoxSharp.Data.Converters
                 return converter.CreateQuery(set.Context, expression.Type.GetGenericArguments()[0]);
             }
 
+            object[] attributes = expression.Type.GetCustomAttributes(typeof(SqlKeywordAttribute), true);
+            if (attributes != null && attributes.Length > 0)
+                return new KeywordExpression(expression.Value);
+
             return expression;
         }
     }

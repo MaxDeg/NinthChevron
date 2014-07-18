@@ -44,7 +44,7 @@ namespace BlueBoxSharp.Data.Entity
 
             if (eventArgs.OldValue == null && eventArgs.NewValue == null) return;
             if (eventArgs.OldValue is string && (string)eventArgs.OldValue == "" && eventArgs.NewValue == null) return;
-            if (eventArgs.OldValue != null && eventArgs.OldValue.Equals(eventArgs.NewValue)) return;
+            //if (eventArgs.OldValue != null && eventArgs.OldValue.Equals(eventArgs.NewValue)) return;
 
             EntityPropertyChange change = new EntityPropertyChange();
             change.Property = eventArgs.PropertyName;

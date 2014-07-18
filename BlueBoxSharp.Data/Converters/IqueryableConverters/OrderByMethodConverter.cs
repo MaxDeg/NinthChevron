@@ -31,17 +31,12 @@ namespace BlueBoxSharp.Data.Converters.IQueryableConverters
         {
             QueryExpression context = (QueryExpression)converter.Convert(expression.Arguments[0]);
             LambdaExpression lambda = converter.GetLambdaExpression(expression.Arguments[1]);
-            Expression orderByExpr = converter.Convert(lambda.Body, new Binding(lambda.Parameters[0], context));
 
-            if (orderByExpr.NodeType == ExpressionType.Convert)
-                orderByExpr = ((UnaryExpression)orderByExpr).Operand;
+            if (expression.Method.Name.EndsWith("Descending"))
+                context.OrderByDesc(converter, lambda);
+            else
+                context.OrderByAsc(converter, lambda);
 
-            OrderByExpression orderByClause = new OrderByExpression(
-                        orderByExpr,
-                        expression.Method.Name.EndsWith("Descending") ? OrderByDirection.Descending : OrderByDirection.Ascending
-                    );
-
-            context.OrderBy.Add(orderByClause);
             return context;
         }
     }

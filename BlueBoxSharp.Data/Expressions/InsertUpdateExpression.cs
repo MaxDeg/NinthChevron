@@ -53,7 +53,7 @@ namespace BlueBoxSharp.Data.Expressions
         private void AddChange(EntityPropertyChange change)
         {
             IColumnMetadata columnMeta;
-            if (!this._metadata.Columns.TryGetValue(change.Property, out columnMeta)) return;
+            if (!this._metadata.Columns.TryGetValue(change.Property, out columnMeta) || columnMeta.IsIdentity) return;
             if (change.NewValue == null && !columnMeta.IsNullable)
             {
                 if (columnMeta.Type == typeof(string))
@@ -66,7 +66,7 @@ namespace BlueBoxSharp.Data.Expressions
 
             if (change.OldValue == null && change.NewValue == null) return;
             if (change.OldValue is string && (string)change.OldValue == "" && change.NewValue == null) return;
-            if (change.OldValue != null && change.OldValue.Equals(change.NewValue)) return;
+            //if (change.OldValue != null && change.OldValue.Equals(change.NewValue)) return;
 
             Tuple<string, object> entry = this.Columns.Where(c => c.Item1 == change.Property).SingleOrDefault();
             if (entry != null) this.Columns.Remove(entry);

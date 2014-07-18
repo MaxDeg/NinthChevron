@@ -64,10 +64,6 @@
       <Project>{0c974bcf-1a08-43f2-b503-c3656162f035}</Project>
       <Name>BlueBoxSharp.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BlueBoxSharp.Data.MySql\BlueBoxSharp.Data.MySql.csproj">
-      <Project>{a2ded9f4-c3eb-426b-92d0-94aa34bcb1be}</Project>
-      <Name>BlueBoxSharp.Data.MySql</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BlueBoxSharp.Data.SqlServer\BlueBoxSharp.Data.SqlServer.csproj">
       <Project>{baa7763c-8842-44a7-b450-813fdcaef0b4}</Project>
       <Name>BlueBoxSharp.Data.SqlServer</Name>
@@ -82,10 +78,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <UsingTask AssemblyFile="$(SolutionDir)BlueBoxSharp.ILInjector\bin\Release\v4.5\BlueBoxSharp.ILInjector.dll" TaskName="InjectCode" />
-  <Target Name="InjectCode" AfterTargets="Build">
-    <InjectCode Assembly="$(TargetPath)" />
-  </Target>
   <!--To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

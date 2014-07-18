@@ -1,6 +1,5 @@
 ﻿using BlueBoxSharp.Data;
 using BlueBoxSharp.Data.Metadata;
-using BlueBoxSharp.Data.MySql.Metadata;
 using BlueBoxSharp.Data.SqlServer;
 using BlueBoxSharp.Data.SqlServer.Metadata;
 using BlueBoxSharp.Data.Translators;
@@ -18,8 +17,8 @@ namespace Sandbox
         static void Main(string[] args)
         {
             Console.WriteLine("Ok it's start");
-            
-            SqlServerMetadata mssqlMeta = new SqlServerMetadata(@"Data Source=(localdb)\Projects;Initial Catalog=AdventureWorks2012;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False");
+
+            SqlServerMetadata mssqlMeta = new SqlServerMetadata(@"Server=sbo-fast2;Database=NAS_SonyESI;UID=sa;PWD=sql;initial catalog=NAS_SonyESI;");
             foreach (var group in mssqlMeta.Tables.GroupBy(t => new { Database = t.Database, Schema = t.Schema }))
             {
                 string dbName = GeneratorHelper.ToCSharpName(group.Key.Database, NameType.None);

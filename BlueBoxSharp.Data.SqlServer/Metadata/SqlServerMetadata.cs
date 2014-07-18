@@ -1,4 +1,4 @@
-﻿/**
+/**
  *   Copyright 2013
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -40,36 +40,35 @@ namespace BlueBoxSharp.Data.SqlServer.Metadata
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand(@"​SELECT DISTINCT
-                                                                columns.table_catalog,
-                                                                CASE WHEN columns.table_schema = 'dbo' THEN '' ELSE columns.table_schema END AS TableSchema,
-														        columns.table_name, 
-														        columns.column_name, 
-														        columns.data_type, 
-														        CASE WHEN columns.is_nullable = 'YES' THEN 1 ELSE 0 END AS IsNullable,  
-														        CASE WHEN EXISTS(SELECT * 
-							                                                    FROM		information_schema.constraint_column_usage usage
-							                                                    LEFT JOIN	information_schema.table_constraints constraints
-							                                                    ON			usage.table_catalog = constraints.table_catalog
-									                                                    AND usage.table_schema = constraints.table_schema
-									                                                    AND usage.table_name = constraints.table_name
-									                                                    AND usage.constraint_name = constraints.constraint_name
-									                                                    AND constraints.Constraint_type = 'PRIMARY KEY'
-							                                                    WHERE		columns.table_catalog = usage.table_catalog
-									                                                    AND columns.table_schema = usage.table_schema
-									                                                    AND columns.table_name = usage.table_name
-									                                                    AND columns.column_name = usage.column_name
-						                                                    ) THEN 1 ELSE 0 END AS IsPK,
-				                                                COLUMNPROPERTY(object_id(columns.table_schema + '.' + columns.table_name), columns.column_name, 'IsIdentity') AS IsIdentity,
-                                                                columns.ordinal_position
-											        FROM		information_schema.columns columns
-                                                    INNER JOIN information_schema.tables tables
-                                                    ON			columns.table_catalog = tables.table_catalog
-		                                                    AND columns.table_schema = tables.table_schema
-		                                                    AND columns.table_name = tables.table_name
-											        WHERE		columns.table_name NOT IN ('dtproperties', 'sysconstraints', 'syssegments', 'sysdiagrams')
-		                                                    AND tables.table_type = 'BASE TABLE'" + schemaClause +
-                                                    @" ORDER BY	columns.table_catalog, TableSchema, columns.table_name, columns.ordinal_position", connection);
+                SqlCommand cmd = new SqlCommand(@"SELECT DISTINCT columns.table_catalog,
+				                                                    CASE WHEN columns.table_schema = 'dbo' THEN '' ELSE columns.table_schema END AS TableSchema,
+				                                                    columns.table_name, 
+				                                                    columns.column_name, 
+				                                                    columns.data_type, 
+				                                                    CASE WHEN columns.is_nullable = 'YES' THEN 1 ELSE 0 END AS IsNullable,  
+				                                                    CASE WHEN EXISTS(SELECT * 
+									                                                    FROM		information_schema.constraint_column_usage usage
+									                                                    LEFT JOIN	information_schema.table_constraints constraints
+									                                                    ON			usage.table_catalog = constraints.table_catalog
+											                                                    AND usage.table_schema = constraints.table_schema
+											                                                    AND usage.table_name = constraints.table_name
+											                                                    AND usage.constraint_name = constraints.constraint_name
+											                                                    AND constraints.Constraint_type = 'PRIMARY KEY'
+									                                                    WHERE		columns.table_catalog = usage.table_catalog
+											                                                    AND columns.table_schema = usage.table_schema
+											                                                    AND columns.table_name = usage.table_name
+											                                                    AND columns.column_name = usage.column_name
+								                                                    ) THEN 1 ELSE 0 END AS IsPK,
+				                                                    COLUMNPROPERTY(object_id(columns.table_schema + '.' + columns.table_name), columns.column_name, 'IsIdentity') AS IsIdentity,
+				                                                    columns.ordinal_position
+                                                    FROM			information_schema.columns columns
+                                                    INNER JOIN		information_schema.tables tables
+                                                    ON				columns.table_catalog = tables.table_catalog
+			                                                    AND columns.table_schema = tables.table_schema
+			                                                    AND columns.table_name = tables.table_name
+											        WHERE		    columns.table_name NOT IN ('dtproperties', 'sysconstraints', 'syssegments', 'sysdiagrams')
+		                                                        AND tables.table_type = 'BASE TABLE'" + schemaClause +
+                                                    @"ORDER BY	columns.table_catalog, TableSchema, columns.table_name, columns.ordinal_position", connection);
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {

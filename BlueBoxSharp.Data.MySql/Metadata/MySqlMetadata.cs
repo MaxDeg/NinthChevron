@@ -58,7 +58,7 @@ namespace BlueBoxSharp.Data.MySql.Metadata
 		                                                    AND columns.table_name = tables.table_name
                                                     WHERE		columns.table_schema NOT IN ('mysql', 'performance_schema')
 		                                                    AND tables.table_type = 'BASE TABLE'" + schemaClause +
-                                                    @"ORDER BY	columns.table_schema, columns.table_name, columns.ordinal_position", connection);
+                                                    @" ORDER BY	columns.table_schema, columns.table_name, columns.ordinal_position", connection);
 
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {

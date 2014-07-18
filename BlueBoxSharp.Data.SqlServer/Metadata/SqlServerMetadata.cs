@@ -69,7 +69,7 @@ namespace BlueBoxSharp.Data.SqlServer.Metadata
 		                                                    AND columns.table_name = tables.table_name
 											        WHERE		columns.table_name NOT IN ('dtproperties', 'sysconstraints', 'syssegments', 'sysdiagrams')
 		                                                    AND tables.table_type = 'BASE TABLE'" + schemaClause +
-                                                    @"ORDER BY	columns.table_catalog, TableSchema, columns.table_name, columns.ordinal_position", connection);
+                                                    @" ORDER BY	columns.table_catalog, TableSchema, columns.table_name, columns.ordinal_position", connection);
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {

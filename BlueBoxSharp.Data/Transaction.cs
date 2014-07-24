@@ -209,7 +209,7 @@ namespace BlueBoxSharp.Data
                 }
                 finally
                 {
-                    this._dbTransaction.Connection.Close();
+                    this._dbTransaction.Dispose();
                 }
             }
         }

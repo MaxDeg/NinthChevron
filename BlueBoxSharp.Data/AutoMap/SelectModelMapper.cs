@@ -67,7 +67,7 @@ namespace BlueBoxSharp.Data.AutoMap
                 {
                     Expression bindExpression = ((MemberAssignment)bind).Expression;
 
-                    if (property != null && bind.Member.Name == property.Name)
+                    if (property != null && bind.Member.Name == property.Name && bindExpression is MemberInitExpression)
                         data.BaseBindings = (MemberInitExpression)bindExpression;
 
                     PropertyInfo entityProperty = modelType.GetProperty(bind.Member.Name, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);

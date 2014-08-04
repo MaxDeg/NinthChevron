@@ -2,6 +2,5 @@
 <Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <BBSharpDataLibPath>$(SolutionDir)packages\BlueBoxSharp.Data.SqlServer.1.0.2.0\lib\net40\</BBSharpDataLibPath>
-    <BBSharpDataBuildPath>$(SolutionDir)packages\BlueBoxSharp.Data.SqlServer.1.0.2.0\build\net40\</BBSharpDataBuildPath>
   </PropertyGroup>
 </Project>

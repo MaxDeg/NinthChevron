@@ -33,13 +33,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueBoxSharp.Data.SqlServer
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlueBoxSharp.UnitTest", "BlueBoxSharp.UnitTest", "{6E1B540F-1E10-4B7D-836B-BEBD40148589}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlueBoxSharp.AppConfig", "BlueBoxSharp.AppConfig", "{1A6CCA1A-4B9D-4595-B402-053314ACE202}"
-	ProjectSection(SolutionItems) = preProject
-		BlueBoxSharp.AppConfig\AppConfig.tt.pp = BlueBoxSharp.AppConfig\AppConfig.tt.pp
-		BlueBoxSharp.AppConfig\BlueBoxSharp.AppConfig.nuspec = BlueBoxSharp.AppConfig\BlueBoxSharp.AppConfig.nuspec
-		BlueBoxSharp.AppConfig\BlueBoxSharp.AppConfig.props = BlueBoxSharp.AppConfig\BlueBoxSharp.AppConfig.props
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueBoxSharp.Data.SqlServer", "BlueBoxSharp.Data.SqlServer\BlueBoxSharp.Data.SqlServer.csproj", "{BAA7763C-8842-44A7-B450-813FDCAEF0B4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet.BlueBoxSharp.Core", "NuGet.BlueBoxSharp.Core\NuGet.BlueBoxSharp.Core.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
@@ -60,6 +53,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet.BlueBoxSharp.Data.Sql
 		{BAA7763C-8842-44A7-B450-813FDCAEF0B4} = {BAA7763C-8842-44A7-B450-813FDCAEF0B4}
 		{62FF886F-4096-4869-8C42-6C0D8BF0724F} = {62FF886F-4096-4869-8C42-6C0D8BF0724F}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet.NinthChevron.StrongConfig", "NuGet.NinthChevron.StrongConfig\NuGet.NinthChevron.StrongConfig.csproj", "{74445BC4-5CC9-45D0-A296-989973AF50AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -113,6 +108,10 @@ Global
 		{A8A1A82D-3397-4F21-AC3F-E52EA8DDC57D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8A1A82D-3397-4F21-AC3F-E52EA8DDC57D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8A1A82D-3397-4F21-AC3F-E52EA8DDC57D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74445BC4-5CC9-45D0-A296-989973AF50AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74445BC4-5CC9-45D0-A296-989973AF50AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74445BC4-5CC9-45D0-A296-989973AF50AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74445BC4-5CC9-45D0-A296-989973AF50AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -123,5 +122,6 @@ Global
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389} = {F1CFEED1-7F80-4ADD-972A-79933DE2BEB3}
 		{1A608669-67BD-4F89-9698-D79CB97EF498} = {F1CFEED1-7F80-4ADD-972A-79933DE2BEB3}
 		{A8A1A82D-3397-4F21-AC3F-E52EA8DDC57D} = {F1CFEED1-7F80-4ADD-972A-79933DE2BEB3}
+		{74445BC4-5CC9-45D0-A296-989973AF50AC} = {F1CFEED1-7F80-4ADD-972A-79933DE2BEB3}
 	EndGlobalSection
 EndGlobal

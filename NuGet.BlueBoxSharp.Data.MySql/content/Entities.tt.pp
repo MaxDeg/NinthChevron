@@ -15,7 +15,7 @@
 <#@ import namespace="BlueBoxSharp.Data.Metadata" #>
 <#@ import namespace="BlueBoxSharp.Data.MySql" #>
 <#@ import namespace="BlueBoxSharp.Data.MySql.Metadata" #>
-<#@ include file="$(BBSharpDataBuildPath)T4TemplateHelpers.t4" #>
+<#@ include file="$(BBSharpDataLibPath)T4TemplateHelpers.t4" #>
 <#
 	string path = Host.ResolvePath(@"App.config");
 	System.Configuration.Configuration configuration = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(

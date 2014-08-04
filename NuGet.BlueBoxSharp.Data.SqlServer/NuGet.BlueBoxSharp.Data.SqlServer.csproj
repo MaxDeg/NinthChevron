@@ -36,11 +36,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\</OutputPath>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -49,51 +49,71 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="content\Entities.tt.pp" />
-    <None Include="lib\net40\BlueBoxSharp.Data.props">
-      <SubType>Designer</SubType>
+    <None Include="content\Entities.tt.pp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="lib\net40\T4TemplateHelpers.t4" />
-    <None Include="lib\net45\BlueBoxSharp.Data.props">
+    <None Include="build\net40\BlueBoxSharp.Data.props">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="lib\net45\T4TemplateHelpers.t4" />
+    <None Include="lib\net40\T4TemplateHelpers.t4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="build\net45\BlueBoxSharp.Data.props">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="lib\net45\T4TemplateHelpers.t4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="NuGetPackage.ps1" />
     <None Include="NuGetSetup.ps1" />
     <None Include="NuGet.exe" />
     <None Include="NuGet.config" />
     <None Include="Package.nuspec" />
-    <None Include="tools\init.ps1" />
-    <None Include="tools\install.ps1" />
-    <None Include="tools\uninstall.ps1" />
+    <None Include="tools\init.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="tools\install.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="tools\uninstall.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.0\BlueBoxSharp.Data.dll">
       <Link>lib\net40\BlueBoxSharp.Data.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.0\BlueBoxSharp.Data.pdb">
       <Link>lib\net40\BlueBoxSharp.Data.pdb</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.0\BlueBoxSharp.Data.SqlServer.dll">
       <Link>lib\net40\BlueBoxSharp.Data.SqlServer.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.0\BlueBoxSharp.Data.SqlServer.pdb">
       <Link>lib\net40\BlueBoxSharp.Data.SqlServer.pdb</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.5\BlueBoxSharp.Data.dll">
       <Link>lib\net45\BlueBoxSharp.Data.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.5\BlueBoxSharp.Data.pdb">
       <Link>lib\net45\BlueBoxSharp.Data.pdb</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.5\BlueBoxSharp.Data.SqlServer.dll">
       <Link>lib\net45\BlueBoxSharp.Data.SqlServer.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.5\BlueBoxSharp.Data.SqlServer.pdb">
       <Link>lib\net45\BlueBoxSharp.Data.SqlServer.pdb</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

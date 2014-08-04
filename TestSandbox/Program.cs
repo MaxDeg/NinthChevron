@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using BlueBoxSharp.ILInjector.Injectors;
+using System.Configuration;
 
 namespace TestSandbox
 {
@@ -13,9 +13,15 @@ namespace TestSandbox
     {
         static void Main(string[] args)
         {
-            //NotifyPropertyChangesInjector injector = new NotifyPropertyChangesInjector(@"D:\Projects\BlueBoxSharp\Sandbox\bin\Debug\Sandbox.exe");
-            //injector.Run();
+            while (true)
+            {
+                Console.WriteLine(AppSettings.IsDebugMode);
+                Console.WriteLine(ConnectionStrings.T4Connection);
+                Console.WriteLine(ConnectionStrings.LocalSqlServer);
 
+                if (Console.ReadKey().Key == ConsoleKey.Escape)
+                    break;
+            }
             Console.WriteLine("Ok it's end");
             Console.ReadKey();
         }

@@ -15,7 +15,7 @@
 using System;
 using System.Configuration;
 
-namespace TestSandbox
+namespace $rootnamespace$
 {
 	public static class AppSettings
 	{

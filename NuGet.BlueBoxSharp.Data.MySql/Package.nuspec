@@ -23,8 +23,9 @@
     <tags></tags>
   </metadata>
   <files>
-    <file src="lib\" target="lib" />
-    <file src="tools\" target="tools" />
-    <file src="content\" target="content" />
+    <file src="bin\lib\" target="lib" />
+    <file src="bin\tools\" target="tools" />
+    <file src="bin\content\" target="content" />
+    <file src="bin\build\" target="build" />
   </files>
 </package>

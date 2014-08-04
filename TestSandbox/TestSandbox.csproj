@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\BlueBoxSharp.Data.MySql.1.0.2.0\build\net45\BlueBoxSharp.Data.MySql.props" Condition="Exists('..\packages\BlueBoxSharp.Data.MySql.1.0.2.0\build\net45\BlueBoxSharp.Data.MySql.props')" />
-  <Import Project="..\packages\BlueBoxSharp.Data.1.1.2.0\build\net45\BlueBoxSharp.Data.props" Condition="Exists('..\packages\BlueBoxSharp.Data.1.1.2.0\build\net45\BlueBoxSharp.Data.props')" />
-  <Import Project="..\packages\BlueBoxSharp.Core.1.0.2.0\build\net45\BlueBoxSharp.Core.props" Condition="Exists('..\packages\BlueBoxSharp.Core.1.0.2.0\build\net45\BlueBoxSharp.Core.props')" />
-  <Import Project="..\packages\BlueBoxSharp.AppConfig.1.0.0.0\build\BlueBoxSharp.AppConfig.props" Condition="Exists('..\packages\BlueBoxSharp.AppConfig.1.0.0.0\build\BlueBoxSharp.AppConfig.props')" />
+  <Import Project="..\packages\NinthChevron.StrongConfig.1.0.0.0\build\net45\NinthChevron.StrongConfig.props" Condition="Exists('..\packages\NinthChevron.StrongConfig.1.0.0.0\build\net45\NinthChevron.StrongConfig.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -18,7 +15,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>c74223d7</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>1f2ce45e</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -43,16 +40,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BlueBoxSharp.Core">
-      <HintPath>..\packages\BlueBoxSharp.Core.1.0.2.0\lib\net45\BlueBoxSharp.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="BlueBoxSharp.Data">
-      <HintPath>..\packages\BlueBoxSharp.Data.1.1.2.0\lib\net45\BlueBoxSharp.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="BlueBoxSharp.Data.MySql">
-      <HintPath>..\packages\BlueBoxSharp.Data.MySql.1.0.2.0\lib\net45\BlueBoxSharp.Data.MySql.dll</HintPath>
-    </Reference>
-    <Reference Include="MySql.Data, Version=6.7.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\packages\BlueBoxSharp.Data.MySql.1.0.2.0\lib\net45\MySql.Data.dll</HintPath>
+      <HintPath>..\packages\NinthChevron.StrongConfig.1.0.0.0\lib\net45\BlueBoxSharp.Core.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -78,9 +67,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AppConfig.cs</LastGenOutput>
     </None>
-    <None Include="Entities.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -92,12 +78,8 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\BlueBoxSharp.Core.1.0.2.0\build\net45\BlueBoxSharp.Core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BlueBoxSharp.Core.1.0.2.0\build\net45\BlueBoxSharp.Core.props'))" />
-    <Error Condition="!Exists('..\packages\BlueBoxSharp.Core.1.0.2.0\build\net45\BlueBoxSharp.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BlueBoxSharp.Core.1.0.2.0\build\net45\BlueBoxSharp.Core.targets'))" />
-    <Error Condition="!Exists('..\packages\BlueBoxSharp.Data.1.1.2.0\build\net45\BlueBoxSharp.Data.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BlueBoxSharp.Data.1.1.2.0\build\net45\BlueBoxSharp.Data.props'))" />
-    <Error Condition="!Exists('..\packages\BlueBoxSharp.Data.MySql.1.0.2.0\build\net45\BlueBoxSharp.Data.MySql.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BlueBoxSharp.Data.MySql.1.0.2.0\build\net45\BlueBoxSharp.Data.MySql.props'))" />
+    <Error Condition="!Exists('..\packages\NinthChevron.StrongConfig.1.0.0.0\build\net45\NinthChevron.StrongConfig.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NinthChevron.StrongConfig.1.0.0.0\build\net45\NinthChevron.StrongConfig.props'))" />
   </Target>
-  <Import Project="..\packages\BlueBoxSharp.Core.1.0.2.0\build\net45\BlueBoxSharp.Core.targets" Condition="Exists('..\packages\BlueBoxSharp.Core.1.0.2.0\build\net45\BlueBoxSharp.Core.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

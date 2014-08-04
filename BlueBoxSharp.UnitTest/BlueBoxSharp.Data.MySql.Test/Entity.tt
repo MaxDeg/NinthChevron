@@ -1,0 +1,82 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ output extension=".cs" #>
+<#@ assembly name="$(SolutionDir)BlueBoxSharp.Data\bin\Release\v4.5\BlueBoxSharp.Data.dll" #>
+<#@ assembly name="$(SolutionDir)BlueBoxSharp.Data.MySql\bin\Release\v4.5\BlueBoxSharp.Data.MySql.dll" #>
+<#@ assembly name="System.Configuration.dll" #>
+<#@ assembly name="System.Core.dll" #>
+<#@ import namespace="System.Configuration" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="BlueBoxSharp.Data" #>
+<#@ import namespace="BlueBoxSharp.Data.MySql" #>
+<#@ import namespace="BlueBoxSharp.Data.Metadata" #>
+<#
+	string path = Host.ResolvePath(@"App.config");
+	Configuration configuration = ConfigurationManager.OpenMappedExeConfiguration(new ExeConfigurationFileMap { ExeConfigFilename = path }, ConfigurationUserLevel.None);
+	
+	NamingRulesProvider.Current = NamingRulesProvider.Default;
+	MySqlMetadata meta = new MySqlMetadata(configuration.ConnectionStrings.ConnectionStrings["T4Connection"].ConnectionString, "sakila");
+#>
+using System;
+using System.Collections.Generic;
+using BlueBoxSharp.Data;
+using BlueBoxSharp.Data.Entity;
+using BlueBoxSharp.Helpers;
+using BlueBoxSharp.ComponentModel.DataAnnotations;
+
+namespace BlueBoxSharp.Data.MySql.Test.Sakila
+{
+<# 
+foreach (ITableMetadata tab in meta.Tables) 
+{
+#>
+	[Table("<#= tab.Name #>", "<#= tab.Schema #>", "<#= tab.Database #>")]
+	public partial class <#= GeneratorHelper.ToCSharpName(tab.Name, NameType.Table) #> : Entity<<#= GeneratorHelper.ToCSharpName(tab.Name, NameType.Table) #>>
+	{
+		static <#= GeneratorHelper.ToCSharpName(tab.Name, NameType.Table) #>()
+		{
+	<# 
+	foreach (IRelationColumnMetadata c in tab.Relations) 
+	{
+	#>
+		<#= GeneratorHelper.CreateRelationDefinition(c) #> // <#= c.IsReverseRelation ? "Reverse Relation" : "Relation" #>
+	<# 
+	}
+	#>
+	}
+
+	<# 
+	foreach (IColumnMetadata c in tab.Columns.Values) 
+	{
+	#>
+	<#= GeneratorHelper.CreateProperty(c) #>
+	<#
+	}
+	#>
+
+	<# 
+	foreach (IRelationColumnMetadata c in tab.Relations) 
+	{
+	#>
+	<#= GeneratorHelper.CreateRelationProperty(c) #>
+	<# 
+	}
+	#>
+}
+
+<# 
+}
+#>
+
+	public class Procedures
+	{
+<# 
+foreach (IProcedureMetadata procedure in meta.Procedures)
+{ 
+#>
+	<#= GeneratorHelper.CreateDelegate(procedure) #>
+<# 
+}
+#>
+	}
+}

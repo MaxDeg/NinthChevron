@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>BlueBoxSharp.Data</id>
+    <version>1.0.0</version>
+    <title>BlueBoxSharp.Data</title>
+    <authors>Maxime Degallaix</authors>
+    <owners></owners>
+    <description>
+      Linq Provider to access SQL database. Query are executed on Set of Entity.
+    </description>
+    <releaseNotes>
+    </releaseNotes>
+    <language>en-US</language>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <copyright>Copyright  2014</copyright>
+    <dependencies>
+        <group>
+          <dependency id="BlueBoxSharp.Core" version="1.0.2.0" />
+        </group>
+    </dependencies>
+    <references></references>
+    <tags></tags>
+  </metadata>
+  <files>
+    <file src="lib\" target="lib" />
+    <file src="tools\" target="tools" />
+    <file src="content\" target="content" />
+  </files>
+</package>

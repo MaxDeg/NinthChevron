@@ -165,15 +165,6 @@
     <Compile Include="AutoMap\WhereClauseMapper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="__NugetPackage\BlueBoxSharp.Data.net40.props">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="__NugetPackage\BlueBoxSharp.Data.net45.props">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="__NugetPackage\T4TemplateHelpers.t4" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\BlueBoxSharp.Core\BlueBoxSharp.Core.csproj">
       <Project>{0c974bcf-1a08-43f2-b503-c3656162f035}</Project>
       <Name>BlueBoxSharp.Core</Name>

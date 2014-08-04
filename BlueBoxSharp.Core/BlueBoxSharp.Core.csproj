@@ -72,17 +72,6 @@
     <Compile Include="Utilities\ObjectMerger.cs" />
     <Compile Include="Utilities\SimpleLogger.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="__NugetPackage\BlueBoxSharp.Core.net40.props">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="__NugetPackage\BlueBoxSharp.Core.net45.props">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="__NugetPackage\BlueBoxSharp.Core.targets">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

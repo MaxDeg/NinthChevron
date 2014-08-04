@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2013 for Windows Desktop
-VisualStudioVersion = 12.0.30110.0
+# Visual Studio Express 2013 for Web
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueBoxSharp.Data", "BlueBoxSharp.Data\BlueBoxSharp.Data.csproj", "{62FF886F-4096-4869-8C42-6C0D8BF0724F}"
 EndProject
@@ -41,6 +41,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlueBoxSharp.AppConfig", "B
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueBoxSharp.Data.SqlServer", "BlueBoxSharp.Data.SqlServer\BlueBoxSharp.Data.SqlServer.csproj", "{BAA7763C-8842-44A7-B450-813FDCAEF0B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet.BlueBoxSharp.Core", "NuGet.BlueBoxSharp.Core\NuGet.BlueBoxSharp.Core.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0C974BCF-1A08-43F2-B503-C3656162F035} = {0C974BCF-1A08-43F2-B503-C3656162F035}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget Packages", "Nuget Packages", "{F1CFEED1-7F80-4ADD-972A-79933DE2BEB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet.BlueBoxSharp.Data.MySql", "NuGet.BlueBoxSharp.Data.MySql\NuGet.BlueBoxSharp.Data.MySql.csproj", "{1A608669-67BD-4F89-9698-D79CB97EF498}"
+	ProjectSection(ProjectDependencies) = postProject
+		{62FF886F-4096-4869-8C42-6C0D8BF0724F} = {62FF886F-4096-4869-8C42-6C0D8BF0724F}
+		{A2DED9F4-C3EB-426B-92D0-94AA34BCB1BE} = {A2DED9F4-C3EB-426B-92D0-94AA34BCB1BE}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet.BlueBoxSharp.Data.SqlServer", "NuGet.BlueBoxSharp.Data.SqlServer\NuGet.BlueBoxSharp.Data.SqlServer.csproj", "{A8A1A82D-3397-4F21-AC3F-E52EA8DDC57D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BAA7763C-8842-44A7-B450-813FDCAEF0B4} = {BAA7763C-8842-44A7-B450-813FDCAEF0B4}
+		{62FF886F-4096-4869-8C42-6C0D8BF0724F} = {62FF886F-4096-4869-8C42-6C0D8BF0724F}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -82,12 +101,27 @@ Global
 		{BAA7763C-8842-44A7-B450-813FDCAEF0B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAA7763C-8842-44A7-B450-813FDCAEF0B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAA7763C-8842-44A7-B450-813FDCAEF0B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A608669-67BD-4F89-9698-D79CB97EF498}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A608669-67BD-4F89-9698-D79CB97EF498}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A608669-67BD-4F89-9698-D79CB97EF498}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A608669-67BD-4F89-9698-D79CB97EF498}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8A1A82D-3397-4F21-AC3F-E52EA8DDC57D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8A1A82D-3397-4F21-AC3F-E52EA8DDC57D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8A1A82D-3397-4F21-AC3F-E52EA8DDC57D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8A1A82D-3397-4F21-AC3F-E52EA8DDC57D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{0053A9E9-AFEF-4390-BAEC-3FC0A332DF88} = {6E1B540F-1E10-4B7D-836B-BEBD40148589}
 		{2DEAB805-A946-4422-A4D2-AB44F184D6A2} = {6E1B540F-1E10-4B7D-836B-BEBD40148589}
+		{0053A9E9-AFEF-4390-BAEC-3FC0A332DF88} = {6E1B540F-1E10-4B7D-836B-BEBD40148589}
+		{0451BAEF-DF2E-4B98-8644-94EE9415E389} = {F1CFEED1-7F80-4ADD-972A-79933DE2BEB3}
+		{1A608669-67BD-4F89-9698-D79CB97EF498} = {F1CFEED1-7F80-4ADD-972A-79933DE2BEB3}
+		{A8A1A82D-3397-4F21-AC3F-E52EA8DDC57D} = {F1CFEED1-7F80-4ADD-972A-79933DE2BEB3}
 	EndGlobalSection
 EndGlobal

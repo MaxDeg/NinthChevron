@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>BlueBoxSharp.Data.MySql</id>
+    <version>1.0.2.0</version>
+    <title>BlueBoxSharp.Data.MySql</title>
+    <authors>Maxime Degallaix</authors>
+    <owners></owners>
+    <description>
+      Linq Provider to access MySQL database. Query are executed on Set of Entity.
+    </description>
+    <releaseNotes>
+    </releaseNotes>
+    <language>en-US</language>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <copyright>Copyright  2014</copyright>
+    <dependencies>
+      <group>
+        <dependency id="BlueBoxSharp.Core" version="1.0.2.0" />
+      </group>
+    </dependencies>
+    <references></references>
+    <tags></tags>
+  </metadata>
+  <files>
+    <file src="lib\" target="lib" />
+    <file src="tools\" target="tools" />
+    <file src="content\" target="content" />
+  </files>
+</package>

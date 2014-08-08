@@ -55,6 +55,7 @@ namespace BlueBoxSharp.Data
 
         public IOrderedQueryable<TEntity> Query<TEntity>() where TEntity : Entity<TEntity>, new()
         {
+            /*
             IInternalQuery set;
             Type type = typeof(TEntity);
             if (!_sets.TryGetValue(type, out set))
@@ -62,8 +63,8 @@ namespace BlueBoxSharp.Data
                 set = new Query<TEntity>(new QueryProvider(), this);
                 this._sets.Add(type, set);
             }
-
-            return (IOrderedQueryable<TEntity>)set;
+            */
+            return (IOrderedQueryable<TEntity>)new Query<TEntity>(new QueryProvider(), this);
         }
 
         /// <summary>
@@ -374,7 +375,9 @@ namespace BlueBoxSharp.Data
             using (DbDataReader reader = command.ExecuteReader())
             {
                 do
+                {
                     yield return DataRecord.CreateEnumerable(reader);
+                }
                 while (reader.NextResult());
             }
         }
@@ -501,8 +504,14 @@ namespace BlueBoxSharp.Data
             {
                 using (DbDataReader reader = command.ExecuteReader())
                 {
+                    List<DataRecord> results = new List<DataRecord>();
+
                     foreach (IDataRecord r in reader)
-                        yield return new DataRecord(r);
+                    {
+                         results.Add(new DataRecord(r));
+                    }
+
+                    return results;
                 }
             }
         }

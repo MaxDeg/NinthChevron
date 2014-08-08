@@ -54,7 +54,9 @@ namespace BlueBoxSharp.Data
         public static IEnumerable<DataRecord> CreateEnumerable(DbDataReader reader)
         {
             foreach (DbDataReader r in reader)
+            {
                 yield return new DataRecord(r);
+            }
         }
     }
 }

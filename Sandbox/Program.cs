@@ -17,28 +17,7 @@ namespace Sandbox
         static void Main(string[] args)
         {
             Console.WriteLine("Ok it's start");
-
-            SqlServerMetadata mssqlMeta = new SqlServerMetadata(@"Server=sbo-fast2;Database=NAS_SonyESI;UID=sa;PWD=sql;initial catalog=NAS_SonyESI;");
-            foreach (var group in mssqlMeta.Tables.GroupBy(t => new { Database = t.Database, Schema = t.Schema }))
-            {
-                string dbName = GeneratorHelper.ToCSharpName(group.Key.Database, NameType.None);
-                string schemaName = GeneratorHelper.ToCSharpName(group.Key.Schema, NameType.Schema);
-                string namespaceName = dbName + (!string.IsNullOrEmpty(group.Key.Schema) ? "." + schemaName + "Schema" : "");
-
-                foreach (ITableMetadata tab in group)
-                {
-                    foreach (IColumnMetadata c in tab.Columns.Values)
-                    {
-                        Console.WriteLine(GeneratorHelper.CreateProperty(c));
-                    }
-
-                    foreach (IRelationColumnMetadata c in tab.Relations)
-                    {
-                        Console.WriteLine(GeneratorHelper.CreateRelationDefinition(c));
-                    }
-                }
-            }
-
+            
 
             //MySqlMetadata meta = new MySqlMetadata("Server=localhost;Database=sakila;Uid=root;Pwd=Secret.123456;");
             //MySqlMetadata meta = new MySqlMetadata("Server=localhost;Database=sakila;Uid=root;Pwd=password;");

@@ -52,14 +52,14 @@
     <None Include="content\Entities.tt.pp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="build\net40\BlueBoxSharp.Data.props">
+    <None Include="build\net40\BlueBoxSharp.Data.SqlServer.props">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="lib\net40\T4TemplateHelpers.t4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="build\net45\BlueBoxSharp.Data.props">
+    <None Include="build\net45\BlueBoxSharp.Data.SqlServer.props">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -83,35 +83,35 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.0\BlueBoxSharp.Data.dll">
+    <Content Include="..\..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.0\BlueBoxSharp.Data.dll">
       <Link>lib\net40\BlueBoxSharp.Data.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.0\BlueBoxSharp.Data.pdb">
+    <Content Include="..\..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.0\BlueBoxSharp.Data.pdb">
       <Link>lib\net40\BlueBoxSharp.Data.pdb</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.0\BlueBoxSharp.Data.SqlServer.dll">
+    <Content Include="..\..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.0\BlueBoxSharp.Data.SqlServer.dll">
       <Link>lib\net40\BlueBoxSharp.Data.SqlServer.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.0\BlueBoxSharp.Data.SqlServer.pdb">
+    <Content Include="..\..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.0\BlueBoxSharp.Data.SqlServer.pdb">
       <Link>lib\net40\BlueBoxSharp.Data.SqlServer.pdb</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.5\BlueBoxSharp.Data.dll">
+    <Content Include="..\..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.5\BlueBoxSharp.Data.dll">
       <Link>lib\net45\BlueBoxSharp.Data.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.5\BlueBoxSharp.Data.pdb">
+    <Content Include="..\..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.5\BlueBoxSharp.Data.pdb">
       <Link>lib\net45\BlueBoxSharp.Data.pdb</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.5\BlueBoxSharp.Data.SqlServer.dll">
+    <Content Include="..\..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.5\BlueBoxSharp.Data.SqlServer.dll">
       <Link>lib\net45\BlueBoxSharp.Data.SqlServer.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.5\BlueBoxSharp.Data.SqlServer.pdb">
+    <Content Include="..\..\BlueBoxSharp.Data.SqlServer\bin\Release\v4.5\BlueBoxSharp.Data.SqlServer.pdb">
       <Link>lib\net45\BlueBoxSharp.Data.SqlServer.pdb</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

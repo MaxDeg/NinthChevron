@@ -35,7 +35,9 @@ namespace BlueBoxSharp.Data.SqlServer
         protected override DbCommand CreateCommand(DbConnection connection, DbTransaction transaction, string query)
         {
             if (transaction == null)
+            {
                 return new SqlCommand(query, (SqlConnection)connection);
+            }
 
             return new SqlCommand(query, (SqlConnection)connection, (SqlTransaction)transaction);
         }
@@ -43,7 +45,10 @@ namespace BlueBoxSharp.Data.SqlServer
         protected override DbConnection GetConnection(bool open = true)
         {
             SqlConnection connection = new SqlConnection(this.ConnectionString);
-            if (open) connection.Open();
+            if (open)
+            {
+                connection.Open();
+            }
 
             return connection;
         }

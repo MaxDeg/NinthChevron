@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{0451BAEF-DF2E-4B98-8644-94EE9415E389}</ProjectGuid>
+    <ProjectGuid>{1A608669-67BD-4F89-9698-D79CB97EF498}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NuGet.BlueBoxSharp.Core</RootNamespace>
-    <AssemblyName>NuGet.BlueBoxSharp.Core</AssemblyName>
+    <RootNamespace>NuGet.BlueBoxSharp.Data.MySql</RootNamespace>
+    <AssemblyName>NuGet.BlueBoxSharp.Data.MySql</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -49,11 +49,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="build\net40\BlueBoxSharp.Core.props">
+    <None Include="build\net40\BlueBoxSharp.Data.MySql.props">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="build\net45\BlueBoxSharp.Core.props">
+    <None Include="content\Entities.tt.pp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="lib\T4TemplateHelpers.t4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="build\net45\BlueBoxSharp.Data.MySql.props">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -73,20 +79,6 @@
     </None>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Content Include="..\..\BlueBoxSharp.Core\bin\Release\v4.0\BlueBoxSharp.Core.dll">
-      <Link>lib\net40\BlueBoxSharp.Core.dll</Link>
-    </Content>
-    <Content Include="..\..\BlueBoxSharp.Core\bin\Release\v4.0\BlueBoxSharp.Core.pdb">
-      <Link>lib\net40\BlueBoxSharp.Core.pdb</Link>
-    </Content>
-    <Content Include="..\..\BlueBoxSharp.Core\bin\Release\v4.5\BlueBoxSharp.Core.dll">
-      <Link>lib\net45\BlueBoxSharp.Core.dll</Link>
-    </Content>
-    <Content Include="..\..\BlueBoxSharp.Core\bin\Release\v4.5\BlueBoxSharp.Core.pdb">
-      <Link>lib\net45\BlueBoxSharp.Core.pdb</Link>
-    </Content>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

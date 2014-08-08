@@ -74,23 +74,18 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="..\BlueBoxSharp.Core\bin\Release\v4.0\BlueBoxSharp.Core.dll">
+    <Content Include="..\..\BlueBoxSharp.Core\bin\Release\v4.0\BlueBoxSharp.Core.dll">
       <Link>lib\net40\BlueBoxSharp.Core.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\BlueBoxSharp.Core\bin\Release\v4.0\BlueBoxSharp.Core.pdb">
+    <Content Include="..\..\BlueBoxSharp.Core\bin\Release\v4.0\BlueBoxSharp.Core.pdb">
       <Link>lib\net40\BlueBoxSharp.Core.pdb</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\BlueBoxSharp.Core\bin\Release\v4.5\BlueBoxSharp.Core.dll">
+    <Content Include="..\..\BlueBoxSharp.Core\bin\Release\v4.5\BlueBoxSharp.Core.dll">
       <Link>lib\net45\BlueBoxSharp.Core.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\BlueBoxSharp.Core\bin\Release\v4.5\BlueBoxSharp.Core.pdb">
+    <Content Include="..\..\BlueBoxSharp.Core\bin\Release\v4.5\BlueBoxSharp.Core.pdb">
       <Link>lib\net45\BlueBoxSharp.Core.pdb</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

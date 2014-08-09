@@ -13,7 +13,8 @@
     </releaseNotes>
     <language>en-US</language>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <copyright>Copyright  2014</copyright>
+    <copyright>Copyright 2014</copyright>
+    <projectUrl>https://github.com/MaxDeg/NinthChevron</projectUrl>
     <dependencies>
         <group targetFramework="net40">
           <dependency id="NinthChevron.Core" version="1.0.4.0" />

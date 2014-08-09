@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlueBoxSharp.Helpers;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace BlueBoxSharp.Data.Translators.Handlers
 
             public bool Equals(Key other)
             {
-                return this._objectType == other._objectType && this._name == other._name && 
+                return this._objectType == other._objectType && this._name == other._name &&
                         this._parametersTypes.Count() == other._parametersTypes.Count() && this._parametersTypes.Except(other._parametersTypes).Count() == 0;
             }
         }
@@ -58,6 +59,17 @@ namespace BlueBoxSharp.Data.Translators.Handlers
             }
             else
             {
+                foreach (var subTypes in TypeHelper.GetTypeHierarchy(objectType))
+                {
+                    foreach (var type in subTypes)
+                    {
+                        if (handlers.TryGetValue(new Key(type.IsGenericType ? type.GetGenericTypeDefinition() : type, name, parametersTypes), out handlerType))
+                        {
+                            return (IMethodHandler)Activator.CreateInstance(handlerType);
+                        }
+                    }
+                }
+
                 return null;
             }
         }

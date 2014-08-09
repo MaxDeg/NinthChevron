@@ -9,6 +9,7 @@ using System.Configuration;
 using BlueBoxSharp.Data.SqlServer;
 using BlueBoxSharp.Data;
 using BlueBoxSharp.Data.Translators.Handlers;
+using BlueBoxSharp.Helpers;
 
 namespace TestSandbox
 {
@@ -25,8 +26,7 @@ namespace TestSandbox
             //    if (Console.ReadKey().Key == ConsoleKey.Escape)
             //        break;
             //}
-
-            Console.WriteLine(NativeMethodHandlers.GetHandler(typeof(string), "Translate").Translate(""));
+            Console.WriteLine(NativeMethodHandlers.GetHandler(typeof(string), "Translate").Translate(typeof(string), ""));
 
 
             Console.WriteLine("Ok it's end");

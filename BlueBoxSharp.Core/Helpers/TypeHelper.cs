@@ -91,5 +91,23 @@ namespace BlueBoxSharp.Helpers
             return realType == typeof(int) || realType == typeof(short) || realType == typeof(double)
                     || realType == typeof(float) || realType == typeof(long) || realType == typeof(decimal);
         }
+
+        public static IEnumerable<IEnumerable<Type>> GetTypeHierarchy(Type t)
+        {
+            do
+            {
+                if (t.BaseType == null)
+                {
+                    yield return t.GetInterfaces();
+                }
+                else
+                {
+                    yield return t.GetInterfaces().Concat(new[] { t.BaseType });
+                }
+
+                t = t.BaseType;
+            }
+            while (t != null);
+        } 
     }
 }

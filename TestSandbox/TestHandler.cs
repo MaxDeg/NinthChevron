@@ -7,14 +7,30 @@ using System.Threading.Tasks;
 
 namespace TestSandbox
 {
-    [NativeMethod(typeof(object), "Translate")]
-    [NativeMethod(typeof(object), "Translate", typeof(int))]
-    [NativeMethod(typeof(object), "Translate", typeof(int), typeof(int))]
+    [NativeMethod(typeof(IEnumerable<>), "Translate")]
     public class TestHandler : IMethodHandler
     {
-        public string Translate(string objectExpression, params string[] parametersExpressions)
+        public string Translate(Type t, string objectExpression, params string[] parametersExpressions)
         {
             return "TestHandler.Translate";
+        }
+    }
+
+    [NativeMethod(typeof(object), "Translate")]
+    public class Test2Handler : IMethodHandler
+    {
+        public string Translate(Type t, string objectExpression, params string[] parametersExpressions)
+        {
+            return "TestHandler.Translate(object)";
+        }
+    }
+
+    [NativeMethod(typeof(string), "Translate")]
+    public class Test3Handler : IMethodHandler
+    {
+        public string Translate(Type t, string objectExpression, params string[] parametersExpressions)
+        {
+            return "TestHandler.Translate(string)";
         }
     }
 }

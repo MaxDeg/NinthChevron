@@ -25,6 +25,7 @@ using BlueBoxSharp.Data.Expressions;
 using BlueBoxSharp.Data.Metadata;
 using BlueBoxSharp.Helpers;
 using BlueBoxSharp.Data.Translators;
+using BlueBoxSharp.Data.Translators.Handlers;
 
 namespace BlueBoxSharp.Data.SqlServer.Translators
 {
@@ -167,54 +168,15 @@ namespace BlueBoxSharp.Data.SqlServer.Translators
                 return string.Format(attribute.CallFormat, node.Arguments.Select(a => Visit(a)).ToArray());
             else
             {
-                switch (node.Method.Name)
+                Type type = node.Object == null ? node.Type : node.Object.Type;
+                IMethodHandler handler = NativeMethodHandlers.GetHandler(type, node.Method.Name, node.Arguments.Select(a => a.Type).ToArray());
+                if (handler != null)
                 {
-                    case "ToString":
-                        return string.Format("CONVERT(NVARCHAR, {0})", Visit(node.Object));
-                    case "IsNullOrEmpty":
-                        return string.Format("ISNULL(LEN({0}), 0) <= 0", Visit(node.Arguments[0]));
-                    case "StartsWith":
-                        return string.Format("{0} LIKE {1}", Visit(node.Object), Visit(node.Arguments[0]));
-                    case "ToLower":
-                        return string.Format("LOWER({0})", Visit(node.Object));
-                    case "ToUpper":
-                        return string.Format("UPPER({0})", Visit(node.Object));
-                    case "Concat":
-                        List<string> expressions = new List<string>();
-
-                        foreach (Expression e in node.Arguments)
-                        {
-                            if (e is ConstantExpression)
-                                expressions.Add(SqlEncode(((ConstantExpression)e).Value));
-                            else
-                                expressions.Add(Visit(e));
-                        }
-
-                        return string.Join(" + ", expressions);
-                    case "Contains":
-                        if (node.Object != null && node.Object.Type == typeof(string))
-                            return string.Format("{0} LIKE {1}", Visit(node.Object), Visit(node.Arguments[0]));
-
-                        string argument;
-                        string list;
-                        if (node.Object != null)
-                        {
-                            list = Visit(node.Object);
-                            argument = Visit(node.Arguments[0]);
-                        }
-                        else
-                        {
-                            list = Visit(node.Arguments[0]);
-                            argument = Visit(node.Arguments[1]);
-                        }
-
-                        if (list == "()")
-                            return string.Format("{0} <> {0}", argument);
-
-                        return string.Format("{0} IN {1}", argument, list);
-
-                    default:
-                        return string.Join(",", node.Arguments.Select(a => Visit(a)));
+                    return handler.Translate(type, node.Object == null ? null : Visit(node.Object), node.Arguments.Select(a => Visit(a)).ToArray());
+                }
+                else
+                {
+                    throw new InvalidOperationException("NativeHandler not found");
                 }
             }
         }

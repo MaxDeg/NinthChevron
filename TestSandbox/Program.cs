@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 using BlueBoxSharp.Data.SqlServer;
 using BlueBoxSharp.Data;
+using BlueBoxSharp.Data.Translators.Handlers;
 
 namespace TestSandbox
 {
@@ -25,19 +26,11 @@ namespace TestSandbox
             //        break;
             //}
 
-            SqlServerDataContext dbContext = new SqlServerDataContext(ConnectionStrings.T4Connection);
-
-            int count = CountNotes(dbContext, "BVDEP", "", "d", "").Select(r => r.Get<int>(0)).FirstOrDefault();
-            Console.WriteLine(count);
+            Console.WriteLine(NativeMethodHandlers.GetHandler(typeof(string), "Translate").Translate(""));
 
 
             Console.WriteLine("Ok it's end");
             Console.ReadKey();
-        }
-
-        public static IEnumerable<DataRecord> CountNotes(DataContext context, string inUserId, string inCompanyId, string inType, string inReference)
-        {
-            return context.ExecuteProcedure("[NAS_SonyESI]..[dbo].[CountNotes]", inUserId, inCompanyId, inType, inReference);
         }
     }
 }

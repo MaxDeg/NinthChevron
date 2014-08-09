@@ -160,7 +160,10 @@
     <Compile Include="AutoMap\SelectModelMapper.cs" />
     <Compile Include="Entity\TableAttribute.cs" />
     <Compile Include="Transaction.cs" />
+    <Compile Include="Translators\Handlers\NativeMethodAttribute.cs" />
+    <Compile Include="Translators\Handlers\NativeMethodHandlers.cs" />
     <Compile Include="Translators\ITranslator.cs" />
+    <Compile Include="Translators\Handlers\IMethodHandler.cs" />
     <Compile Include="Translators\SqlExpressionVisitor.cs" />
     <Compile Include="AutoMap\WhereClauseMapper.cs" />
   </ItemGroup>

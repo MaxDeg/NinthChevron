@@ -29,7 +29,7 @@ namespace BlueBoxSharp.Data.SqlServer
     {
         public SqlServerDataContext(string connectionString) : base(connectionString)
         {
-            this.Translator = new TSqlTranslator(this);
+            this.Translator = new TSqlTranslator2005(this);
         }
 
         protected override DbCommand CreateCommand(DbConnection connection, DbTransaction transaction, string query)

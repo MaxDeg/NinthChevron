@@ -49,7 +49,17 @@
     <Compile Include="Metadata\SqlServerProcedureMetadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlFunctions.cs" />
+    <Compile Include="SqlServer2000DataContext.cs" />
     <Compile Include="SqlServerDataContext.cs" />
+    <Compile Include="Translators\Handlers\IEnumerableContainsHandler.cs" />
+    <Compile Include="Translators\Handlers\ObjectToStringHandler.cs" />
+    <Compile Include="Translators\Handlers\StringConcatHandler.cs" />
+    <Compile Include="Translators\Handlers\StringContainsHandler.cs" />
+    <Compile Include="Translators\Handlers\StringIsNullOrEmptyHandler.cs" />
+    <Compile Include="Translators\Handlers\StringLengthHandler.cs" />
+    <Compile Include="Translators\Handlers\StringStartsWithHandler.cs" />
+    <Compile Include="Translators\Handlers\StringToLowerHandler.cs" />
+    <Compile Include="Translators\Handlers\ToUpperHandler.cs" />
     <Compile Include="Translators\TSqlTranslator.cs" />
     <Compile Include="Translators\TSqlTranslator2005.cs" />
   </ItemGroup>
@@ -63,6 +73,7 @@
       <Name>BlueBoxSharp.Data</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
     <MSBuild Condition=" '$(TargetFrameworkVersion)' != 'v4.0'" Projects="$(MSBuildProjectFile)" Properties="TargetFrameworkVersion=v4.0" RunEachTargetSeparately="true" />

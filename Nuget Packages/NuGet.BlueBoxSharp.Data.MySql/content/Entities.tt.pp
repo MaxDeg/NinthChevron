@@ -3,19 +3,19 @@
 <#@ assembly name="System.Xml" #>
 <#@ assembly name="System.Core.dll" #>
 <#@ assembly name="System.Configuration.dll" #>
-<#@ assembly name="$(BBSharpCoreLibPath)BlueBoxSharp.Core.dll" #>
-<#@ assembly name="$(BBSharpDataLibPath)BlueBoxSharp.Data.dll" #>
-<#@ assembly name="$(BBSharpDataLibPath)BlueBoxSharp.Data.MySql.dll" #>
+<#@ assembly name="$(NCCoreLibPath)NinthChevron.Core.dll" #>
+<#@ assembly name="$(NCMySqlDataLibPath)NinthChevron.Data.dll" #>
+<#@ assembly name="$(NCMySqlDataLibPath)NinthChevron.Data.MySql.dll" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Xml" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ import namespace="BlueBoxSharp.Data" #>
-<#@ import namespace="BlueBoxSharp.Data.Metadata" #>
-<#@ import namespace="BlueBoxSharp.Data.MySql" #>
-<#@ import namespace="BlueBoxSharp.Data.MySql.Metadata" #>
-<#@ include file="$(BBSharpDataLibPath)T4TemplateHelpers.t4" #>
+<#@ import namespace="NinthChevron.Data" #>
+<#@ import namespace="NinthChevron.Data.Metadata" #>
+<#@ import namespace="NinthChevron.Data.MySql" #>
+<#@ import namespace="NinthChevron.Data.MySql.Metadata" #>
+<#@ include file="$(NCMySqlDataLibPath)T4TemplateHelpers.t4" #>
 <#
 	string path = Host.ResolvePath(@"App.config");
 	System.Configuration.Configuration configuration = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(
@@ -34,10 +34,10 @@ foreach (var group in meta.Tables.GroupBy(t => new { Database = t.Database, Sche
 #>
 using System;
 using System.Collections.Generic;
-using BlueBoxSharp.Data;
-using BlueBoxSharp.Data.Entity;
-using BlueBoxSharp.Helpers;
-using BlueBoxSharp.ComponentModel.DataAnnotations;
+using NinthChevron.Data;
+using NinthChevron.Data.Entity;
+using NinthChevron.Helpers;
+using NinthChevron.ComponentModel.DataAnnotations;
 
 <#
 foreach (var schema in meta.Tables.Where(t => t.Schema != group.Key.Schema).Select(t => new { Database = t.Database, Schema = t.Schema }).Distinct())
@@ -99,10 +99,10 @@ foreach (ITableMetadata tab in group)
 #>
 using System;
 using System.Collections.Generic;
-using BlueBoxSharp.Data;
-using BlueBoxSharp.Data.Entity;
-using BlueBoxSharp.Helpers;
-using BlueBoxSharp.ComponentModel.DataAnnotations;
+using NinthChevron.Data;
+using NinthChevron.Data.Entity;
+using NinthChevron.Helpers;
+using NinthChevron.ComponentModel.DataAnnotations;
 
 namespace $rootnamespace$.<#= namespaceName #>
 {

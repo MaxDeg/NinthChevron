@@ -1,8 +1,8 @@
-﻿using BlueBoxSharp.Data;
-using BlueBoxSharp.Data.Metadata;
-using BlueBoxSharp.Data.SqlServer;
-using BlueBoxSharp.Data.SqlServer.Metadata;
-using BlueBoxSharp.Data.Translators;
+﻿using NinthChevron.Data;
+using NinthChevron.Data.Metadata;
+using NinthChevron.Data.SqlServer;
+using NinthChevron.Data.SqlServer.Metadata;
+using NinthChevron.Data.Translators;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

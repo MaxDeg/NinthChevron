@@ -8,8 +8,8 @@
 <#@ assembly name="System.Xml" #>
 <#@ assembly name="System.Core.dll" #>
 <#@ assembly name="System.Configuration.dll" #>
-<#@ assembly name="$(SolutionDir)BlueBoxSharp.Data\bin\Release\v4.5\BlueBoxSharp.Data.dll" #>
-<#@ assembly name="$(SolutionDir)BlueBoxSharp.Data.MySql\bin\Release\v4.5\BlueBoxSharp.Data.MySql.dll" #>
+<#@ assembly name="$(SolutionDir)NinthChevron.Data\bin\Release\v4.5\NinthChevron.Data.dll" #>
+<#@ assembly name="$(SolutionDir)NinthChevron.Data.MySql\bin\Release\v4.5\NinthChevron.Data.MySql.dll" #>
 <#@ import namespace="EnvDTE" #>
 <#@ import namespace="Microsoft.VisualStudio.Shell" #>
 <#@ import namespace="Microsoft.VisualStudio.Shell.Interop" #>
@@ -19,10 +19,10 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Xml" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ import namespace="BlueBoxSharp.Data" #>
-<#@ import namespace="BlueBoxSharp.Data.MySql" #>
-<#@ import namespace="BlueBoxSharp.Data.MySql.Metadata" #>
-<#@ import namespace="BlueBoxSharp.Data.Metadata" #>
+<#@ import namespace="NinthChevron.Data" #>
+<#@ import namespace="NinthChevron.Data.MySql" #>
+<#@ import namespace="NinthChevron.Data.MySql.Metadata" #>
+<#@ import namespace="NinthChevron.Data.Metadata" #>
 <#
 	string path = Host.ResolvePath(@"App.config");
 	System.Configuration.Configuration configuration = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(
@@ -93,10 +93,10 @@ foreach (var group in meta.Tables.GroupBy(t => new { Database = t.Database, Sche
 #>
 using System;
 using System.Collections.Generic;
-using BlueBoxSharp.Data;
-using BlueBoxSharp.Data.Entity;
-using BlueBoxSharp.Helpers;
-using BlueBoxSharp.ComponentModel.DataAnnotations;
+using NinthChevron.Data;
+using NinthChevron.Data.Entity;
+using NinthChevron.Helpers;
+using NinthChevron.ComponentModel.DataAnnotations;
 
 namespace Sandbox.Entities.<#= namespaceName #>
 {
@@ -149,10 +149,10 @@ foreach (ITableMetadata tab in group)
 #>
 using System;
 using System.Collections.Generic;
-using BlueBoxSharp.Data;
-using BlueBoxSharp.Data.Entity;
-using BlueBoxSharp.Helpers;
-using BlueBoxSharp.ComponentModel.DataAnnotations;
+using NinthChevron.Data;
+using NinthChevron.Data.Entity;
+using NinthChevron.Helpers;
+using NinthChevron.ComponentModel.DataAnnotations;
 
 namespace Sandbox.Entities.<#= namespaceName #>
 {

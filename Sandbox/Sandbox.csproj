@@ -60,17 +60,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BlueBoxSharp.Core\BlueBoxSharp.Core.csproj">
+    <ProjectReference Include="..\NinthChevron.Core\NinthChevron.Core.csproj">
       <Project>{0c974bcf-1a08-43f2-b503-c3656162f035}</Project>
-      <Name>BlueBoxSharp.Core</Name>
+      <Name>NinthChevron.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BlueBoxSharp.Data.SqlServer\BlueBoxSharp.Data.SqlServer.csproj">
+    <ProjectReference Include="..\NinthChevron.Data.SqlServer\NinthChevron.Data.SqlServer.csproj">
       <Project>{baa7763c-8842-44a7-b450-813fdcaef0b4}</Project>
-      <Name>BlueBoxSharp.Data.SqlServer</Name>
+      <Name>NinthChevron.Data.SqlServer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BlueBoxSharp.Data\BlueBoxSharp.Data.csproj">
+    <ProjectReference Include="..\NinthChevron.Data\NinthChevron.Data.csproj">
       <Project>{62ff886f-4096-4869-8c42-6c0d8bf0724f}</Project>
-      <Name>BlueBoxSharp.Data</Name>
+      <Name>NinthChevron.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

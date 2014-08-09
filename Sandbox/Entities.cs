@@ -1,6 +1,6 @@
-﻿using BlueBoxSharp.ComponentModel.DataAnnotations;
-using BlueBoxSharp.Data;
-using BlueBoxSharp.Data.Entity;
+﻿using NinthChevron.ComponentModel.DataAnnotations;
+using NinthChevron.Data;
+using NinthChevron.Data.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

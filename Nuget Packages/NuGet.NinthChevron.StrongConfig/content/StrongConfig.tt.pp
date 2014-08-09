@@ -1,12 +1,12 @@
 <#@ template debug="false" hostspecific="true" language="C#" #>
 <#@ assembly name="System.Core" #>
 <#@ assembly name="System.Configuration.dll" #>
-<#@ assembly name="$(NCStrongConfigLibPath)BlueBoxSharp.Core.dll" #>
+<#@ assembly name="$(NCStrongConfigLibPath)NinthChevron.Core.dll" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Configuration" #>
-<#@ import namespace="BlueBoxSharp.Extensions" #>
+<#@ import namespace="NinthChevron.Extensions" #>
 <#@ output extension=".cs" #>
 <#
 	string path = Host.ResolvePath(@"App.config");

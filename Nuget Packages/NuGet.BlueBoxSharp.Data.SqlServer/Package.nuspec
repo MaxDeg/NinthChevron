@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>BlueBoxSharp.Data.SqlServer</id>
-    <version>1.0.1.6</version>
-    <title>BlueBoxSharp.Data.SqlServer</title>
+    <id>NinthChevron.Data.SqlServer</id>
+    <version>1.0.2.0</version>
+    <title>NinthChevron.Data.SqlServer</title>
     <authors>Maxime Degallaix</authors>
     <owners></owners>
     <description>
@@ -16,7 +16,7 @@
     <copyright>Copyright  2014</copyright>
     <dependencies>
         <group targetFramework="net40">
-          <dependency id="BlueBoxSharp.Core" version="1.0.2.0" />
+          <dependency id="NinthChevron.Core" version="1.0.4.0" />
         </group>
     </dependencies>
     <references></references>

@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
-using BlueBoxSharp.Data.SqlServer;
-using BlueBoxSharp.Data;
-using BlueBoxSharp.Data.Translators.Handlers;
-using BlueBoxSharp.Helpers;
+//using NinthChevron.Data.SqlServer;
+//using NinthChevron.Data;
+//using NinthChevron.Data.Translators.Handlers;
+//using NinthChevron.Helpers;
 
-namespace TestSandbox
+namespace NinthChevron.TestSandbox
 {
     class Program
     {
@@ -25,8 +25,8 @@ namespace TestSandbox
 
             //    if (Console.ReadKey().Key == ConsoleKey.Escape)
             //        break;
-            //}
-            Console.WriteLine(NativeMethodHandlers.GetHandler(typeof(string), "Translate").Translate(typeof(string), ""));
+            ////}
+            //Console.WriteLine(NativeMethodHandlers.GetHandler(typeof(string), "Translate").Translate(typeof(string), ""));
 
 
             Console.WriteLine("Ok it's end");

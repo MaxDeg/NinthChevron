@@ -39,7 +39,7 @@ namespace NinthChevron.Data.SqlServer.Metadata
         
         public override string ToString()
         {
-            return string.Format("[{0}]..[{1}].[{2}]", this.Database.Name, this.Schema, this.Name);
+            return string.Format("[{0}].[{1}].[{2}]", this.Database.Name, this.Schema, this.Name);
         }
     }
 }

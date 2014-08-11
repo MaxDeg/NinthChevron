@@ -18,6 +18,8 @@ x64/
 build/
 [Bb]in/
 [Oo]bj/
+v4.0/
+v4.5/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/

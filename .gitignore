@@ -46,6 +46,8 @@ build/
 *.pidb
 *.log
 *.scc
+*.bak
+*.nupkg
 
 # Visual Studio profiler
 *.psess

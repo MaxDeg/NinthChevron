@@ -75,13 +75,14 @@ namespace NinthChevron.Data.Entity
 
         protected void __Set<T>(ref T field, T value, [CallerMemberName] string property = "")
         {
+            object oldValue = field;
+            object newValue = value;
+            field = value;
+            
             if (this._propertyChangeScope || PropertyChanged == null)
             {
                 return;
             }
-
-            object oldValue = field;
-            object newValue = value;
 
             if (oldValue == null && newValue == null) return;
             if (typeof(T) == typeof(string) && (string)oldValue == "" && newValue == null) return;
@@ -102,7 +103,6 @@ namespace NinthChevron.Data.Entity
             EntityPropertyChangedEventArgs args = new EntityPropertyChangedEventArgs(property);
             args.OldValue = oldValue;
             args.NewValue = newValue;
-            field = value;
 
             // Call PropertyChanged (! avoid infinite loop)
             this._propertyChangeScope = true;
